@@ -17,6 +17,7 @@ The order of the projects doesn't really matter. As a general rule, the most rec
 - [A* algorithm](https://www.khanacademy.org/computer-programming/a/6346280991899648)
 - [Euclide's algorithm](https://www.khanacademy.org/computer-programming/euclide/5541978721927168)
 - [Dijkstra's algorithm](https://www.khanacademy.org/computer-programming/dijkstra-algorithm/5030266773094400)
+- [Collisions - Une dimension](https://www.khanacademy.org/computer-programming/collision-une-dimension/4873815556014080)
 - [Physique - Chute libre](https://www.khanacademy.org/computer-programming/physique-chute-libre/6093678011662336)
 - [Clouds (Perlin noise)](https://www.khanacademy.org/computer-programming/clouds-perlin-noise/4891686203080704)
 - [Math Art](https://www.khanacademy.org/computer-programming/math-art/5199950501429248)
