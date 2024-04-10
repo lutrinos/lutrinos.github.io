@@ -2,7 +2,7 @@
 
 My name is Nathan, and I am currently a high school student. I enjoy coding, reading, playing basketball or doing something related with maths and physic.
 
-Besides this short presentation, I use this website to list some of the projects I made, what I am currently involved, and nothing much more...
+Besides this short presentation, I use this website to list some of the projects I made, and am currently involved in.
 
 !!! info Note
 The order of the projects doesn't really matter. As a general rule, the most recent are placed first.
