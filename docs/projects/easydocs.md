@@ -4,7 +4,7 @@ index: 0
 ---
 
 !!! info Info
-I am making many structural changes to EasyDocs, related with its core algorithms, to make it more performant and extensible.
+I will not maintain this side project soon. However, I started a  rewrite of EasyDocs, related with its core algorithms, to make it more performant and extensible, which might be released some day.
 !!!
 
 # What is EasyDocs?
