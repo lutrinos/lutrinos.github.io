@@ -32,7 +32,7 @@ jobs:
       # Run build command
       - name: Build
         run: |
-          npm i @lutrinos/easydocs -g
+          npm i @nathanti/easydocs -g
           easydocs build
 
       # Publish the pages
