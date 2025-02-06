@@ -1,14 +1,14 @@
 
 {
-  "title": "nathanTi",
+  "title": "Lutrinos",
   "favicon": "/profile.png",
   "header": {
-    "title": "nathanTi",
+    "title": "Lutrinos",
     "icon": "/profile.png",
     "links": [
       {
         "label": "GitHub",
-        "link": "https://github.com/ntillier"
+        "link": "https://github.com/lutrinos"
       }
     ]
   }
