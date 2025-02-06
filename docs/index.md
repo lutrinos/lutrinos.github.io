@@ -46,10 +46,6 @@ The order of the projects doesn't really matter. As a general rule, the most rec
 * [lmdb-search](https://github.com/ntillier/lmdb-search)
 * [Replit's Graphql module](https://github.com/ntillier/Replit-s-graphql-module-Node.js)
 
-## Replit
-* [Spotify's API template](https://replit.com/@nathanTi/Spotify-API)
-* [Replit Database](https://replit.com/@nathanTi/Replit-database)
-
 ## Websites
 * [Upfriends](https://upfriends.web.app/)
 * [RunTs](https://github.com/ntillier/RunTs)
@@ -79,4 +75,4 @@ Since Replit has discontinued free hosting, all the websites below may work, but
 - [Drawing App](https://drawing-app.nathanti.repl.co/)
 
 
-[![](https://visitcount.itsvg.in/api?id=nathanTi&label=Profile%20Views&color=2&icon=0&pretty=true)](https://visitcount.itsvg.in)
+[![](https://visitcount.itsvg.in/api?id=lutrinos&label=Profile%20Views&color=2&icon=0&pretty=true)](https://visitcount.itsvg.in)
