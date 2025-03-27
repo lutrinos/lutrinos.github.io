@@ -14,6 +14,7 @@ The order of the projects doesn't really matter. As a general rule, the most rec
 - [Ressources (en français)](https://github.com/ntillier/Ressources)
 
 ## Khan Academy
+- [Bezier curve drawing](https://www.khanacademy.org/computer-programming/bezier/6445157619515392)
 - [A* algorithm](https://www.khanacademy.org/computer-programming/a/6346280991899648)
 - [Euclide's algorithm](https://www.khanacademy.org/computer-programming/euclide/5541978721927168)
 - [Dijkstra's algorithm](https://www.khanacademy.org/computer-programming/dijkstra-algorithm/5030266773094400)
