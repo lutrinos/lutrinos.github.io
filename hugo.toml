@@ -470,9 +470,9 @@ uglyURLs = false
     chineseZodiac = false
 
     # Translate the year? (valid for title)
-    i18nYear = false
+    i18nYear = true
     # Translate the month? (valid for title)
-    i18nMonth = false
+    i18nMonth = true
 
 
     ######################################
