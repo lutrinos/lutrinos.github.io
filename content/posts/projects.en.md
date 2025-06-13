@@ -1,13 +1,13 @@
 +++
 title = "Projects"
-date = "2024-01-30T10:04:15+02:00"
-modified = "2025-06-13T10:04:15+02:00"
+date = 2024-01-30
+modified = 2025-06-13
 +++
 
 The order does not matter, even though the most recent are listed first globally.
 
 # GitHub
-- [Ressources (en français)](https://github.com/lutrinos/Ressources)
+- [Ressources (in French)](https://github.com/lutrinos/Ressources)
 
 # Khan Academy
 - [Boyer-Moore algorithm](https://www.khanacademy.org/computer-programming/boyer-moore/5546924586418176)

@@ -1,8 +1,7 @@
 +++
 title = "Projets"
-date = 2020-11-23
-# date = 2020-12-23T15:21:54+05:30
-# modified = 2020-12-23T15:21:54+05:30
+date = 2024-02-01
+modified = 2025-06-13
 +++
 
 L'ordre des projets n'a que peu d'importance, même si en règle générale, ceux les plus récents sont vers le haut.
