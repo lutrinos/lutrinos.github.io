@@ -1,0 +1,3 @@
+**Idées :**
+- Rabin-Karp
+- Huffman
