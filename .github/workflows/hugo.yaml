@@ -78,11 +78,11 @@ jobs:
             --cacheDir "${{ env.HUGO_CACHEDIR }}"
 
       - name: Cache Save
+        if: steps.cache-restore.outputs.cache-hit != 'true'
         id: cache-save
         uses: actions/cache/save@v4
         with:
-          path: |
-            ${{ env.HUGO_CACHEDIR }}
+          path: ${{ env.HUGO_CACHEDIR }}
           key: ${{ steps.cache-restore.outputs.cache-primary-key }}
 
       - name: Upload artifact
