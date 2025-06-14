@@ -3,26 +3,38 @@
 (not .IsTranslated))) -}}
 {{- if not $hide -}}
 <div id="lang-switcher">
-    <span>{{ .Site.Language.LanguageName }}</span>
-    {{ if .IsTranslated }}
-    <ul id="langs">
-        {{ range .Translations }}
-        <li><a rel="alternate" href="{{ .RelPermalink }}" hreflang="{{ .Lang }}" lang="{{ .Lang }}">{{
-                .Language.LanguageName }}</a></li>
-        {{ end }}
-    </ul>
-    {{ else }}
-    {{ if not .Site.Params.autoHideLangToggle }}
-    <ul id="langs">
-        {{ range .Site.Languages }}
-        {{ if ne $.Site.Language.Lang .Lang }}
-        <li><a rel="alternate" href="{{ .Lang | relURL }}" hreflang="{{ .Lang }}" lang="{{ .Lang }}">{{ .LanguageName
-                }}</a></li>
-        {{ end }}
-        {{ end }}
-    </ul>
+    {{ $currentLang := .Site.Language.Lang }}
+    {{ $targetLang := "" }}
+    {{ $targetLink := "" }}
+
+    {{/* Trouve l’autre langue disponible */}}
+    {{ range .Site.Languages }}
+    {{ if ne .Lang $currentLang }}
+    {{ $targetLang = .Lang }}
     {{ end }}
     {{ end }}
+
+    {{/* Si la page est traduite, on prend la version équivalente */}}
+    {{ with .Translations }}
+    {{ range . }}
+    {{ if eq .Lang $targetLang }}
+    {{ $targetLink = .RelPermalink }}
+    {{ end }}
+    {{ end }}
+    {{ end }}
+
+    {{/* Sinon on redirige vers l’accueil de la langue cible */}}
+    {{ if eq $targetLink "" }}
+    {{ $targetLink = (site.GetPage $targetLang).RelPermalink }}
+    {{ end }}
+
+    <a href="{{ $targetLink }}" hreflang="{{ $targetLang }}">
+        {{- if eq $targetLang "en" -}}
+        {{- partial "utils/icon.html" (dict "$" $ "name" "flag_en") -}}
+        {{- else -}}
+        {{- partial "utils/icon.html" (dict "$" $ "name" "flag_fr") -}}
+        {{- end -}}
+    </a>
 </div>
 {{- end -}}
 {{- end -}}
