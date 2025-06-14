@@ -6,7 +6,7 @@ title = "Lutrinos"
 languageCode = "fr"
 hasCJKLanguage = false
 # Copyright information (Markdown supported)
-copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)"
+copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr)"
 
 # Name of theme
 theme = "meme"
@@ -35,10 +35,10 @@ enableEmoji = true
 footnoteReturnLinkContents = "↩"
 
 # Enable `.GitInfo` object for each page?
-enableGitInfo = false
+enableGitInfo = true
 
 # Enable generation of `robots.txt` file?
-enableRobotsTXT = true
+enableRobotsTXT = false
 
 # URL related
 disablePathToLower = false
@@ -158,8 +158,6 @@ uglyURLs = false
 [services.rss]
     limit = -1
 
-
-
 ##########################################
 # Menu Settings
 
@@ -194,17 +192,6 @@ uglyURLs = false
 #               flex: `theme-switcher`,
 #               `lang-switcher`, `search`)
 
-# Languages (i18n)
-[languages.fr]
-    languageName = "Français"
-    weight = 1
-    languageCode = "fr"
-
-[languages.en]
-    languageName = "English"
-    weight = 2
-    languageCode = "en"
-
 [menu]
     ## Menu bar
     # [[menu.main]]
@@ -214,40 +201,39 @@ uglyURLs = false
     #     pre = "internal"
     #     post = "home"
     [[menu.main]]
-        pageref = "/posts/"
+        url = "/posts/"
         name = "Posts"
         weight = 2
         pre = "internal"
         post = "archive"
-    # [[menu.main]]
-    #     pageref = "/categories/"
-    #     name = "Categories"
-    #     weight = 3
-    #     pre = "internal"
-    #     post = "th"
-    # [[menu.main]]
-    #     pageref = "/tags/"
-    #     name = "Tags"
-    #     weight = 4
-    #     pre = "internal"
-    #     post = "tags"
-    # [[menu.main]]
-    #     pageref = "/about/"
-    #     name = "About"
-    #     weight = 5
-    #     pre = "internal"
-    #     post = "user-circle"
-    # [[menu.main]]
-    #     weight = 6
-    #     identifier = "theme-switcher"
     [[menu.main]]
-        weight = 7
+        url = "/categories/"
+        name = "Catégories"
+        weight = 3
+        pre = "internal"
+        post = "th"
+    [[menu.main]]
+        url = "/tags/"
+        name = "Thèmes"
+        weight = 4
+        pre = "internal"
+        post = "tags"
+    [[menu.main]]
+        url = "/about/"
+        name = "À propos"
+        weight = 5
+        pre = "internal"
+        post = "user-circle"
+    [[menu.main]]
+        weight = 6
         identifier = "lang-switcher"
     [[menu.main]]
-        weight = 8
+        weight = 7
         identifier = "search"
         post = "search"
-
+    [[menu.main]]
+        weight = 8
+        identifier = "theme-switcher"
 
 
 ##########################################
@@ -1208,14 +1194,14 @@ uglyURLs = false
     ######################################
     # Post Gitinfo
 
-    enablePostGitInfo = false
+    enablePostGitInfo = true
 
-    displayPostGitInfo = false
+    displayPostGitInfo = true
     # Note: *global settings*
     #       `gitinfo` in post’s Front Matter
     #       has a higher priority than here
 
-    repoURL = ""
+    repoURL = "https://github.com/lutrinos/lutrinos.github.io"
     repoEditURL = ""
     repoEditURLSuffix = ""
 
@@ -1550,3 +1536,51 @@ uglyURLs = false
 [caches]
   [caches.images]
     dir = ':cacheDir/images'
+
+# Languages (i18n)
+[languages.fr]
+    languageName = "Français"
+    weight = 1
+    languageCode = "fr"
+
+[languages.en]
+    languageName = "English"
+    weight = 2
+    languageCode = "en"
+    copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr)"
+
+[languages.en.menu]
+    [[languages.en.menu.main]]
+        url = "/en/posts/"
+        name = "Posts"
+        weight = 2
+        pre = "internal"
+        post = "archive"
+    [[languages.en.menu.main]]
+        url = "/en/categories/"
+        name = "Categories"
+        weight = 3
+        pre = "internal"
+        post = "th"
+    [[languages.en.menu.main]]
+        url = "/en/tags/"
+        name = "Tags"
+        weight = 4
+        pre = "internal"
+        post = "tags"
+    [[languages.en.menu.main]]
+        url = "/en/about/"
+        name = "About"
+        weight = 5
+        pre = "internal"
+        post = "user-circle"
+    [[languages.en.menu.main]]
+        weight = 6
+        identifier = "lang-switcher"
+    [[languages.en.menu.main]]
+        weight = 7
+        identifier = "search"
+        post = "search"
+    [[languages.en.menu.main]]
+        weight = 8
+        identifier = "theme-switcher"
