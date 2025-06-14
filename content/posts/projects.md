@@ -1,5 +1,6 @@
 +++
 title = "Inventaire des projets"
+description  = "Une liste des différents projets et programmes réalisées par-ci par-là."
 date = 2024-02-01
 modified = 2025-06-13
 tags = ['Informatique']
