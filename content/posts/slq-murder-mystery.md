@@ -4,11 +4,12 @@ description = "Résolvons le meurtre du petit jeu THE SQL Murder Mystery !"
 tags =  ["Informatique", "SQL", "Jeux"]
 categories = ["Base de données"]
 date = 2025-06-14
+modified = 2025-06-15
 +++
 
 [The SQL Murder Mystery](https://mystery.knightlab.com/) est un petit jeu dont on doit trouver la réponse grâce à des requêtes en SQL.
 
-Si vous ne l'avez pas fait, cherchez la solution ! Ce post n'a pour but que d'expliquer les démarches et le raisonnement afin de réaliser le moins de requêtes possibles, et développe les quelques notes que j'ai pris quand je l'ai résolu.
+Si vous ne l'avez pas fait, cherchez la solution ! Ce post n'a pour but que d'expliquer les démarches et le raisonnement afin de réaliser le moins de requêtes possibles, et développe les quelques notes que j'ai prises quand je l'ai résolu.
 
 À vrai dire c'est plus pour m'amuser qu'autre chose :wink:
 
@@ -61,7 +62,7 @@ FROM person
 WHERE address_street_name = "Franklin Ave" AND name LIKE "Annabel%"
 ```
 
-On peut donc récupérer aisément leurs témoignages de la manière suivante, à la condition de ne pas faire de `ORDER BY` dans l'union (honnêtement je ne le savais pas avant d'essayer :sweat_smile:).
+On peut donc récupérer aisément leurs témoignages de la manière suivante, à la condition de ne pas faire de `ORDER BY` dans l'union, car SQL le refuse (honnêtement je ne le savais pas avant d'essayer :sweat_smile:).
 
 Pour pallier à cet inconvénient, comme `Franklin Ave` est placé avant `Northwestern Dr` dans l'ordre alphabétique, on peut trier l'union selon le nom de la rue ascendant puis le numéro descendant. Il suffira alors de considérer la première personne résidant à `Northwestern Dr` dans la liste, et celles résidant à `Franklin Ave` (placées avant dans le résultat de la requête) s'il y en a plusieurs.
 
@@ -105,7 +106,7 @@ Cherchons les différents suspects !
 
 Essayons de trouver le meurtrier en une requête avec toutes ces informations.
 
-On va pour cela aggréger les donnéesà partir de la table `person` avec trois projections consécutives :
+On va pour cela aggréger les données à partir de la table `person` avec trois projections consécutives :
 - sur `get_fit_now_member` dont l'identifiant de la personne correspond
 - sur `drivers_license` dont l'identifiant de la licence correspond
 - sur `get_git_now_check_in` dont l'identifiant d'inscription correspond, ainsi que la date du passage qui doit être le 9 janvier 2018.
@@ -115,7 +116,7 @@ On sélectionne ensuite les colonnes sur trois critères :
 - le numéro de la plaque d'immatriculation
 - l'identifiant d'inscription au club
 
-Pour ne pas avoir à répeter les noms des tables qui sont assez long, le mot clé `AS` nous permet de les renommer localement.
+Pour ne pas avoir à répéter les noms des tables qui sont assez longs, le mot clé `AS` nous permet d'utiliser des alias le temps de la requête.
 
 ```sql
 SELECT *

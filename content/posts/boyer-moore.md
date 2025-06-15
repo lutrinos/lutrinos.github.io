@@ -60,7 +60,7 @@ On utilisera comme exemple la recherche du mot _abracadabra_ dans le mot _abrabr
 
 La table de décalage consiste à connaître, pour chaque caractère `c` et chaque indice `i` du motif, la position du premier caractère `c` à gauche de la position `i` dans le motif (en partant de la droite, autrement dit du caractère à la position `i`).
 
-Par exemple, en prenant `c = "a"` et `i = 9` (avec les caractères du motif indexés à zéro, le 9-ème caractère correspond au dernier `r`), on remarque le premier `a` par la droite est deux caractères avant, soit à la position `7`.
+Par exemple, en prenant `c = "a"` et `i = 9` (avec les caractères du motif indexés à zéro, le 9-ème caractère correspond au dernier `r`), on remarque que le premier `a` par la droite est deux caractères avant, soit à la position `7`.
 
 De même, pour `i =  10`, le dernier `a` avant est toujours à la 7-ème position, car il doit être **strictement avant**, donc le dernier `a` (le caractère à la position `i`) ne compte pas.
 
@@ -91,7 +91,7 @@ Il faut donc que le dernier caractère du texte vérifié, ici le `d`,  ait deva
 
 ![Futur décalage](/images/boyer-moore/image2.png)
 
-- S'il y a un `d` plus tôt dans le motif, on le place  devant le texte pour que les deux mêmes caractères soient confondus. Formellement, on déplace le motif de `j - k` caractères vers la droite, avec `j` la position du dernier caractère comparé dans le motif (ici `j = 9`), et `k` celle du premier `d` (caractère du texte différent) directement à sa gauche (ici `k = 6`). On remarque `k` est le nombre de la table de décalage correspondant au caractère `d` et à la position `j`.
+- S'il y a un `d` plus tôt dans le motif, on le place  devant le texte pour que les deux mêmes caractères soient confondus. Formellement, on déplace le motif de `j - k` caractères vers la droite, avec `j` la position du dernier caractère comparé dans le motif (ici `j = 9`), et `k` celle du premier `d` (caractère du texte différent) directement à sa gauche (ici `k = 6`). On remarque que `k` est le nombre de la table de décalage correspondant au caractère `d` et à la position `j`.
 - S'il n'existe pas, alors on ne peut pas avancer le motif pour que ce caractère du texte soit superposé avec un caractère identique du motif. On doit donc décaler le motif jusqu'à ce que le premier caractère du motif soit après le caractère du texte.
 
 On est alors dans la position suivante.
@@ -120,7 +120,7 @@ Il y a une différence, on redécale et le motif "sort" du texte, donc l'algorit
 
 Tout d'abord, nous devons connaître la taille du texte et du motif.
 
-Il est possible d'utiliser la fonction `strlen` en important `string.h`, mais on le peut le faire nous-mêmes : la fin d'une séquence de caractères est marquée par un `0` à la fin.
+Il est possible d'utiliser la fonction `strlen` en important `string.h`, mais on peut le faire nous-mêmes, car la fin d'une séquence de caractères est marquée par un `0` à la fin.
 
 On a donc la fonction `strlen` suivante prenant en entrée du texte et renvoyant sa longueur, de complexité temporelle $O(n)$ avec $n$ la longueur de la chaîne de caractères.
 ```c
@@ -265,7 +265,7 @@ int main() {
 }
 ```
 
-L'exécution de ce programme donne comme sortie l'indice 3. Ouf ! Tout fonctionne comme prévu⁣ :partying_face:
+L'exécution de ce programme donne comme sortie l'indice 3 avec l'exemple initial. Ouf ! Tout fonctionne comme prévu⁣ :partying_face:
 
 # Sources
 - [Page Wikipédia anglophone](https://en.wikipedia.org/wiki/Boyer-Moore_string-search_algorithm)
