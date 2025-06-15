@@ -1,13 +1,13 @@
 +++
 title = "The SQL Murder Mystery"
-description = "Résolvons le meurtre du petit jeu THE SQL Murder Mystery !"
+description = "Résolvons le meurtre du petit jeu The SQL Murder Mystery !"
 tags =  ["Informatique", "SQL", "Jeux"]
 categories = ["Base de données"]
 date = 2025-06-14
 modified = 2025-06-15
 +++
 
-[The SQL Murder Mystery](https://mystery.knightlab.com/) est un petit jeu dont on doit trouver la réponse grâce à des requêtes en SQL.
+[The SQL Murder Mystery](https://mystery.knightlab.com/) est un jeu dont on doit trouver la réponse grâce à des requêtes en SQL.
 
 Si vous ne l'avez pas fait, cherchez la solution ! Ce post n'a pour but que d'expliquer les démarches et le raisonnement afin de réaliser le moins de requêtes possibles, et développe les quelques notes que j'ai prises quand je l'ai résolu.
 
