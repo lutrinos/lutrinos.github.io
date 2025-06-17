@@ -9,7 +9,7 @@ hasCJKLanguage = false
 copyright = "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr)"
 
 # Name of theme
-theme = "meme"
+theme = ["hugo-admonitions", "meme"]
 
 # `hugo new` automatically opened text editor
 newContentEditor = ""
@@ -1533,6 +1533,7 @@ uglyURLs = false
         # Fediverse
         #fediverse = "@reuixiy@bird.makeup"
 
+# Caching for GitHub pages
 [caches]
   [caches.images]
     dir = ':cacheDir/images'
