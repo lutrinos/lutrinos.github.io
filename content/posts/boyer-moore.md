@@ -131,6 +131,9 @@ int length(char* str) {
 }
 ```
 
+> [!INFO] Complexité temporelle
+> Elle permet d'avoir un ordre de grandeur du temps mis par l'algorithme à s'exécuter en fonction de la taille de l'entrée.
+
 En C, chaque caractère est encodé comme un entier sur 8 bits, donc compris entre 0 et 255. On va donc construire la table comme un tableau en deux dimensions de taille 256 fois 256.
 
 On peut donc à présent construire la table de décalage avec la fonction `table` prenant en entrée le tableau à remplir, du texte et la taille de la chaîne de caractères, renvoyant la table sous forme d'un tableau bidimensionnel. Elle est de complexité $O(n)$ avec $n$ la longueur de la chaîne du motif, même si le facteur 256 est grand.

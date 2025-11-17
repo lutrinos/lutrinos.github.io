@@ -12,4 +12,4 @@ displayReadingTime = false
 
 # Bien le bonjour !
 
-Je suis actuellement étudiant en classes préparatoires, en MP2I. Je publie de temps à autre des posts à propos d'informatique, de mathématiques ou (parfois) de physique.
+Actuellement en deuxième année de prépa MPI, je publie de temps à autre des _choses_ à propos d'informatique, de mathématiques ou (parfois) de physique.

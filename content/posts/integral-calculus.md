@@ -7,7 +7,7 @@ tags = ["Mathématiques", "Python"]
 date = 2025-06-17
 +++
 
-Lorsque l'on veut obtenir la valeur d'une intégrale, on peut s'y prendre de différentes manières.
+Lorsque l'on veut obtenir la valeur d'une intégrale numériquement, on peut s'y prendre de différentes manières.
 
 Certaines calculatrices graphiques sont capables de calculer explicitement l'intégrale, avec des algorithmes comme l'[algorithme de Risch](https://en.wikipedia.org/wiki/Risch_algorithm). Mais souvent, une bonne approximation suffit, et un calcul numérique suffisamment fin permet d'obtenir rapidement une valeur proche de celle réelle.
 
@@ -105,6 +105,26 @@ def calcul(f, a, b, n):
 
 Comme précédemment, plus $n$ est grand, meilleure la valeur est.
 
+> [!NOTE]
+> On aborde à présent des méthodes moins connues, néanmoins assez intéressante.
+
+# Méthode de Simpson
+Cette méthode se distingue des précédentes par l'approximation utilisée : on ne passe pas par des approximations mettant en jeu des quadrilatères, mais des polynômes quadratique (de degré deux). Polynômes dont on sait facilement calculer l'intégrale !
+
+Considérons en effet le polynôme suivant $$ P(X) = aX^2 + bX + c $$
+Son intégration[^1] est directe :
+
+$$
+\int_a^b (at^2+bt+c)dt = \left[\frac{a}{3}t^3 + \frac{b}{2}t^2 + ct  \right]_a^b
+$$
+
+# Formule de Newton-Cotes
+On approximait précédemment notre intégrale par une suite de polynôme  de degré deux se succédant. Qu'en est-il de l'approximer directement sur l'intervale entier avec un unique polynôme.
+
+L'approche connue sous le nom de Newton-Cotes met donc à l'oeuvre une interpolation polynomiale pour calculer l'aire de l'intégrale.
+
+
+
 # Intégrales et séries
 
 Ce passage est destiné à des lecteurs plus avertis, ayant des rudiments sur les notions de [séries](https://fr.wikipedia.org/wiki/S%C3%A9rie_(math%C3%A9matiques)).
@@ -112,7 +132,7 @@ Ce passage est destiné à des lecteurs plus avertis, ayant des rudiments sur le
 En effet, on a la proposition suivante.
 
 > [!IMPORTANT] Proposition
-> Pour $f$ une fonction continue[^1] sur $[a,b]$ avec $a < b$ deux réels, et $n$ un entier non nul, on a le résultat suivant.
+> Pour $f$ une fonction continue[^2] sur $[a,b]$ avec $a < b$ deux réels, et $n$ un entier non nul, on a le résultat suivant.
 > $$ \frac{b-a}{n} \sum_{k=0}^{n-1} f\left(a+k\cdot\frac{b-a}{n}\right) \longrightarrow_{n \rightarrow +  \infty} \int_a^b f(t)\mathrm{d}t $$
 
 De plus, pour une application [k-lipschitzienne](https://fr.wikipedia.org/wiki/Application_lipschitzienne), la différence entre les deux termes est en $O(\frac{1}{n})$.
@@ -121,4 +141,7 @@ Ce n'est pas tout de l'affirmer, prouvons le !
 
 > [!TASK] À rédiger...
 
-[^1]: En réalité, l'hypothèse continue par morceaux suffit.
+> Note de l'auteur : on pourrait également aborder les méthode de Boole-Villarceau ainsi que Weedle-Hardy, qui correspondent pour l'essentiel aux formules de Newton-Cotes avec des polynôme de degré respectifs quatre et six.
+
+[^1]: Plutôt celle de sa fonction polynomiale associée si on veut être tatillon
+[^2]: En réalité, l'hypothèse continue par morceaux suffit.
