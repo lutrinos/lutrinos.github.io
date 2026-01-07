@@ -12,7 +12,7 @@ Les formulaire des développements limités usuels, avec des éléments de preuv
 
 |Fonction|Développement limité|
 |--------|--------------------|
-| $$e^{ax}$$ | $$ 1 + ax + \frac{(ax)^2}{2} + \frac{(ax)^3}{3!} + ... + \frac{(ax)^n}{n!} + o(x^n) $$ |
+| $$e^{x}$$ | $$ 1 + x + \frac{x^2}{2} + \frac{x^3}{3!} + ... + \frac{x^n}{n!} + o(x^n) $$ |
 | $$(1+x)^\alpha$$ | $$1 + ax + \frac{a(a-1)}{2}x^2 + ... + \frac{a(...)(a-n+1)}{n!} + o(x^n)$$ |
 | $$\frac{1}{1+x}$$ | $$ 1-x+x^2-x^3+x^4+...+(-1)^n x^n + o(x^n) $$ |
 | $$\frac{1}{1-x}$$ | $$ 1+x+x^2+x^3+x^4+...+x^n + o(x^n) $$ |
