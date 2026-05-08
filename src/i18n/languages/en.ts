@@ -33,7 +33,6 @@ export const en: Translation = {
     [Key.announcement]: "Announcement",
     [Key.announcementClose]: "Close",
 
-    [Key.comments]: "Comments",
     [Key.untitled]: "Untitled",
     [Key.uncategorized]: "Uncategorized",
     [Key.noTags]: "No Tags",

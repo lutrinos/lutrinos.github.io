@@ -29,8 +29,6 @@ enum I18nKey {
     announcement = "announcement",
     announcementClose = "announcementClose",
 
-    comments = "comments",
-
     untitled = "untitled",
     uncategorized = "uncategorized",
     noTags = "noTags",
@@ -248,22 +246,6 @@ enum I18nKey {
     hour = "hour",
     minute = "minute",
     second = "second",
-
-    // 音乐播放器
-    playlist = "playlist",
-    musicEmptyPlaylist = "musicEmptyPlaylist",
-    musicNoSongsAvailable = "musicNoSongsAvailable",
-    musicPlayFailed = "musicPlayFailed",
-    musicAutoplayBlocked = "musicAutoplayBlocked",
-    musicMetingFailed = "musicMetingFailed",
-    musicUnknownArtist = "musicUnknownArtist",
-    musicUnknownTrack = "musicUnknownTrack",
-    musicSwitchToLocal = "musicSwitchToLocal",
-    musicSwitchToMeting = "musicSwitchToMeting",
-    musicProgress = "musicProgress",
-    musicCollapse = "musicCollapse",
-    musicVolume = "musicVolume",
-    musicExpand = "musicExpand",
 }
 
 export default I18nKey;

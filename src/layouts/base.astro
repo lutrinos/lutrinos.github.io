@@ -418,21 +418,7 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
                 top: 0,
                 behavior: "smooth",
             });
-            // Check if the current page is a post page, if so, trigger a custom event to initialize the comment system
-            setTimeout(() => {
-                if (document.getElementById("tcomment")) {
-                    const pageLoadedEvent = new CustomEvent(
-                        "twilight:page:loaded",
-                        {
-                            detail: {
-                                path: window.location.pathname,
-                                timestamp: Date.now(),
-                            },
-                        },
-                    );
-                    document.dispatchEvent(pageLoadedEvent);
-                }
-            }, 300);
+            
             // Initialize Fancybox
             initFancybox();
         });

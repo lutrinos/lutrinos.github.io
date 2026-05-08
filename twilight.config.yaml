@@ -232,17 +232,6 @@ post:
         # License link
         url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
-    # Comment configuration
-    comment:
-        # Enable comment feature
-        enable: false
-        # Twikoo comment system configuration
-        twikoo:
-            # Environment ID
-            envId: "https://twikoo.vercel.app"
-            # Language
-            lang: "en"
-
 # Enable Footer Feature
 footer:
     # Enable Footer HTML injection feature
