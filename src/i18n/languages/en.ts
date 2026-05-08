@@ -251,20 +251,4 @@ export const en: Translation = {
     [Key.hour]: "hour",
     [Key.minute]: "minute",
     [Key.second]: "second",
-
-    // Music Player
-    [Key.playlist]: "Playlist",
-    [Key.musicEmptyPlaylist]: "Local playlist is empty",
-    [Key.musicNoSongsAvailable]: "No songs available in playlist",
-    [Key.musicPlayFailed]: "Failed to play \"{0}\", trying next...",
-    [Key.musicAutoplayBlocked]: "Autoplay blocked",
-    [Key.musicMetingFailed]: "Failed to fetch Meting playlist",
-    [Key.musicUnknownArtist]: "Unknown Artist",
-    [Key.musicUnknownTrack]: "Unknown Track",
-    [Key.musicSwitchToLocal]: "Switch to Local mode",
-    [Key.musicSwitchToMeting]: "Switch to Meting mode",
-    [Key.musicProgress]: "Progress",
-    [Key.musicCollapse]: "Collapse player",
-    [Key.musicVolume]: "Volume",
-    [Key.musicExpand]: "Expand music player",
 };
