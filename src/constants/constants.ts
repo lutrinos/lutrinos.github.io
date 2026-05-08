@@ -4,10 +4,6 @@ export const LIGHT_MODE = "light",
     DARK_MODE = "dark",
     SYSTEM_MODE = "system";
 
-export const WALLPAPER_FULLSCREEN = "fullscreen",
-    WALLPAPER_BANNER = "banner",
-    WALLPAPER_NONE = "none";
-
 // Navbar height (px)
 export const NAVBAR_HEIGHT = 72;
 // Distance between navbar and main content when scroll following is released (rem)

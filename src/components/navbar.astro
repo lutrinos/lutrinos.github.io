@@ -5,21 +5,18 @@ import { navbarConfig, siteConfig } from "@/config";
 import { LinkPresets } from "@constants/link-presets";
 import { LinkPreset, type NavbarLink } from "@/types/config";
 import { url } from "@utils/url";
-import { getNavbarTransparentModeForWallpaperMode, getDefaultWallpaperMode } from "@utils/wallpaper";
 import NavLinks from "@components/navbar/navLinks.astro";
 import NavMenu from "@components/navbar/navMenu.svelte";
 import Search from "@components/navbar/search.svelte";
 import Translator from "@components/navbar/translator.svelte";
 import DisplaySettings from "@components/navbar/displaySettings.svelte";
 import LightDarkSwitch from "@components/navbar/lightDarkSwitch.svelte";
-import WallpaperSwitch from "@components/navbar/wallpaperSwitch.svelte";
 
 
 const className = Astro.props.class;
 
 // 获取导航栏透明模式配置 - 根据当前壁纸模式读取正确的配置
-const navbarTransparentMode = getNavbarTransparentModeForWallpaperMode(getDefaultWallpaperMode());
-
+const navbarTransparentMode = "semi"
 let links: NavbarLink[] = navbarConfig.links.map(
     (item: NavbarLink | LinkPreset): NavbarLink => {
         if (typeof item === "number") {
@@ -30,7 +27,7 @@ let links: NavbarLink[] = navbarConfig.links.map(
 );
 ---
 
-<div id="navbar" class="z-50 onload-animation-down px-3 sm:px-6 md:px-0" data-transparent-mode={navbarTransparentMode}>
+<div id="navbar" class="z-50 onload-animation-down px-3 sm:px-6 md:px-0">
     <div class="absolute h-8 left-0 right-0 -top-8 bg-(--card-bg) transition"></div> <!-- used for onload animation -->
     <div class:list={[
         className,
@@ -51,7 +48,6 @@ let links: NavbarLink[] = navbarConfig.links.map(
             <Translator client:idle></Translator>
             <DisplaySettings client:idle></DisplaySettings>
             <LightDarkSwitch client:idle></LightDarkSwitch>
-            <WallpaperSwitch client:idle></WallpaperSwitch>
             <NavMenu client:idle links={links}></NavMenu>
         </div>
     </div>
@@ -62,9 +58,6 @@ let links: NavbarLink[] = navbarConfig.links.map(
 function initSemifullScrollDetection() {
     const navbar = document.getElementById('navbar');
     if (!navbar) return;
-
-    const transparentMode = navbar.getAttribute('data-transparent-mode');
-    if (transparentMode !== 'semifull') return;
 
     // 移除之前的滚动事件监听器（如果存在）
     if (window.semifullScrollHandler) {
@@ -102,9 +95,6 @@ function initSemifullScrollDetection() {
     // 初始化状态
     updateNavbarState();
 }
-
-// 将函数暴露到全局对象，供页面切换时调用
-window.initSemifullScrollDetection = initSemifullScrollDetection;
 
 // 页面加载完成后初始化滚动检测
 if (document.readyState === 'loading') {

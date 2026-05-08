@@ -22,8 +22,6 @@ site:
         # CSS class names to ignore during translation
         ignoreClasses:
             - "ignore"
-            - "banner-title"
-            - "banner-subtitle"
         # HTML tags to ignore during translation
         ignoreTags:
             - "script"
@@ -48,82 +46,6 @@ site:
     # Default Theme ("system" follows system | "light" light mode | "dark" dark mode)
     defaultTheme: "light"
 
-    # Wallpaper Configuration
-    wallpaper:
-        # Mode ("banner" banner | "fullscreen" full screen | "none" solid color)
-        mode: "none"
-        # Image source configuration (shared by fullscreen and banner modes)
-        src:
-            # Desktop wallpaper image (relative to /public directory; supports a single image or an image array, carousel is automatically enabled when array length > 1)
-            desktop:
-                - "/assets/images/desktopWallpaper_1.jpg"
-                - "/assets/images/desktopWallpaper_2.jpg"
-                - "/assets/images/desktopWallpaper_3.jpg"
-            # Mobile wallpaper image (relative to /public directory; supports a single image or an image array, carousel is automatically enabled when array length > 1)
-            mobile:
-                - "/assets/images/mobileWallpaper_1.jpg"
-                - "/assets/images/mobileWallpaper_2.jpg"
-        # Wallpaper position ('top' | 'center' | 'bottom')
-        position: "center"
-        # Carousel configuration (shared by fullscreen and banner modes)
-        carousel:
-            # Enable carousel for multiple images, otherwise display one image randomly
-            enable: true
-            # Carousel interval (seconds)
-            interval: 3.6
-            # Enable Ken Burns effect
-            kenBurns: true
-        # Banner mode specific configuration
-        banner:
-            # Banner text configuration
-            homeText:
-                # Display text on the home page
-                enable: true
-                # Main title
-                title: "Twilight"
-                # Subtitle, supports a single string or a string array
-                subtitle:
-                    - "Illuminate Our Paths"
-                # Subtitle typewriter effect
-                typewriter:
-                    # Enable subtitle typewriter effect
-                    enable: true
-                    # Typing speed (ms)
-                    speed: 111
-                    # Deleting speed (ms)
-                    deleteSpeed: 51
-                    # Pause time after full display (ms)
-                    pauseTime: 3000
-            # Banner image source credit text
-            credit:
-                # Display banner image source credit text
-                enable: false
-                # Source text to display
-                text: "Describe"
-                # (Optional) URL link to the original artwork or artist page
-                url: ""
-            # Navigation bar configuration
-            navbar:
-                # Navigation bar transparency mode ("semi" semi-transparent with rounded corners | "full" fully transparent | "semifull" dynamic transparency)
-                transparentMode: "semifull"
-            # Water ripple effect configuration
-            waves:
-                # Enable water ripple effect
-                enable: true
-                # Enable performance mode (simplifies wave effects to improve performance)
-                performanceMode: false
-        # Fullscreen mode specific configuration
-        fullscreen:
-            # Layer level
-            zIndex: -1
-            # Wallpaper opacity, between 0-1
-            opacity: 0.9
-            # Background blur degree (pixel value)
-            blur: 1
-            # Navigation bar transparency mode
-            navbar:
-                transparentMode: "semi"
-    
     # favicon configuration
     favicon: []
     # bangumi configuration

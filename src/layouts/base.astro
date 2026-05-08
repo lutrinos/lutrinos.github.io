@@ -11,9 +11,7 @@ import { getAnalyticsConfig } from "@utils/analytics";
 import type { Favicon } from "@/types/config";
 import { defaultFavicons } from "@constants/icon";
 import {
-    BANNER_HEIGHT,
     BANNER_HEIGHT_EXTEND,
-    BANNER_HEIGHT_HOME,
     LIGHT_MODE,
     DARK_MODE,
     SYSTEM_MODE,
@@ -21,7 +19,6 @@ import {
     NAVBAR_HEIGHT,
     NAVBAR_GAP,
     NAVBAR_FOLLOW_DISTANCE,
-    MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
     SIDEBAR_TOP,
     SIDEBAR_SPACING,
 } from "@constants/constants";
@@ -31,19 +28,17 @@ import ConfigCarrier from "@components/configCarrier.astro";
 import MusicPlayer from "@components/musicPlayer.svelte";
 import Pio from "@components/pio.svelte";
 import "@styles/navbar.css";
-import "@styles/banner.css";
 import "@styles/fancybox.css";
 
 interface Props {
     title?: string;
-    banner?: string;
     description?: string;
     lang?: string;
     setOGTypeArticle?: boolean;
     postSlug?: string;
 }
 
-let { title, banner, description, lang, setOGTypeArticle, postSlug } =
+let { title, description, lang, setOGTypeArticle, postSlug } =
     Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
@@ -54,45 +49,12 @@ const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
 const configHue = siteConfig.themeColor.hue;
 
 // 获取导航栏透明模式配置
-const navbarTransparentMode =
-    siteConfig.wallpaper.banner?.navbar?.transparentMode || "semi";
+const navbarTransparentMode = "full";// "full" | "semi" | "semifull" | undefined
+
+
 // 判断是否应该显示顶部高光效果（只在full和semifull模式下显示）
 const shouldShowTopHighlight =
     navbarTransparentMode === "full" || navbarTransparentMode === "semifull";
-
-// 获取默认banner图片的辅助函数
-const getDefaultBanner = (): string => {
-    const src = siteConfig.wallpaper.src;
-    if (typeof src === "string") {
-        return src;
-    }
-    if (Array.isArray(src)) {
-        return src[0] || "";
-    }
-    if (src && typeof src === "object") {
-        // 优先使用desktop，如果没有则使用mobile
-        const desktopSrc = src.desktop;
-        const mobileSrc = src.mobile;
-        if (typeof desktopSrc === "string") {
-            return desktopSrc;
-        }
-        if (Array.isArray(desktopSrc) && desktopSrc.length > 0) {
-            return desktopSrc[0];
-        }
-        if (typeof mobileSrc === "string") {
-            return mobileSrc;
-        }
-        if (Array.isArray(mobileSrc) && mobileSrc.length > 0) {
-            return mobileSrc[0];
-        }
-    }
-    return "";
-};
-
-// TODO don't use post cover as banner for now
-banner = getDefaultBanner();
-
-const enableBanner = siteConfig.wallpaper.mode === "banner";
 
 let pageTitle: string;
 if (title) {
@@ -116,14 +78,6 @@ if (!lang) {
     lang = `${siteConfig.lang}`;
 }
 const siteLang = lang.replace("_", "-");
-
-const bannerOffsetByPosition = {
-    top: `${BANNER_HEIGHT_EXTEND}vh`,
-    center: `${BANNER_HEIGHT_EXTEND / 2}vh`,
-    bottom: "0",
-};
-const bannerOffset =
-    bannerOffsetByPosition[siteConfig.wallpaper.position || "center"];
 
 const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
 ---
@@ -244,15 +198,6 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
             const hue = localStorage.getItem("hue") || configHue;
             // Apply the hue to the document
             document.documentElement.style.setProperty("--hue", hue);
-            // calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
-            let offset = Math.floor(
-                window.innerHeight * (BANNER_HEIGHT_EXTEND / 100),
-            );
-            offset = offset - (offset % 4);
-            document.documentElement.style.setProperty(
-                "--banner-height-extend",
-                `${offset}px`,
-            );
         </script>
         <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
         <style
@@ -280,7 +225,7 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
 
     <body
         class="min-h-screen"
-        class:list={[{ "is-home": isHomePage, "enable-banner": enableBanner }]}
+        class:list={[{ "is-home": isHomePage }]}
     >
         <!-- 全局配置载体 -->
         <ConfigCarrier />
@@ -309,12 +254,8 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
         "navbar-height": `${NAVBAR_HEIGHT / 16}rem`,
         "navbar-gap": `${NAVBAR_GAP}rem`,
         "navbar-follow-distance": `${NAVBAR_FOLLOW_DISTANCE}rem`,
-        "main-panel-overlaps-banner-height": `${MAIN_PANEL_OVERLAPS_BANNER_HEIGHT}rem`,
         "sidebar-top": `${SIDEBAR_TOP}rem`,
         "sidebar-spacing": `${SIDEBAR_SPACING}rem`,
-        bannerOffset,
-        "banner-height-home": `${BANNER_HEIGHT_HOME}vh`,
-        "banner-height": `${BANNER_HEIGHT}vh`,
     }}
 >
     @reference "../styles/main.css";
@@ -329,66 +270,16 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
             --sidebar-top: var(--sidebar-top);
             --sidebar-spacing: var(--sidebar-spacing);
         }
-        /* Banner mode overrides */
-        body.enable-banner {
-            --main-content-top: calc(
-                var(--banner-height) - var(--main-panel-overlaps-banner-height)
-            );
-            --top-row-height: calc(var(--main-content-top) - var(--navbar-gap));
-        }
-        html.banner-hiding body.enable-banner {
-            --main-content-top: calc(
-                var(--navbar-height) + var(--navbar-gap) +
-                    var(--navbar-follow-distance)
-            ) !important;
-            --top-row-height: calc(
-                var(--main-content-top) - var(--navbar-gap)
-            ) !important;
-        }
-        /* Home page with Banner mode overrides */
-        body.enable-banner.is-home {
-            --main-content-top: calc(
-                var(--banner-height) -
-                    var(--main-panel-overlaps-banner-height) +
-                    var(--banner-height-extend, 36vh)
-            );
-            --top-row-height: calc(var(--main-content-top) - var(--navbar-gap));
-        }
-        html.banner-hiding body.enable-banner.is-home {
-            --main-content-top: calc(
-                var(--navbar-height) + var(--navbar-gap) +
-                    var(--navbar-follow-distance)
-            ) !important;
-            --top-row-height: calc(
-                var(--main-content-top) - var(--navbar-gap)
-            ) !important;
-        }
-
-        .enable-banner.is-home #banner-wrapper {
-            @apply h-(--banner-height-home) translate-y-(--banner-height-extend);
-        }
-        .enable-banner #banner-wrapper {
-            @apply h-(--banner-height-home);
-        }
-        .enable-banner.is-home #banner {
-            @apply h-(--banner-height-home) translate-y-0;
-        }
-        .enable-banner #banner {
-            @apply h-(--banner-height-home) translate-y-(--bannerOffset);
-        }
     }
 </style>
 
 <script>
     import {
-        BANNER_HEIGHT,
-        BANNER_HEIGHT_HOME,
-        BANNER_HEIGHT_EXTEND,
+        BANNER_HEIGHT
     } from "@/constants/constants";
     import { BREAKPOINT_MD, BREAKPOINT_LG } from "@constants/breakpoints";
     import { widgetManager, getComponentConfig } from "@utils/widget";
     import { pathsEqual, url } from "@utils/url";
-    import { initWallpaperMode } from "@utils/wallpaper";
     import { initTheme } from "@utils/theme";
     import { initHue } from "@utils/hue";
     import { initMarkdownActions } from "@/utils/markdown";
@@ -448,17 +339,7 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
                 } else {
                     bodyElement!.classList.remove("is-home");
                 }
-                // Control banner text visibility based on page
-                const bannerTextOverlay = document.querySelector(
-                    ".banner-text-overlay",
-                );
-                if (bannerTextOverlay) {
-                    if (isHomePage) {
-                        bannerTextOverlay.classList.remove("hidden");
-                    } else {
-                        bannerTextOverlay.classList.add("hidden");
-                    }
-                }
+
                 // Increase the page height during page transition to prevent the scrolling animation from jumping
                 const heightExtend =
                     document.getElementById("page-height-extend");
@@ -621,26 +502,12 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
     // 使用节流优化滚动性能
     window.onscroll = throttle(scrollFunction, 16); // 约60fps
     // 监听窗口 resize 事件，用于更新 banner 高度相关的 CSS 变量
-    window.onresize = () => {
-        // calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
-        let offset = Math.floor(
-            window.innerHeight * (BANNER_HEIGHT_EXTEND / 100),
-        );
-        offset = offset - (offset % 4);
-        document.documentElement.style.setProperty(
-            "--banner-height-extend",
-            `${offset}px`,
-        );
-    };
 
     // Initialize theme
     initTheme();
 
     // Initialize hue
     initHue();
-
-    // Initialize wallpaper mode
-    initWallpaperMode();
 
     // 初始化 Markdown 相关操作以防止因 Swup 无刷新跳转的机制限制而导致操作失效
     initMarkdownActions();
