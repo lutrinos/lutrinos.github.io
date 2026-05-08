@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import { getPostUrl } from "@utils/url";
+import { postConfig } from "@/config";
+import Twikoo from "./twikoo.astro";
+
+
+interface Props {
+    post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+
+const path = getPostUrl(post);
+
+let commentService = "";
+if (postConfig.comment?.enable && post.data.comment && postConfig.comment?.twikoo) {
+    commentService = "twikoo";
+}
+---
+
+{postConfig.comment?.enable && post.data.comment && (
+    <div class="card-base p-6 mb-4 transition-swup-fade">
+        {commentService === 'twikoo' && <Twikoo path={path} />}
+        {commentService === '' && null}
+    </div>
+)}
