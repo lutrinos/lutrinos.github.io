@@ -5,10 +5,6 @@ import svelte, { vitePreprocess } from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
 import swup from "@swup/astro";
 import sitemap from "@astrojs/sitemap";
-import cloudflarePages from "@astrojs/cloudflare";
-import netlify from "@astrojs/netlify";
-import vercel from "@astrojs/vercel";
-import edgeone from "@edgeone/astro";
 import decapCmsOauth from "decap-cms-oauth-astro";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
@@ -39,16 +35,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 // Choose adapter depending on deployment environment
 const adapter = process.env.GITHUB_ACTIONS
     ? undefined
-    : (process.env.CF_PAGES
-        ? cloudflarePages()
-        : (process.env.NETLIFY
-            ? netlify()
-            : (process.env.EDGEONE
-                ? edgeone()
-                : vercel({ mode: "serverless" })
-            )
-        )
-    );
+    : undefined;
 
 // Ref: https://astro.build/config
 export default defineConfig({

@@ -84,8 +84,6 @@ export type SiteConfig = {
         // 用户 ID
         userId?: string;
     };
-    // OpenGraph 配置
-    generateOgImages: boolean;
 };
 
 /**
