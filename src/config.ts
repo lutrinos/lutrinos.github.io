@@ -1,5 +1,3 @@
-import yaml from "js-yaml";
-
 import type {
     SiteConfig,
     AnalyticsConfig,
@@ -12,9 +10,11 @@ import type {
     FooterConfig
 } from "./types/config";
 import { LinkPreset } from "./types/config";
-import rawConfig from "../twilight.config.yaml?raw";
 
+// @ts-ignore
+import config from "../site.config.yml";
 
+// Type of config
 type ConfigFile = {
     site: SiteConfig;
     analytics: AnalyticsConfig;
@@ -27,8 +27,6 @@ type ConfigFile = {
     post: PostConfig;
     footer: FooterConfig;
 };
-
-const config = yaml.load(rawConfig) as ConfigFile;
 
 const linkPresetNameMap: Record<string, LinkPreset> = {
     Home: LinkPreset.Home,
