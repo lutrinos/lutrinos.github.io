@@ -1,11 +1,11 @@
 # Site Configuration
 site:
     # Site URL (ending with a slash)
-    siteURL: "https://twilight.spr-aachen.com/"
+    siteURL: "https://lutrinos.github.io/"
     # Site Title
-    title: "Twilight"
+    title: "Lutrinos"
     # Site Subtitle
-    subtitle: "Blog Template"
+    subtitle: ""
     # Language Configuration
     lang: "en"
 
@@ -181,11 +181,11 @@ sidebar:
 # Profile Configuration
 profile:
     # Avatar configuration (relative to /public directory)
-    avatar: "/assets/images/avatar.jpg"
+    avatar: "/assets/images/icon.png"
     # Information configuration
-    name: "Twilight"
+    name: "Lutrinos"
     # Bio configuration
-    bio: "Hi"
+    bio: "Yo"
     # Link configuration
     links:
         - # Link example
@@ -226,7 +226,7 @@ post:
     # License configuration
     license:
         # Enable license
-        enable: true
+        enable: false
         # License name
         name: "CC BY-NC-SA 4.0"
         # License link
