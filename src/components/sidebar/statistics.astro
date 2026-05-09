@@ -1,6 +1,6 @@
 ---
 import { getCategoryList, getSortedPostsList, getTagList } from "@utils/post";
-import StatsCharts from "./statistics.jsx";
+import StatsCharts from "./statistics.tsx";
 import { i18n } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 
@@ -28,7 +28,6 @@ const { class: className, style, side } = Astro.props;
         tags: i18n(I18nKey.tags),
         statistics: i18n(I18nKey.statistics),
     }}
-    client:visible
     {posts}
     {categories}
     {tags}
@@ -36,3 +35,104 @@ const { class: className, style, side } = Astro.props;
     style={style}
     {side}
 />
+
+<style>
+    .stats-charts {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+    }
+    .chart-section {
+        width: 100%;
+        position: relative;
+    }
+    .heatmap-section {
+        position: relative;
+    }
+    .section-header {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
+    .time-scale-select {
+        display: flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        background: var(--btn-regular-bg);
+        color: var(--btn-content);
+        border: 1px solid var(--line-color);
+        cursor: pointer;
+        opacity: 0.7;
+        transition: all 0.2s;
+        outline: none;
+    }
+    .time-scale-select:hover {
+        opacity: 1;
+        border-color: var(--primary);
+    }
+    .dropdown-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+    .dropdown-wrapper:hover .dropdown-menu-custom {
+        opacity: 1;
+        visibility: visible;
+        translate: 0 0;
+    }
+    .dropdown-menu-custom {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 4px;
+        background: var(--card-bg);
+        border: 1px solid var(--line-color);
+        border-radius: 4px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        opacity: 0;
+        visibility: hidden;
+        translate: 0 -10px;
+        transition: all 0.2s;
+        z-index: 50;
+        min-width: 80px;
+        overflow: hidden;
+    }
+    .dropdown-item-custom {
+        width: 100%;
+        text-align: left;
+        padding: 6px 12px;
+        font-size: 0.7rem;
+        color: var(--btn-content);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .dropdown-item-custom:hover {
+        background: var(--btn-plain-bg-hover);
+        color: var(--primary);
+    }
+    .dropdown-item-custom.active {
+        color: var(--primary);
+        font-weight: bold;
+        background: var(--btn-plain-bg-hover);
+    }
+    .dropdown-icon {
+        font-size: 0.9rem;
+        transition: rotate 0.2s;
+    }
+    .dropdown-wrapper:hover .dropdown-icon {
+        rotate: 180deg;
+    }
+    .heatmap-container {
+        height: 180px;
+        width: 100%;
+    }
+    .radar-container {
+        height: 250px;
+        width: 100%;
+    }
+</style>

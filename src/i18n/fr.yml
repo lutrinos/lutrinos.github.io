@@ -15,6 +15,8 @@ series: "Séries"
 posts: "Articles"
 recentPosts: "Articles récents"
 postList: "Liste des articles"
+postsByYear: "Articles par année"
+postsByMonth: "Articles par mois"
 statistics: "Statistiques"
 tableOfContents: "Table des matières"
 

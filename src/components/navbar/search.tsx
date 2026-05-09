@@ -1,11 +1,9 @@
-import { h } from 'preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
-import { url } from "@utils/url";
 import { navigateToPage } from "@utils/navigation";
 import { onClickOutside } from "@utils/widget";
-import DropdownPanel from "@/components/common/DropdownPanel.jsx";
-import Icon from "@components/common/icon.jsx";
+import DropdownPanel from "@/components/common/DropdownPanel.tsx";
+import Icon from "@components/common/icon";
 
 export default function Search({ searchLabel }) {
     const [keywordDesktop, setKeywordDesktop] = useState("");
@@ -17,23 +15,7 @@ export default function Search({ searchLabel }) {
     const [isDesktopSearchExpanded, setIsDesktopSearchExpanded] = useState(false);
     const debounceTimerRef = useRef(null);
 
-    const fakeResult = [
-        {
-            url: url("/"),
-            meta: {
-                title: "This Is a Fake Search Result",
-            },
-            excerpt:
-                "Because the search cannot work in the <mark>dev</mark> environment.",
-        },
-        {
-            url: url("/"),
-            meta: {
-                title: "If You Want to Test the Search",
-            },
-            excerpt: "Try running <mark>npm build && npm preview</mark> instead.",
-        },
-    ];
+    const fakeResult = [];
 
     const togglePanel = () => {
         const panel = document.getElementById("search-panel");

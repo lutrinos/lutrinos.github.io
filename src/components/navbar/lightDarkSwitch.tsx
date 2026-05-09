@@ -9,9 +9,9 @@ import {
 } from "@utils/theme";
 import { onClickOutside } from "@utils/widget";
 import { siteConfig } from "@/config";
-import DropdownItem from "@/components/common/DropdownItem.jsx";
-import DropdownPanel from "@/components/common/DropdownPanel.jsx";
-import Icon from "@components/common/icon.jsx";
+import DropdownItem from "@/components/common/DropdownItem.tsx";
+import DropdownPanel from "@/components/common/DropdownPanel.tsx";
+import Icon from "@components/common/icon";
 
 export default function LightDarkSwitch({ lightMode, darkMode, systemMode }) {
     const seq = [LIGHT_MODE, DARK_MODE, SYSTEM_MODE];
