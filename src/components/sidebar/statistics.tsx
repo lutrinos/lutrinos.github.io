@@ -1,7 +1,11 @@
+// @ts-ignore
 import { JSDOM } from "jsdom";
 
 import { h } from 'preact';
 import * as Plot from "@observablehq/plot";
+import { Category } from "@utils/post";
+import { Tag } from "@utils/tag";
+import { CATEGORY_SEPARATOR } from "@utils/category";
 
 const chartFontFamily =
     "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
@@ -14,13 +18,24 @@ const colors = {
     label: '#475569',
 };
 
-const buildLabelData = (items: any, limit = 5) =>
+const buildLabelData = (items: Category[] | Tag[], limit = 5) =>
     items
         .filter((item: any) => !item.parent) // On ignore les sous-catégories
-        .slice()
-        .sort((a: any, b: any) => (b.count || 0) - (a.count || 0))
-        .slice(0, limit)
-        .map((item: any) => ({ label: item.name ?? item.label, value: item.count || 0 }));
+        .map((item: any) => ({
+            value: item.count,
+            label: item.name.split(CATEGORY_SEPARATOR)[0]
+        }))
+        .reduce((acc: any[], item: any) => {
+            const index = acc.findIndex((a: any) => a.label === item.label);
+            if (index !== -1) {
+                acc[index].value += item.value;
+            } else {
+                acc.push(item);
+            }
+            return acc;
+        }, [])
+        .sort((a: any, b: any) => (b.value || 0) - (a.value || 0))
+        .slice(0, limit);
 
 const buildRadarChart = (data: any, color: string) => {
     if (data.length === 0) return "";
@@ -46,8 +61,8 @@ const buildRadarChart = (data: any, color: string) => {
 
     return Plot.plot({
         document,
-        width: 250,
-        height: 250,
+        width: 200,
+        height: 200,
         style: { background: "none", fontFamily: chartFontFamily, fontSize: "10px", overflow: "visible" },
         x: { axis: null, domain: [-maxValue * 1.3, maxValue * 1.3] },
         y: { axis: null, domain: [-maxValue * 1.3, maxValue * 1.3] },
@@ -79,6 +94,7 @@ const buildRadarChart = (data: any, color: string) => {
                 y: d => Math.sin(d.angle) * (maxValue * 1.2),
                 text: "label",
                 fill: colors.label,
+                // @ts-ignore
                 textAnchor: (d) => {
                     const cos = Math.cos(d.angle);
                     return Math.abs(cos) < 0.1 ? "middle" : cos > 0 ? "start" : "end";
@@ -89,8 +105,15 @@ const buildRadarChart = (data: any, color: string) => {
 };
 
 
-export default function Statistics({ categories = [], tags = [], class: className = '', style = '', side = 'default', labels = {} }) {
-    const categoriesData = buildLabelData(categories, 5);
+export default function Statistics({ categories = [], tags = [], class: className = '', style = '', side = 'default', labels = {} }: {
+    categories: Category[],
+    tags: Tag[],
+    class?: string,
+    style?: string,
+    side?: string,
+    labels?: Record<string, string>
+}) {
+    const categoriesData = buildLabelData(categories, 51);
     const tagsData = buildLabelData(tags, 5);
 
     const categoryChart = buildRadarChart(categoriesData, colors.category);
@@ -108,7 +131,7 @@ export default function Statistics({ categories = [], tags = [], class: classNam
                     <div class="text-75 text-md font-extrabold">{(labels as any).categories}</div>
                     <div class="chart-section radar-section">
                         <div class="radar-container transition-opacity duration-600">
-                            <div style="position: relative; overflow: hidden; width: 248px; height: 250px; cursor: default;">
+                            <div class="relative overflow-hidden w-full h-52 cursor-default flex justify-center">
                                 <div dangerouslySetInnerHTML={{ __html: categoryChart }} />
                             </div>
                         </div>
@@ -117,7 +140,7 @@ export default function Statistics({ categories = [], tags = [], class: classNam
                     <div class="text-75 text-md font-extrabold">{(labels as any).tags}</div>
                     <div class="chart-section radar-section">
                         <div class="radar-container transition-opacity duration-600">
-                            <div style="position: relative; overflow: hidden; width: 248px; height: 250px; cursor: default;">
+                            <div class="relative overflow-hidden w-full h-52 cursor-default flex justify-center">
                                 <div dangerouslySetInnerHTML={{ __html: tagChart }} />
                             </div>
                         </div>
