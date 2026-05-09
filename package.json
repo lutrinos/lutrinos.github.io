@@ -13,9 +13,9 @@
 		"new-post": "node scripts/new-post.js"
 	},
 	"dependencies": {
+		"@astrojs/preact": "^5.1.2",
 		"@astrojs/rss": "^4.0.18",
 		"@astrojs/sitemap": "^3.7.2",
-		"@astrojs/svelte": "^8.1.0",
 		"@expressive-code/core": "^0.41.7",
 		"@expressive-code/plugin-collapsible-sections": "^0.41.7",
 		"@expressive-code/plugin-line-numbers": "^0.41.7",
@@ -26,7 +26,6 @@
 		"@iconify-json/fa6-regular": "^1.2.4",
 		"@iconify-json/fa6-solid": "^1.2.4",
 		"@iconify-json/material-symbols": "^1.2.70",
-		"@iconify/svelte": "^5.2.1",
 		"@swup/astro": "^1.8.0",
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.2.4",
@@ -43,6 +42,7 @@
 		"mdast-util-to-string": "^4.0.0",
 		"node-html-parser": "^7.1.0",
 		"pagefind": "^1.5.2",
+		"preact": "^10.29.1",
 		"reading-time": "^1.5.0",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-callouts": "^2.1.2",
@@ -55,7 +55,6 @@
 		"remark-sectionize": "^2.1.0",
 		"rollup-plugin-visualizer": "^7.0.1",
 		"sanitize-html": "^2.17.3",
-		"svelte": "^5.55.5",
 		"tailwindcss": "^4.2.4",
 		"unist-util-visit": "^5.1.0",
 		"uplot": "^1.6.32"
