@@ -3,10 +3,7 @@
     import dayjs from "dayjs";
 
     import { BREAKPOINT_LG } from "@constants/breakpoints";
-    import { i18n } from "@i18n/translation";
-    import I18nKey from "@i18n/i18nKey";
     import Icon from "@components/common/icon.svelte";
-    //import { LineChart } from "layerchart/svg";
 
     let {
         posts = [],
@@ -15,6 +12,7 @@
         class: className = "",
         style = "",
         side = "default",
+        labels = {}
     }: {
         posts?: any[];
         categories?: any[];
@@ -22,18 +20,8 @@
         class?: string;
         style?: string;
         side?: string;
+        labels: Record<string, string>
     } = $props();
-
-    const labels = {
-        year: i18n(I18nKey.year),
-        month: i18n(I18nKey.month),
-        day: i18n(I18nKey.day),
-        posts: i18n(I18nKey.posts),
-        activities: "Activities",
-        categories: i18n(I18nKey.categories),
-        tags: i18n(I18nKey.tags),
-        statistics: i18n(I18nKey.statistics),
-    };
 
     let container = $state<HTMLDivElement>();
     let isHeatmapLoading = $state(true);

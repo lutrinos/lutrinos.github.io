@@ -4,8 +4,6 @@ import { onMount } from "svelte";
 import { getPostUrl } from "@utils/url";
 import { getCategoryPathLabel, getCategoryPathParts } from "@utils/category";
 import { parseTags } from "@utils/tag";
-import { i18n } from "@i18n/translation";
-import I18nKey from "@i18n/i18nKey";
 
 
 interface Post {
@@ -26,9 +24,11 @@ interface Group {
 
 interface Props {
     sortedPosts?: Post[];
+    postCountLabel: string;
+    postsCountLabel: string;
 }
 
-let { sortedPosts = [] }: Props = $props();
+let { sortedPosts = [], postCountLabel = "post", postsCountLabel = "posts" }: Props = $props();
 
 let tags = $state<string[]>([]);
 let categories = $state<string[]>([]);
@@ -132,7 +132,7 @@ let groups = $derived.by(() => {
                     <div class="h-3 w-3 bg-none rounded-full outline-solid outline-(--primary) mx-auto outline-offset-2 z-50 outline-3"></div>
                 </div>
                 <div class="w-[70%] md:w-[80%] transition text-left text-50">
-                    {group.posts.length} {i18n(group.posts.length === 1 ? I18nKey.postCount : I18nKey.postsCount)}
+                    {group.posts.length} {group.posts.length === 1 ? postCountLabel : postsCountLabel}
                 </div>
             </div>
             {#each group.posts as post}

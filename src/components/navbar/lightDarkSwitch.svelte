@@ -10,12 +10,15 @@ import {
 import { onClickOutside } from "@utils/widget";
 import type { LIGHT_DARK_MODE } from "@/types/config";
 import { siteConfig } from "@/config";
-import { i18n } from "@i18n/translation";
-import I18nKey from "@i18n/i18nKey";
 import DropdownItem from "@/components/common/DropdownItem.svelte";
 import DropdownPanel from "@/components/common/DropdownPanel.svelte";
 import Icon from "@components/common/icon.svelte";
 
+let {
+    lightMode,
+    darkMode,
+    systemMode
+} = $props();
 
 const seq: LIGHT_DARK_MODE[] = [LIGHT_MODE, DARK_MODE, SYSTEM_MODE];
 let mode: LIGHT_DARK_MODE = $state(siteConfig.defaultTheme || SYSTEM_MODE);
@@ -83,7 +86,7 @@ onMount(() => {
                     onclick={() => switchScheme(LIGHT_MODE)}
             >
                 <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem] mr-3"></Icon>
-                {i18n(I18nKey.lightMode)}
+                {lightMode}
             </DropdownItem>
             <DropdownItem
                     isActive={mode === DARK_MODE}
@@ -91,7 +94,7 @@ onMount(() => {
                     onclick={() => switchScheme(DARK_MODE)}
             >
                 <Icon icon="material-symbols:dark-mode-outline-rounded" class="text-[1.25rem] mr-3"></Icon>
-                {i18n(I18nKey.darkMode)}
+                {darkMode}
             </DropdownItem>
             <DropdownItem
                     isActive={mode === SYSTEM_MODE}
@@ -99,7 +102,7 @@ onMount(() => {
                     onclick={() => switchScheme(SYSTEM_MODE)}
             >
                 <Icon icon="material-symbols:radio-button-partial-outline" class="text-[1.25rem] mr-3"></Icon>
-                {i18n(I18nKey.systemMode)}
+                {systemMode}
             </DropdownItem>
         </DropdownPanel>
     </div>

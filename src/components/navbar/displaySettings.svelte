@@ -4,9 +4,9 @@
     import { BREAKPOINT_LG } from "@constants/breakpoints";
     import { getDefaultHue, getHue, setHue } from "@utils/hue";
     import { onClickOutside } from "@utils/widget";
-    import { i18n } from "@i18n/translation";
-    import I18nKey from "@i18n/i18nKey";
     import Icon from "@components/common/icon.svelte";
+
+    let { themeColor } = $props();
 
     let hue = $state(getDefaultHue());
     const defaultHue = getDefaultHue();
@@ -88,7 +88,7 @@
                     before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
                     before:absolute before:-left-3 before:top-[0.33rem]"
                 >
-                    {i18n(I18nKey.themeColor)}
+                    {themeColor}
                     <button
                         aria-label="Reset to Default"
                         class="btn-regular w-7 h-7 rounded-md active:scale-90 flex items-center justify-center"
@@ -120,7 +120,7 @@
                 class="w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded-sm select-none"
             >
                 <input
-                    aria-label={i18n(I18nKey.themeColor)}
+                    aria-label={themeColor}
                     type="range"
                     min="0"
                     max="360"
