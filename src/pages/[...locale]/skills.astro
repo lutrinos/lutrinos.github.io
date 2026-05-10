@@ -1,9 +1,8 @@
 ---
 export const prerender = true;
 
+export const getStaticPaths = async () => getLocaleStaticPaths();
 
-import { LinkPresets } from "@constants/link-presets";
-import { LinkPreset } from "@/types/config";
 import { UNCATEGORIZED } from "@constants/constants";
 import {
     getAdvancedSkills,
@@ -12,16 +11,18 @@ import {
     getTotalExperience,
     skillsData,
 } from "@utils/skills";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
+import { getLocaleStaticPaths } from "@utils/locale";
 import I18nKey from "@i18n/i18nKey";
 import IconifyLoader from "@components/common/iconifyLoader.astro";
 import SkillCard from "@components/data/skillCard.astro";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
 
+const i18n = useLocale(Astro.currentLocale);
 
-const title = LinkPresets[LinkPreset.Skills].name;
-const subtitle = LinkPresets[LinkPreset.Skills].description;
+const title = i18n(I18nKey.skills)
+const subtitle = i18n(I18nKey.skillsSubtitle);
 
 // 获取技能统计信息
 const stats = getSkillStats();
@@ -68,6 +69,7 @@ const getCategoryText = (category: string) => {
 
 // 收集所有技能图标用于预加载
 const allIcons = skillsData.map((skill) => skill.icon).filter(Boolean);
+
 ---
 
 <GridLayout title={title} description={subtitle}>

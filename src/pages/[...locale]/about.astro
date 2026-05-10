@@ -8,7 +8,7 @@ import Markdown from "@components/common/markdown.astro";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
 import { getCollection } from "astro:content";
-import { getLocaleParams } from "@utils/language";
+import { getLocaleParams } from "@utils/locale";
 
 export const getStaticPaths = (async () => {
     const pages = await getCollection("spec", (page) => {

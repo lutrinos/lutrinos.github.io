@@ -2,60 +2,30 @@
 import { Icon } from "astro-icon/components";
 
 import { type NavbarLink } from "@/types/config";
-import { navbarConfig } from "@/config";
-import { LinkPresets } from "@constants/link-presets";
 import { url } from "@utils/url";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
-import { SUPPORTED_LANGUAGES } from "@i18n/language";
-import { getLocaleParams } from "@utils/language";
+import { getLocaleStaticPaths } from "@utils/locale";
+import I18nKey from "@i18n/i18nKey";
 
-export async function getStaticPaths() {
-    return SUPPORTED_LANGUAGES.map((l) =>
-        navbarConfig.links
-            .filter(
-                (link) =>
-                    typeof link !== "number" &&
-                    link.children &&
-                    link.children.length > 0,
-            )
-            .map((link) => {
-                const navLink = link as NavbarLink;
-
-                // Extract the slug, removing leading and trailing slashes
-                const slug = navLink.url.replace(/^\/|\/$/g, "");
-
-                return {
-                    params: {
-                        menu: slug,
-                        locale: getLocaleParams(l),
-                    },
-                    props: {
-                        link: navLink,
-                    },
-                };
-            }),
-    ).flat();
-}
+export const getStaticPaths = getLocaleStaticPaths;
 
 interface Props {
     link: NavbarLink;
 }
 
-const { link } = Astro.props;
-
-// Get child links and convert LinkPresets to full NavbarLink objects
-const childrenLinks = link.children || [];
-
-const processedLinks = childrenLinks.map((child) => {
-    if (typeof child === "number") {
-        return LinkPresets[child];
+const processedLinks = [
+    {
+        icon: "",
+        external: false,
+        url: "/projects",
+        name: "text",
+        description: "Description"
     }
-    return child;
-});
+];
 
-const pageTitle = link.name;
-const pageDescription = link.description || "";
+const pageTitle = "Exposition";
+const pageDescription = "Description";
 ---
 
 <GridLayout title={pageTitle} description={pageDescription}>

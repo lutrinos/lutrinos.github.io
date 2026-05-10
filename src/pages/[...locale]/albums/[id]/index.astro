@@ -1,7 +1,8 @@
 ---
 import type { AlbumGroup } from "@utils/albums";
 import { sortedAlbums } from "@utils/albums";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
+import { getLocaleStaticPathsWithId } from "@utils/locale";
 import I18nKey from "@i18n/i18nKey";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
@@ -9,12 +10,8 @@ import ImageWrapper from "@components/common/imageWrapper.astro";
 
 
 export const getStaticPaths = async () => {
-    return sortedAlbums.filter(album => album.visible).map((album) => ({
-        params: { id: album.id },
-        props: { album },
-    }));
+    return getLocaleStaticPathsWithId(sortedAlbums.filter((album) => album.visible).map((album) => album.id));
 };
-
 
 interface Props {
     album: AlbumGroup;
@@ -25,6 +22,7 @@ const { album } = Astro.props;
 if (!album) {
     return Astro.redirect("/404");
 }
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <GridLayout title={album.title} description={album.description || album.title}>

@@ -1,19 +1,20 @@
 ---
 export const prerender = true;
 
+export const getStaticPaths = async () => getLocaleStaticPaths();
 
-import { LinkPresets } from "@constants/link-presets";
-import { LinkPreset } from "@/types/config";
 import { siteConfig } from "@/config";
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
+import { getLocaleStaticPaths } from "@utils/locale";
 import ImageWrapper from "@components/common/imageWrapper.astro";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
 
+const i18n = useLocale(Astro.currentLocale);
 
-const pageTitle = LinkPresets[LinkPreset.Anime].name;
-const pageDescription = LinkPresets[LinkPreset.Anime].description;
+const pageTitle = i18n(I18nKey.anime);
+const pageDescription = i18n(I18nKey.animeSubtitle);
 
 // Bangumi API配置
 const BANGUMI_USER_ID = siteConfig.bangumi?.userId || "";
@@ -333,7 +334,7 @@ const stats = {
                                                 <span class="text-black/70 dark:text-white/70 truncate ml-2">{anime.studio}</span>
                                             </div>
                                             <div class="flex flex-wrap gap-1 mt-2">
-                                                {anime.genre.map((g) => (
+                                                {anime.genre.map((g: any) => (
                                                     <span class="px-1.5 py-0.5 bg-(--btn-regular-bg) text-black/70 dark:text-white/70 rounded-sm text-xs">{g}</span>
                                                 ))}
                                             </div>

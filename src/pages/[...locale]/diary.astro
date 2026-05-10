@@ -1,17 +1,22 @@
 ---
-import { LinkPresets } from "@constants/link-presets";
-import { LinkPreset } from "@/types/config";
+export const prerender = true;
+
+export const getStaticPaths = async () => getLocaleStaticPaths();
+
 import { siteConfig } from "@/config";
 import { sortedMoments } from "@/utils/diary";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
+import { getLocaleStaticPaths } from "@utils/locale";
 import I18nKey from "@i18n/i18nKey";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
 import ImageWrapper from "@components/common/imageWrapper.astro";
 
 
-const pageTitle = LinkPresets[LinkPreset.Diary].name;
-const pageDescription = LinkPresets[LinkPreset.Diary].description;
+const i18n = useLocale(Astro.currentLocale);
+
+const pageTitle = i18n(I18nKey.diary);
+const pageDescription = i18n(I18nKey.diarySubtitle);
 
 // 时间格式化函数
 function formatTime(dateString: string): string {
@@ -34,6 +39,7 @@ function formatTime(dateString: string): string {
     const days = Math.floor(diffInMinutes / 1440);
     return `${days}${i18n(I18nKey.diaryDaysAgo)}`;
 }
+
 ---
 
 <GridLayout title={pageTitle} description={pageDescription}>

@@ -1,19 +1,22 @@
 ---
-import { LinkPresets } from "@constants/link-presets";
-import { LinkPreset } from "@/types/config";
+export const prerender = true;
+
+export const getStaticPaths = async () => getLocaleStaticPaths();
+
 import { sortedAlbums } from "@utils/albums";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
+import { getLocaleStaticPaths } from "@utils/locale";
 import I18nKey from "@i18n/i18nKey";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
 import ImageWrapper from "@components/common/imageWrapper.astro";
 
 
-const pageTitle = LinkPresets[LinkPreset.Albums].name;
-const pageDescription = LinkPresets[LinkPreset.Albums].description;
-
-// 获取所有相册
 const albumsData = sortedAlbums.filter(album => album.visible);
+const i18n = useLocale(Astro.currentLocale);
+
+const pageTitle = i18n(I18nKey.albums)
+const pageDescription = i18n(I18nKey.albumsSubtitle)
 ---
 
 <GridLayout title={pageTitle} description={pageDescription}>

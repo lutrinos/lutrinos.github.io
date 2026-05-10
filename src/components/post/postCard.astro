@@ -5,7 +5,7 @@ import type { CollectionEntry } from "astro:content";
 
 import { getFileDirFromPath, getPostUrl } from "@utils/url";
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import ImageWrapper from "@components/common/imageWrapper.astro";
 import PostMetadata from "./postMeta.astro";
 
@@ -41,6 +41,7 @@ const { remarkPluginFrontmatter } = await render(entry);
 
 // derive image base path from the real file path to preserve directory casing
 const imageBaseDir = getFileDirFromPath(entry.filePath || "");
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <div class:list={["card-base flex flex-col-reverse md:flex-col w-full rounded-(--radius-large) overflow-hidden relative", className]} style={style}>

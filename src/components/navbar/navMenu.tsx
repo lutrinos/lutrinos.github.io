@@ -4,8 +4,9 @@ import { useState, useEffect } from 'preact/hooks';
 import { url } from "@utils/url";
 import { onClickOutside } from "@utils/widget";
 import Icon from "@components/common/icon";
+import type { NavbarLink } from '@/types/config';
 
-export default function NavMenu({ links }) {
+export default function NavMenu({ links }: { links: NavbarLink[] }) {
     const [isOpen, setIsOpen] = useState(false);
 
     function togglePanel() {
@@ -13,7 +14,7 @@ export default function NavMenu({ links }) {
     }
 
     // Click outside to close panel
-    function handleClickOutside(event) {
+    function handleClickOutside(event: any) {
         if (!isOpen) return;
         onClickOutside(event, "nav-menu-panel", "nav-menu-switch", () => {
             setIsOpen(false);
@@ -31,18 +32,18 @@ export default function NavMenu({ links }) {
         <div class="relative md:hidden">
             <button aria-label="Menu" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90"
                 id="nav-menu-switch"
-                onclick={togglePanel}
+                onClick={togglePanel}
             >
                 <Icon icon="material-symbols:menu-rounded" class="text-[1.25rem]" />
             </button>
             <div id="nav-menu-panel"
                 class={`float-panel fixed transition-all right-4 px-2 py-2 max-h-[80vh] overflow-y-auto ${!isOpen ? 'float-panel-closed' : ''}`}
             >
-                {links.map(link => (
+                {links.map((link: NavbarLink) => (
                     <div class="mobile-menu-item" key={link.url}>
                         <a href={link.external ? link.url : url(link.url)}
                             class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active) transition"
-                            target={link.external ? "_blank" : null}
+                            target={link.external ? "_blank" : undefined}
                         >
                             <div class="flex items-center transition text-black/75 dark:text-white/75 font-bold group-hover:text-(--primary) group-active:text-(--primary)">
                                 {link.icon && <Icon icon={link.icon} class="text-[1.1rem] mr-2" />}

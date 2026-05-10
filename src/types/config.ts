@@ -96,24 +96,6 @@ export type LIGHT_DARK_MODE =
     | typeof SYSTEM_MODE;
 
 
-/**
- * 
- */
-
-export enum LinkPreset {
-    Home = 0,
-    Archive = 1,
-    Projects = 2,
-    Skills = 3,
-    Timeline = 4,
-    Diary = 5,
-    Albums = 6,
-    Anime = 7,
-    About = 8,
-    Friends = 9,
-}
-
-
 export type NavbarLink = {
     // 链接名称
     name: string;
@@ -125,15 +107,15 @@ export type NavbarLink = {
     icon?: string;
     // 中转页描述
     description?: string;
-    // 子链接，可以是NavbarLink或LinkPreset
-    children?: (NavbarLink | LinkPreset)[];
+    // 子链接，可以是NavbarLink或
+    children?: NavbarLink[];
 };
 
 
 // 导航栏配置
 export type NavbarConfig = {
     // 链接配置
-    links: (NavbarLink | LinkPreset)[]; // 支持多级菜单
+    links: NavbarLink[]; // 支持多级菜单
 };
 
 /**

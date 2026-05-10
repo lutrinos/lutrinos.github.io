@@ -8,14 +8,14 @@ import { getSortedPosts } from "@utils/post";
 import Pagination from "@components/pagination.astro";
 import PostPage from "@components/postPage.astro";
 import GridLayout from "@layouts/grid.astro";
-import { getLocaleParams, SUPPORTED_LANGUAGES } from "@utils/language";
+import { getLocaleParams, SUPPORTED_LOCALES } from "@utils/locale";
 
 export const getStaticPaths = (async ({ paginate }) => {
     const allBlogPosts = await getSortedPosts();
 
     const postsPerLocale = new Map();
 
-    for (let l of SUPPORTED_LANGUAGES) {
+    for (let l of SUPPORTED_LOCALES) {
         postsPerLocale.set(l, []);
     }
 
