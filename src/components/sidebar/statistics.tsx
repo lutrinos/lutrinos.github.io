@@ -20,7 +20,7 @@ const colors = {
 
 const buildLabelData = (items: Category[] | Tag[], limit = 5) =>
     items
-        .filter((item: any) => !item.parent) // On ignore les sous-catégories
+        .filter((item: any) => !item.parent) // Ignore sub-categories
         .map((item: any) => ({
             value: item.count,
             label: item.name.split(CATEGORY_SEPARATOR)[0]
@@ -67,7 +67,7 @@ const buildRadarChart = (data: any, color: string) => {
         x: { axis: null, domain: [-maxValue * 1.3, maxValue * 1.3] },
         y: { axis: null, domain: [-maxValue * 1.3, maxValue * 1.3] },
         marks: [
-            // Anneaux de fond
+            // Background rings
             ...[0.25, 0.5, 0.75, 1].map(r =>
                 Plot.line(points, {
                     x: d => Math.cos(d.angle) * r * maxValue,
@@ -77,7 +77,7 @@ const buildRadarChart = (data: any, color: string) => {
                     strokeWidth: 0.5
                 })
             ),
-            // Axes rayonnants
+            // Radiating axes
             Plot.link(points, {
                 x1: "x0", 
                 y1: "y0",
@@ -85,10 +85,10 @@ const buildRadarChart = (data: any, color: string) => {
                 y2: "ay",
                 stroke: colors.grid, strokeWidth: 0.5
             }),
-            // Zone de données (remplacement de area par line + fill pour radar)
+            // Data area (replacing area with line + fill for radar)
             Plot.line(points, { x: "x", y: "y", fill: color, fillOpacity: 0.1, stroke: color, strokeWidth: 2, curve: "linear-closed" }),
             Plot.dot(points, { x: "x", y: "y", fill: color, stroke: "white", r: 3.5 }),
-            // Libellés
+            // Labels
             Plot.text(points, {
                 x: d => Math.cos(d.angle) * (maxValue * 1.2),
                 y: d => Math.sin(d.angle) * (maxValue * 1.2),

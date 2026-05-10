@@ -39,10 +39,6 @@ export default function Translator({ languages, currentLanguage }) {
         };
     }, []);
 
-    if (!siteConfig.translate?.enable) {
-        return null;
-    }
-
     return (
         <div class="relative z-50" onmouseleave={closePanel}>
             {/* Translation button */}

@@ -1,14 +1,14 @@
 enum I18nKey {
-    // 加载
+    // Loading
     loading = "loading",
 
-    // 导航
+    // Navigation
     home = "home",
     archive = "archive",
     about = "about",
     search = "search",
 
-    // 文章
+    // Post
     directory = "directory",
     tags = "tags",
     categories = "categories",
@@ -19,13 +19,13 @@ enum I18nKey {
     statistics = "statistics",
     tableOfContents = "tableOfContents",
 
-    // 统计
+    // Statistics
     pageViews = "pageViews",
     visitors = "visitors",
     statsLoading = "statsLoading",
     statsError = "statsError",
 
-    // 公告栏
+    // Announcement
     announcement = "announcement",
     announcementClose = "announcementClose",
 
@@ -54,13 +54,13 @@ enum I18nKey {
     publishedAt = "publishedAt",
     license = "license",
 
-    // 404页面
+    // 404 page
     notFound = "notFound",
     notFoundTitle = "notFoundTitle",
     notFoundDescription = "notFoundDescription",
     backToHome = "backToHome",
 
-    // 项目展示页面
+    // Project display page
     projects = "projects",
     projectsSubtitle = "projectsSubtitle",
     projectsAll = "projectsAll",
@@ -85,7 +85,7 @@ enum I18nKey {
     projectsDemo = "projectsDemo",
     projectsSource = "projectsSource",
 
-    // 技能展示页面
+    // Skill display page
     skills = "skills",
     skillsSubtitle = "skillsSubtitle",
     skillsAI = "skillsAI",
@@ -115,7 +115,7 @@ enum I18nKey {
     skillsByLevel = "skillsByLevel",
     skillsByCategory = "skillsByCategory",
 
-    // 时间线页面
+    // Timeline page
     timeline = "timeline",
     timelineSubtitle = "timelineSubtitle",
     timelineEducation = "timelineEducation",
@@ -142,7 +142,7 @@ enum I18nKey {
     timelineEmployed = "timelineEmployed",
     timelineAvailable = "timelineAvailable",
 
-    // 短文页面
+    // Diary page
     diary = "diary",
     diarySubtitle = "diarySubtitle",
     diaryCount = "diaryCount",
@@ -153,7 +153,7 @@ enum I18nKey {
     diaryHoursAgo = "diaryHoursAgo",
     diaryDaysAgo = "diaryDaysAgo",
 
-    // 相册页面
+    // Album page
     albums = "albums",
     albumsSubtitle = "albumsSubtitle",
     albumsEmpty = "albumsEmpty",
@@ -162,7 +162,7 @@ enum I18nKey {
     albumsPhotoCount = "albumsPhotoCount",
     albumsPhotosCount = "albumsPhotosCount",
 
-    // 番剧页面
+    // Anime page
     anime = "anime",
     animeTitle = "animeTitle",
     animeSubtitle = "animeSubtitle",
@@ -179,10 +179,10 @@ enum I18nKey {
     animeEmpty = "animeEmpty",
     animeEmptyBangumi = "animeEmptyBangumi",
 
-    // 友链页面
+    // Friends page
     friends = "friends",
 
-    // RSS页面
+    // RSS page
     rss = "rss",
     rssDescription = "rssDescription",
     rssSubtitle = "rssSubtitle",
@@ -200,7 +200,7 @@ enum I18nKey {
     rssCopied = "rssCopied",
     rssCopyFailed = "rssCopyFailed",
 
-    // Atom页面
+    // Atom page
     atom = "atom",
     atomDescription = "atomDescription",
     atomSubtitle = "atomSubtitle",
@@ -218,7 +218,7 @@ enum I18nKey {
     atomCopied = "atomCopied",
     atomCopyFailed = "atomCopyFailed",
 
-    // 密码保护
+    // Password protection
     passwordProtected = "passwordProtected",
     passwordProtectedTitle = "passwordProtectedTitle",
     passwordProtectedDescription = "passwordProtectedDescription",
@@ -237,7 +237,7 @@ enum I18nKey {
     autoSyntaxHighlightFailed = "autoSyntaxHighlightFailed",
     decryptionError = "decryptionError",
 
-    //最后编辑时间卡片
+    // Last modified time card
     lastModifiedPrefix = "lastModifiedPrefix",
     lastModifiedOutdated = "lastModifiedOutdated",
     year = "year",

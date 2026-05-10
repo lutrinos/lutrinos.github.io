@@ -1,4 +1,4 @@
-# 媒体目录配置
+# Media directory configuration
 media:
   - name: public
     label: Public Images
@@ -27,22 +27,22 @@ media:
     categories: [image]
 
 
-# 内容管理配置
+# Content management configuration
 content:
 
-  # 文章
+  # Posts
   - type: collection
-    # 集合名称
+    # Collection name
     name: posts
-    # 后台显示标签
+    # Admin display label
     label: Posts
-    # 内容存储目录
+    # Content storage directory
     path: src/content/posts
-    # 是否支持子文件夹
+    # Support subfolders
     subfolders: true
-    # 文件命名规则
+    # File naming rule
     filename: "{slug}.md"
-    # 字段列表
+    # Field list
     fields:
       - { name: title, label: Title, type: string }
       - { name: published, label: Published Date, type: date }
@@ -54,34 +54,34 @@ content:
       - { name: draft, label: Draft, type: boolean, required: false }
       - { name: body, label: Body, type: rich-text, required: true }
 
-  # 日记
+  # Diary
   - type: collection
-    # 集合名称
+    # Collection name
     name: diary
-    # 后台显示标签
+    # Admin display label
     label: Diary
-    # 内容存储目录
+    # Content storage directory
     path: src/content/diary
-    # 文件命名规则
+    # File naming rule
     filename: "{year}-{month}-{day}-{hour}-{minute}.json"
-    # 字段列表
+    # Field list
     fields:
       - { name: title, label: Title, type: string }
       - { name: content, label: Content, type: text }
       - { name: date, label: Date, type: date }
       - { name: images, label: Images, type: image, options: { media: diary, multiple: true }, required: false }
 
-  # 相册
+  # Albums
   - type: collection
-    # 集合名称
+    # Collection name
     name: albums
-    # 后台显示标签
+    # Admin display label
     label: Albums
-    # 内容存储目录
+    # Content storage directory
     path: src/content/albums
-    # 文件命名规则
+    # File naming rule
     filename: "{slug}.json"
-    # 字段列表
+    # Field list
     fields:
       - { name: title, label: Title, type: string }
       - { name: description, label: Description, type: text, required: false }
@@ -92,7 +92,7 @@ content:
       - { name: layout, label: Layout, type: select, options: {values: [grid, masonry, list]}, default: grid }
       - { name: columns, label: Columns, type: number, default: 3, min: 1, max: 6 }
       - type: object
-        name: photos
+        name: photos # Photos
         label: Photos
         list: true
         required: false
@@ -105,17 +105,17 @@ content:
           - { name: date, label: Date, type: date, required: false }
       - { name: visible, label: Visible, type: boolean, required: false }
 
-  # 项目
+  # Projects
   - type: collection
-    # 集合名称
+    # Collection name
     name: projects
-    # 后台显示标签
+    # Admin display label
     label: Projects
-    # 内容存储目录
+    # Content storage directory
     path: src/content/projects
-    # 文件命名规则
+    # File naming rule
     filename: "{slug}.json"
-    # 字段列表
+    # Field list
     fields:
       - { name: title, label: Title, type: string }
       - { name: description, label: Description, type: text }
@@ -130,17 +130,17 @@ content:
       - { name: featured, label: Featured, type: boolean, required: false }
       - { name: tags, label: Tags, type: string, list: true, required: false }
 
-  # 技能
+  # Skills
   - type: collection
-    # 集合名称
+    # Collection name
     name: skills
-    # 后台显示标签
+    # Admin display label
     label: Skills
-    # 内容存储目录
+    # Content storage directory
     path: src/content/skills
-    # 文件命名规则
+    # File naming rule
     filename: "{slug}.json"
-    # 字段列表
+    # Field list
     fields:
       - { name: name, label: Name, type: string }
       - { name: description, label: Description, type: text }
@@ -148,7 +148,7 @@ content:
       - { name: category, label: Category, type: select, options: {values: [ai, backend, client, frontend, database, engines, tools, others]} }
       - { name: level, label: Level, type: select, options: {values: [beginner, intermediate, advanced, expert]} }
       - type: object
-        name: experience
+        name: experience # Experience
         label: Experience
         fields:
           - { name: years, label: Years, type: number }
@@ -157,17 +157,17 @@ content:
       - { name: certifications, label: Certifications, type: string, list: true, required: false }
       - { name: color, label: Color, type: string, required: false }
 
-  # 时间线
+  # Timeline
   - type: collection
-    # 集合名称
+    # Collection name
     name: timeline
-    # 后台显示标签
+    # Admin display label
     label: Timeline
-    # 内容存储目录
+    # Content storage directory
     path: src/content/timeline
-    # 文件命名规则
+    # File naming rule
     filename: "{slug}.json"
-    # 字段列表
+    # Field list
     fields:
       - { name: title, label: Title, type: string }
       - { name: description, label: Description, type: text }
@@ -180,7 +180,7 @@ content:
       - { name: skills, label: Skills, type: string, list: true, required: false }
       - { name: achievements, label: Achievements, type: string, list: true, required: false }
       - type: object
-        name: links
+        name: links # Links
         label: Links
         list: true
         required: false
@@ -191,17 +191,17 @@ content:
       - { name: icon, label: Icon, type: string, required: false }
       - { name: color, label: Color, type: string, required: false }
 
-  # 友链
+  # Friend links
   - type: collection
-    # 集合名称
+    # Collection name
     name: friends
-    # 后台显示标签
+    # Admin display label
     label: Friends
-    # 内容存储目录
+    # Content storage directory
     path: src/content/friends
-    # 文件命名规则
+    # File naming rule
     filename: "{slug}.json"
-    # 字段列表
+    # Field list
     fields:
       - { name: title, label: Title, type: string }
       - { name: imgurl, label: Avatar URL, type: string }

@@ -289,7 +289,7 @@ export class TableOfContents extends HTMLElement {
             document.removeEventListener('click', this._handleDocClick);
             document.addEventListener('click', this._handleDocClick);
 
-            // 监听 backToTop 按钮的状态
+            // Listen to the state of the backToTop button
             const backToTopBtn = document.getElementById('back-to-top-btn');
             if (backToTopBtn) {
                 this._backToTopObserver?.disconnect();
@@ -301,7 +301,7 @@ export class TableOfContents extends HTMLElement {
                     });
                 });
                 this._backToTopObserver.observe(backToTopBtn, { attributes: true });
-                this.updateFloatingPosition(); // 初始状态检查
+                this.updateFloatingPosition(); // Initial state check
             }
         }
 

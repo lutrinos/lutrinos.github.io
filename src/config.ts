@@ -65,10 +65,10 @@ const resolvedPostConfig: PostConfig = {
     ...config.post
 };
 
-// 站点配置
+// Site configuration
 export const siteConfig: SiteConfig = config.site;
 
-// 统计配置
+// Analytics configuration
 export const analyticsConfig: AnalyticsConfig = {
     enabled: config.analytics.enabled,
     platform: config.analytics.platform,
@@ -79,22 +79,22 @@ export const analyticsConfig: AnalyticsConfig = {
     }
 };
 
-// 导航栏配置
+// Navbar configuration
 export const navbarConfig: NavbarConfig = {
     links: normalizeNavbarLinks(config.navbar.links),
 };
 
-// 侧边栏配置
+// Sidebar configuration
 export const sidebarConfig: SidebarConfig = config.sidebar;
 
-// 资料配置
+// Profile configuration
 export const profileConfig: ProfileConfig = config.profile;
 
-// 公告配置
+// Announcement configuration
 export const announcementConfig: AnnouncementConfig = config.announcement;
 
-// 文章配置
+// Post configuration
 export const postConfig: PostConfig = resolvedPostConfig;
 
-// 页脚配置
+// Footer configuration
 export const footerConfig: FooterConfig = config.footer;
