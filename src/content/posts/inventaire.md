@@ -2,8 +2,7 @@
 title: Inventaire des projets
 published: 2024-02-01
 description: Une liste des différents projets et programmes 
-cover: ''
-tags: ['Informatique']
+tags: []
 category: 'Divers'
 draft: false
 ---

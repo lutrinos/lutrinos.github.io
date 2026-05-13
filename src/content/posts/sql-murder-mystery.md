@@ -1,7 +1,7 @@
 ---
 title: The SQL Murder Mystery
 description: Résolvons le meurtre du petit jeu The SQL Murder Mystery !
-tags: ["Informatique", "SQL", "Jeux"]
+tags: ["SQL", "Jeux"]
 category: Informatique
 published: 2025-06-14
 modified: 2025-06-15
