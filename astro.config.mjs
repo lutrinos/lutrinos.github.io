@@ -16,6 +16,7 @@ import rehypeCallouts from "rehype-callouts";
 import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
+import remarkEmoji from "remark-emoji";
 
 import { pluginCollapseButton } from "./src/plugins/expressive-code/collapse-button.ts";
 import { pluginCopyButton } from "./src/plugins/expressive-code/copy-button.js";
@@ -158,6 +159,7 @@ export default defineConfig({
             remarkSectionize,
             parseDirectiveNode,
             remarkMermaid,
+            remarkEmoji
         ],
         rehypePlugins: [
             [
@@ -200,7 +202,7 @@ export default defineConfig({
                     theme: "github",
                     showIndicator: false,
                     tags: {
-                        nonCollapsibleContainerTagName: "blockquote",
+                        nonCollapsibleContainerTagName: "blockquote"
                     },
                     props: {
                         containerProps: (node, type) => ({ className: ["admonition", `bdm-${type}`] }),

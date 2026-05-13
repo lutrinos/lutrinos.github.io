@@ -131,7 +131,7 @@ profile:
     # Information configuration
     name: "Lutrinos"
     # Bio configuration
-    bio: "Yo"
+    bio: "Actuellement en deuxième année de prépa MPI, je publie de temps à autre des choses à propos d’informatique, de mathématiques ou (parfois) de physique."
     # Link configuration
     links:
         - # Link example

@@ -1,10 +1,9 @@
-// @ts-ignore
-import { JSDOM } from "jsdom";
+import { parseHTML } from "linkedom";
 
 import { h } from 'preact';
 import * as Plot from "@observablehq/plot";
-import { Category } from "@utils/post";
-import { Tag } from "@utils/tag";
+import type { Category } from "@utils/post";
+import type { Tag } from "@utils/tag";
 import { CATEGORY_SEPARATOR } from "@utils/category";
 
 const chartFontFamily =
@@ -40,7 +39,7 @@ const buildLabelData = (items: Category[] | Tag[], limit = 5) =>
 const buildRadarChart = (data: any, color: string) => {
     if (data.length === 0) return "";
 
-    const { document } = new JSDOM("").window;
+    const { document } = parseHTML("<!doctype html><html><body></body></html>");
 
     const maxValue = Math.max(...data.map((d: any) => Number(d.value) || 0), 1);
     const angleStep = (Math.PI * 2) / Math.max(data.length, 1);

@@ -3,7 +3,7 @@ import { parse as htmlParser } from "node-html-parser";
 import type { APIContext, ImageMetadata } from "astro";
 import type { RSSFeedItem } from "@astrojs/rss";
 import rss from "@astrojs/rss";
-import MarkdownIt from "markdown-it";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import sanitizeHtml from "sanitize-html";
 
 import { siteConfig } from "@/config";
@@ -12,13 +12,12 @@ import { getCategoryPathLabel } from "@utils/category";
 import { parseTags } from "@utils/tag";
 import { getFileDirFromPath, getPostUrl } from "@utils/url";
 
-
-const markdownParser = new MarkdownIt();
-
 // get dynamic import of images as a map collection
 const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
     "/src/content/**/*.{jpeg,jpg,png,gif,webp}", // include posts and assets
 );
+
+const processorPromise = createMarkdownProcessor();
 
 export async function GET(context: APIContext) {
     if (!context.site) {
@@ -29,9 +28,12 @@ export async function GET(context: APIContext) {
     const posts = (await getSortedPosts()).filter((post) => !post.data.encrypted);
     const feed: RSSFeedItem[] = [];
 
+    const processor = await processorPromise;
+
     for (const post of posts) {
-        // convert markdown to html string, ensure post.body is a string
-        const body = markdownParser.render(String(post.body ?? ""));
+        // convert markdown to html string with Astro's markdown processor
+        const rendered = await processor.render(String(post.body ?? ""));
+        const body = String(rendered.code);
         // convert html string to DOM-like structure
         const html = htmlParser.parse(body);
         // hold all img tags in variable images

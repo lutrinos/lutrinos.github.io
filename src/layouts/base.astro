@@ -264,8 +264,6 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
     import { initMarkdownActions } from "@/utils/markdown";
     import { initFancybox, cleanupFancybox } from "@utils/fancybox";
 
-    console.log('LOCALE', Astro.currentLocale);
-
     // 初始化Swup
     const setup = () => {
         let pausedElementIds = new Set();
