@@ -1,0 +1,11 @@
+title: Collision élastique
+description: Collisions élastiques entre des solides en 1D
+image: ./collision-elastique.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/collisions-one-dimension/4873815556014080
+#sourceCode: 
+startDate: 2023
+endDate: 2023
+featured: false
+tags: ["Physique", "Khan Academie"]

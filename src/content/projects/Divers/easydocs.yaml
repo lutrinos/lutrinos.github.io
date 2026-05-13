@@ -1,0 +1,10 @@
+title: EasyDocs
+description: Un générateur de documentation
+image: ./easydocs.png
+techStack: ["NodeJs", "Mithril"]
+status: completed
+liveDemo: https://easydocs.onrender.com/
+sourceCode: https://github.com/lutrinos/EasyDocs
+startDate: 2023-10-18
+featured: false
+tags: ["Divers"]

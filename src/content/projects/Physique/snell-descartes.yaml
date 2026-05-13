@@ -1,0 +1,11 @@
+title: Snell-Descartes
+description: Visualisation des rayons incidents, réfléchis et réfractés selon les lois de Snell-Descartes
+image: ./snell-descartes.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/snell-descartes/6272407137730560
+#sourceCode: 
+startDate: 2023
+endDate: 2023
+featured: false
+tags: ["Physique", "Khan Academie"]

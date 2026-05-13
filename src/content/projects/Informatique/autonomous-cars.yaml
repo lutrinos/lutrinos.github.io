@@ -1,0 +1,11 @@
+title: Apprentissage automatique de voitures autonomes
+description: Des voitures autonomes apprennent à conduire avec des réseaux de neurones et un algorithme génétique
+image: ./autonomous-cars.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/self-driving-cars/5424976789356544
+#sourceCode: 
+startDate: 2025-06-01
+endDate: 2025-06-10
+featured: true
+tags: ["Informatique", "Khan Academie", "Apprentissage automatique"]

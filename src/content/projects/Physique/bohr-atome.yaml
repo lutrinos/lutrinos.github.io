@@ -1,0 +1,11 @@
+title: Modèle de Bohr
+description: Modélisation de l'atome selon le modèle de Bohr
+image: ./bohr-atome.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/atome/5982530092974080
+#sourceCode: 
+startDate: 2023
+endDate: 2023
+featured: false
+tags: ["Physique", "Khan Academie"]

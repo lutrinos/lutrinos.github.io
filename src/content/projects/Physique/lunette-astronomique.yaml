@@ -1,0 +1,11 @@
+title: Lunette astronomique
+description: Tracé des rayons traversant une lunette astronomique
+image: ./lunette-astronomique.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/lunette-astronomique-avanc/6350980982685696
+#sourceCode: 
+startDate: 2023
+endDate: 2023
+featured: false
+tags: ["Physique", "Khan Academie"]

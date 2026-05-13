@@ -1,6 +1,6 @@
 // Project data configuration file
 // Used to manage data for the project display page
-const projectModules = import.meta.glob('../content/projects/**/*.json', { eager: true });
+const projectModules = import.meta.glob('../content/projects/**/*.yaml', { eager: true });
 
 export interface Project {
     id: string;
@@ -20,7 +20,7 @@ export interface Project {
 }
 
 export const projectsData: Project[] = Object.entries(projectModules).map(([path, mod]: [string, any]) => {
-    const id = path.split('/').pop()?.replace('.json', '') || '';
+    const id = path.split('/').pop()?.replace('.yaml', '') || '';
     const data = mod.default as any;
     const basePath = path.replace('../', '').replace(/\/[^/]+$/, '');
     const project: Project = {

@@ -1,0 +1,11 @@
+title: A*
+description: Implémentation de l'algorithme A* (prononcé "A star")
+image: ./a-star.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/a/6346280991899648
+#sourceCode: 
+startDate: 2024
+endDate: 2024
+featured: false
+tags: ["Informatique", "Khan Academie", "Algorithme"]

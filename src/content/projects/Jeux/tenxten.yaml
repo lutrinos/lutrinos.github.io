@@ -1,0 +1,11 @@
+title: Ten x Ten
+description: Jeu consistant à placer des tuiles sur un plateau en temps limité
+image: ./tenxten.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/game-ten-x-ten/5646441056944128
+#sourceCode: 
+startDate: 2025-08-20
+endDate: 2025-08-30
+featured: false
+tags: ["Jeu", "Khan Academie"]

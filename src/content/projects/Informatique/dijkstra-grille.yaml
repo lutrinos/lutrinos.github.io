@@ -1,0 +1,11 @@
+title: Dijkstra
+description: Visualisation de l'algorithme de Dijkstra sur une grille
+image: ./dijkstra-grille.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/dijkstra-grid/4852658400313344
+#sourceCode: 
+startDate: 2024
+endDate: 2024
+featured: false
+tags: ["Informatique", "Khan Academie", "Algorithme"]

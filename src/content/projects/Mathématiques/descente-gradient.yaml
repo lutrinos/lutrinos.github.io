@@ -1,0 +1,11 @@
+title: Descente de gradient
+description: Visualisation d'une descente de gradient pour trouver le minimum (local) d'une fonction
+image: ./descente-gradient.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/descente-de-gradient/5011044381605888
+#sourceCode: 
+startDate: 2025
+endDate: 2025
+featured: false
+tags: ["Mathématiques", "Khan Academie"]

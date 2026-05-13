@@ -1,0 +1,11 @@
+title: Rendu de fonctions du plan
+description: Représentation 3D de fonctions f(x, y, t)
+image: ./3D_Function.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/3d-graphics-f-r3-r/5369745620975616
+#sourceCode: 
+startDate: 2026-04-25
+endDate: 2026-04-30
+featured: true
+tags: ["Informatique", "Khan Academy"]

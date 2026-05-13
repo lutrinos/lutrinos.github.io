@@ -1,0 +1,11 @@
+title: Trajectoire d'un projectile
+description: Tracé de la trajectoire d'un projectile
+image: ./trajectoire-projectile.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/spin-off-of-physique-chute-libre/6093678011662336
+#sourceCode: 
+startDate: 2023
+endDate: 2023
+featured: false
+tags: ["Physique", "Khan Academie"]
