@@ -48,9 +48,9 @@ export function getCategoryUrl(locale: string, category: string | string[] | nul
     return getLocaleUrl(locale, `/archive/?category=${encodeURIComponent(label)}`);
 }
 
-export function getTagUrl(tag: string): string {
-    if (!tag) return url("/archive/");
-    return url(`/archive/?tag=${encodeURIComponent(tag.trim())}`);
+export function getTagUrl(locale: string, tag: string): string {
+    if (!tag) return getLocaleUrl(locale, "/archive/");
+    return getLocaleUrl(locale, `/archive/?tag=${encodeURIComponent(tag.trim())}`);
 }
 
 export function getDir(path: string): string {

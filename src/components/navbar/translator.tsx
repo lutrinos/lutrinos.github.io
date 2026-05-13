@@ -72,14 +72,20 @@ export default function Translator({ currentLocale }: { currentLocale?: string }
                             <DropdownItem
                                 isActive={currentLocale === l}
                                 onclick={() => {
-                                    if (l === 'fr')  {
+                                    /*if (l === 'fr')  {
                                         navigateToPage('/', {
                                             replace: true
                                         });
                                     } else {
-                                        navigateToPage(`/${l}`, {
+                                        navigateToPage(`/${l}/`, {
                                             replace: true
                                         });
+                                    }*/
+
+                                    if (l === 'fr') {
+                                        document.location.href = '/';
+                                    } else {
+                                        document.location.href = `/${l}/`;
                                     }
                                 }}
                                 class="gap-3 p-2! h-auto!"
