@@ -1,0 +1,8 @@
+title: Dessin
+description: Site pour dessiner à plusieurs en même temps
+techStack: ['WebRTC', 'NextJs']
+liveDemo: https://mixapps.vercel.app/apps/draw
+status: completed
+image: ./draw.png
+startDate: 2023
+endDate: 2023

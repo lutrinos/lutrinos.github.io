@@ -1,0 +1,5 @@
+title: Lecteur audio
+description: Lecteur audio pour Android et Linux adapté à Moode audio pour jouer des titres en local.
+techStack: ["Dart", "Flutter", "Tauri", "Rust"]
+status: completed
+startDate: 2023

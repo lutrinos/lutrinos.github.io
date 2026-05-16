@@ -2,13 +2,17 @@
 import { Icon } from "astro-icon/components";
 
 import { type NavbarLink } from "@/types/config";
-import { url } from "@utils/url";
+import { getLocaleUrl, url } from "@utils/url";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
 import { getLocaleStaticPaths } from "@utils/locale";
 import I18nKey from "@i18n/i18nKey";
+import { useLocale } from "@i18n/translation";
+import { describe } from "astro:schema";
 
 export const getStaticPaths = getLocaleStaticPaths;
+
+const i18n = useLocale();
 
 interface Props {
     link: NavbarLink;
@@ -16,11 +20,18 @@ interface Props {
 
 const processedLinks = [
     {
-        icon: "",
+        icon: "material-symbols:archive",
         external: false,
-        url: "/projects",
-        name: "text",
-        description: "Description"
+        url: getLocaleUrl('archive'),
+        name: i18n(I18nKey.archive),
+        description: i18n(I18nKey.archiveSubtitle)
+    },
+    {
+        icon: "material-symbols:folder-special",
+        external: false,
+        url: getLocaleUrl('projects'),
+        name: i18n(I18nKey.projects),
+        description: i18n(I18nKey.projectsSubtitle)
     }
 ];
 
