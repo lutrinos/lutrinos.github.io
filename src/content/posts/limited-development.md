@@ -30,11 +30,11 @@ Les formulaire des développements limités usuels, avec des éléments de preuv
 Une bonne partie de ces formules se trouve directement à partir de la formule de Taylor-Young
 
 :::important[Théorème]
-Si $f$ est $n$ fois dérivable sur $]a,b[$, alors $f$ admet un développement limité d'ordre $n$ en $0$ et celui-ci est donné par
+Si $f$ est $n$ fois dérivable au voisinage de $a$, alors $f$ admet un développement limité d'ordre $n$ en $a$ et celui-ci est donné par
 
 $$
 
-f(x) = \sum_{k=0}^n \frac{f^{(k)}(0)}{k!}x^k + o_{x \rightarrow 0}(x^n)
+f(x) = \sum_{k=0}^n \frac{f^{(k)}(a)}{k!}(x-a)^k + o_{x \rightarrow a}((x-a)^n)
 
 $$
 :::
