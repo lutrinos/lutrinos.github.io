@@ -6,5 +6,5 @@ status: in-progress
 liveDemo: https://supradar.vercel.app/
 sourceCode: https://github.com/lutrinos/SupRadar
 startDate: 2026-04-20
-featured: true
+featured: false
 tags: ["Sites"]
