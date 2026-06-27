@@ -1,0 +1,11 @@
+title: Clustering hiérarchique ascendant
+description: Visualisation d'un algorithme regroupant les ensembles de points les plus proches au fur et à mesure
+image: ./cluster-ascending.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/clustering-hirarchique-ascendant/4879721387376640
+#sourceCode: 
+startDate: 2026
+endDate: 2026
+featured: false
+tags: ["Informatique"]
