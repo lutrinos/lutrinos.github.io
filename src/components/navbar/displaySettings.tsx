@@ -4,7 +4,7 @@ import { useState, useEffect } from 'preact/hooks';
 import { BREAKPOINT_LG } from "@constants/breakpoints";
 import { getDefaultHue, getHue, setHue } from "@utils/hue";
 import { onClickOutside } from "@utils/widget";
-import Icon from "@components/common/icon.jsx";
+import Icon from "@components/common/icon";
 
 export default function DisplaySettings({ themeColor }) {
     const [hue, setHueState] = useState(getDefaultHue());

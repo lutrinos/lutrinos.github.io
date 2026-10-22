@@ -3,7 +3,7 @@ import { useState, useEffect } from 'preact/hooks';
 
 import { url } from "@utils/url";
 import { onClickOutside } from "@utils/widget";
-import Icon from "@components/common/icon.jsx";
+import Icon from "@components/common/icon";
 
 export default function NavMenu({ links }) {
     const [isOpen, setIsOpen] = useState(false);

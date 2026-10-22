@@ -2,15 +2,17 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "jsx": "react-jsx",
-        "jsxImportSource": "react",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "jsxImportSource": "preact",
         "strictNullChecks": true,
         "allowJs": false,
         "declaration": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
         "types": ["astro/client"],
         "plugins": [
             {
@@ -28,8 +30,7 @@
             "@styles/*": ["./src/styles/*"],
             "@/*": ["./src/*"],
         },
-        "noEmit": true,
-        "allowImportingTsExtensions": true,
+        "noEmit": true
     },
     "include": ["src/**/*"]
 }

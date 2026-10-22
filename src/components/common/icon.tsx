@@ -49,7 +49,7 @@ export default function Icon({ icon, class: className = "", style = "", size = "
     }
 }
 
-<style jsx>{`
+<style tsx>{`
     .inline-icon :global(svg) {
         width: 1em;
         height: 1em;

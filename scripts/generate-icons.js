@@ -1,9 +1,9 @@
 /**
- * Icon preprocessing script (Twilight version)
- * Automatically scan icons used in Svelte and Astro components during build and generate inline SVG data
+ * Icon preprocessing script (Twilight version) adapted for tsx
+ * Automatically scan icons used in tsx and Astro components during build and generate inline SVG data
  * 
  * Logic:
- * 1. Scan .svelte and .astro files in src directory
+ * 1. Scan .tsx and .astro files in src directory
  * 2. Extract all icons in the form of icon="prefix:name"
  * 3. Read SVG data from node_modules/@iconify-json/[prefix]/icons.json
  * 4. Generate src/utils/icons.ts
@@ -34,7 +34,7 @@ const iconSetCache = new Map();
 /**
  * Recursively get all files in directory
  */
-function getAllFiles(dir, extensions = [".svelte", ".astro"]) {
+function getAllFiles(dir, extensions = [".tsx", ".astro"]) {
     const files = [];
 
     function walk(currentDir) {
