@@ -131,7 +131,7 @@ profile:
     # Information configuration
     name: "Lutrinos"
     # Bio configuration
-    bio: "Actuellement en deuxième année de prépa MPI, je publie de temps à autre des choses à propos d’informatique, de mathématiques ou (parfois) de physique."
+    bio: "Actuellement élève à l'ENS Paris-Saclay, je publie de temps à autre des choses à propos d’informatique, de mathématiques ou (parfois) de physique."
     # Link configuration
     links:
         - # Link example

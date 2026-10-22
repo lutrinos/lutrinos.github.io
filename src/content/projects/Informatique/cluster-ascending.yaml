@@ -1,5 +1,5 @@
 title: Clustering hiérarchique ascendant
-description: Visualisation d'un algorithme regroupant les ensembles de points les plus proches au fur et à mesure
+description: Visualisation d'un algorithme regroupant les ensembles de points les plus proches au fur et à mesure.
 image: ./cluster-ascending.png
 techStack: ["P5.js"]
 status: completed

@@ -1,0 +1,11 @@
+title: Fourmi de Langton
+description: Visualisation d'une fourmi de Langton sur une surface initialement vide.
+image: ./fourmi-langton.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/fourmi-de-langton/6415047728152576
+#sourceCode: 
+startDate: 2026
+endDate: 2026
+featured: false
+tags: ["Informatique"]
