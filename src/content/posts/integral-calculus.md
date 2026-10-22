@@ -2,7 +2,7 @@
 title: Calcul d'intégrales
 description: Une brève introduction aux approximations numériques d'intégrales.
 slug: "calcul-d-integrales"
-category: ["Mathématiques", "Informatique"]
+category: "Mathématiques"
 tags: ["Algorithmie"]
 published: 2025-06-17
 ---

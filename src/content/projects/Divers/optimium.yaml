@@ -1,0 +1,11 @@
+title: Optimium
+description: Petit bot Discord
+image: ./optimium.png
+techStack: ["NodeJs", "discord.js"]
+status: completed
+#liveDemo: 
+sourceCode: https://github.com/lutrinos/Optimium
+startDate: 2023
+endDate: 2026
+featured: false
+tags: ["Divers"]

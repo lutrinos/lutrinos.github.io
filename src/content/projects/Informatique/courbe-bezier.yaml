@@ -1,0 +1,11 @@
+title: Courbe de Bézier
+description: Visualisation du tracé d'une courbe de Bézier
+image: ./courbe-bezier.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/bezier/6445157619515392
+#sourceCode: 
+startDate: 2025
+endDate: 2025
+featured: false
+tags: ["Informatique", "Khan Academie"]

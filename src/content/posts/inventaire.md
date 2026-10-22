@@ -7,6 +7,10 @@ category: 'Divers'
 draft: false
 ---
 
+:::note
+Pour une liste des projets, qui elle est mise à jour, [suivez moi](/projects) !
+:::
+
 L'ordre des projets n'a que peu d'importance, même si en règle générale, ceux les plus récents sont vers le haut.
 
 # Github

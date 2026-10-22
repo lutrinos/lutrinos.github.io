@@ -1,0 +1,10 @@
+title: PhotoSelect
+description: Un site pour parcourir, sélectionner et exporter des images en vue de réaliser un album photo
+image: ./photoselect.png
+techStack: ["NextJs", "Mantine"]
+status: in-progress
+#liveDemo: 
+sourceCode: https://github.com/lutrinos/PhotoSelect
+startDate: 2025-08-20
+featured: true
+tags: ["Sites"]

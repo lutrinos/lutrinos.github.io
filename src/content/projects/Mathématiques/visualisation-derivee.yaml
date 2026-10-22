@@ -1,0 +1,11 @@
+title: Dérivée
+description: Visualisation de la dérivée sous forme exacte et approchée
+image: ./visualisation-derivee.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/drive/6071233141850112
+#sourceCode: 
+startDate: 2023
+endDate: 2023
+featured: false
+tags: ["Mathématiques", "Khan Academie"]

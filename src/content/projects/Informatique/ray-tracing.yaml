@@ -1,0 +1,11 @@
+title: Ray tracing
+description: Implémentation de l'algorithme du lancer de rayons sur une grille
+image: ./ray-tracing.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/ray/6567971158343680
+#sourceCode: 
+startDate: 2025-10-10
+endDate: 2025-10-10
+featured: false
+tags: ["Informatique", "Khan Academie", "Algorithme"]

@@ -1,0 +1,11 @@
+title: Ciel de Perlin
+description: Génération procédurale d'un ciel nuagé grâce au bruit de Perlin
+image: ./ciel-perlin.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/clouds-perlin-noise/4891686203080704
+#sourceCode: 
+startDate: 2024
+endDate: 2024
+featured: false
+tags: ["Divers", "Khan Academie"]

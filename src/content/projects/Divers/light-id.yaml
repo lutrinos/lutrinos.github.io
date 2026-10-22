@@ -1,0 +1,10 @@
+title: Light-id
+description: Un générateur incrémental d'identifiants
+image: ./light-id.png
+techStack: ["Rust"]
+status: completed
+liveDemo: https://docs.rs/light-id/latest/light_id/
+sourceCode: https://github.com/lutrinos/Light-id
+startDate: 2023
+featured: false
+tags: ["Divers"]

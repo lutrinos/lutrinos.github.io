@@ -1,0 +1,11 @@
+title: Knife Hit
+description: Une copie du jeu Knife Hit développé par Ketchapp.
+image: ./Knife_Hit.png
+techStack: ["P5.js"]
+status: completed
+#liveDemo: /projets/knife-hit
+sourceCode: https://www.khanacademy.org/computer-programming/knife-hit-final-version/5900784483287040
+startDate: 2026-04-10
+endDate: 2026-04-20
+featured: false
+tags: ["Khan Academy", "Jeux"]

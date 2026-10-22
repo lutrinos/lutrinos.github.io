@@ -1,0 +1,11 @@
+title: Onde 1D
+description: Onde à une dimension
+image: ./onde-1d.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/onde-1d/5778482964054016
+#sourceCode: 
+startDate: 2025
+endDate: 2025
+featured: false
+tags: ["Physique", "Khan Academie"]

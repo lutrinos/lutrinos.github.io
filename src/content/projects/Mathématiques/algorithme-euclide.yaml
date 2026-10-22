@@ -1,0 +1,11 @@
+title: Algorithme d'Euclide
+description: Implémentation et visualisation du fonctionnement de l'algorithme d'Euclide permettant de trouver le pgcd d'un nombre
+image: ./algorithme-euclide.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/euclide/5541978721927168
+#sourceCode: 
+startDate: 2024
+endDate: 2024
+featured: false
+tags: ["Mathématiques", "Khan Academie", "Algorithme"]

@@ -1,0 +1,11 @@
+title: Dijkstra
+description: Visualisation de l'algorithme de Dijkstra sur une carte de l'Europe
+image: ./dijkstra-europe.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/dijkstra-algorithm/5030266773094400
+#sourceCode: 
+startDate: 2024
+endDate: 2024
+featured: false
+tags: ["Informatique", "Khan Academie", "Algorithme"]

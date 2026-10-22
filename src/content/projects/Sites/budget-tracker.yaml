@@ -1,0 +1,10 @@
+title: Budget tracker
+description: Une application de gestion de son budget
+image: ./budget-tracker.png
+techStack: ["VueJs"]
+status: completed
+liveDemo: https://budget-tracker-dusky.vercel.app/
+sourceCode: https://github.com/lutrinos/BudgetTracker
+startDate: 2023
+featured: false
+tags: ["Sites"]

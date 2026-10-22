@@ -1,0 +1,11 @@
+title: Lignes de Perlin
+description: Tracé de lignes générées par du bruit de Perlin
+image: ./lignes-bruit-perlin.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/perlin-lines/4532196550033408
+#sourceCode: 
+startDate: 2024
+endDate: 2024
+featured: false
+tags: ["Divers", "Khan Academie"]

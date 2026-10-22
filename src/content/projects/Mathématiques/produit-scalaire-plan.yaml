@@ -1,0 +1,11 @@
+title: Produit scalaire
+description: Visualisation du produit scalaire
+image: ./produit-scalaire.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/vecteurs-scalaires/5145961880141824
+#sourceCode: 
+startDate: 2022
+endDate: 2022
+featured: false
+tags: ["Mathématiques", "Khan Academie"]

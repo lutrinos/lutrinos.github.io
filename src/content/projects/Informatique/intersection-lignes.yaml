@@ -1,0 +1,11 @@
+title: Intersection de segments
+description: Algorithme calculant l'intersection de deux segments dans le plan
+image: ./intersection-lignes.png
+techStack: ["P5.js"]
+status: completed
+liveDemo: https://www.khanacademy.org/computer-programming/intersections/5054069548433408
+#sourceCode: 
+startDate: 2024
+endDate: 2024
+featured: false
+tags: ["Informatique", "Khan Academie"]

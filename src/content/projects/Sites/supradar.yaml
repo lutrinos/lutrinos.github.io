@@ -1,0 +1,10 @@
+title: SupRadar
+description: Un petit explorateur des formations disponibles sur Parcoursup
+image: ./supradar.png
+techStack: ["Svelte", "OpenData"]
+status: in-progress
+liveDemo: https://supradar.vercel.app/
+sourceCode: https://github.com/lutrinos/SupRadar
+startDate: 2026-04-20
+featured: true
+tags: ["Sites"]
