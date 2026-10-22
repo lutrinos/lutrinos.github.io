@@ -33,7 +33,6 @@ export const zh: Translation = {
     [Key.announcement]: "公告",
     [Key.announcementClose]: "关闭",
 
-    [Key.comments]: "评论",
     [Key.untitled]: "无标题",
     [Key.uncategorized]: "未分类",
     [Key.noTags]: "无标签",

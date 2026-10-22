@@ -64,16 +64,7 @@ const normalizeNavbarLinks = (links: Array<NavbarLink | LinkPreset | string>) =>
     links.map(normalizeNavbarLink);
 
 const resolvedPostConfig: PostConfig = {
-    ...config.post,
-    comment: config.post.comment.twikoo
-        ? {
-            ...config.post.comment,
-            twikoo: {
-                ...config.post.comment.twikoo,
-                lang: config.post.comment.twikoo.lang ?? config.site.lang,
-            },
-        }
-        : config.post.comment,
+    ...config.post
 };
 
 // 站点配置

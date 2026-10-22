@@ -33,7 +33,6 @@ export const ja: Translation = {
     [Key.announcement]: "お知らせ",
     [Key.announcementClose]: "閉じる",
 
-    [Key.comments]: "コメント",
     [Key.untitled]: "無題",
     [Key.uncategorized]: "未分類",
     [Key.noTags]: "タグなし",

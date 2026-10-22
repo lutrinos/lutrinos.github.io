@@ -270,20 +270,6 @@ export type PostConfig = {
         // 许可证链接
         url: string;
     };
-    // 评论配置
-    comment: {
-        // 启用评论功能
-        enable: boolean;
-        // Twikoo 评论系统配置
-        twikoo?: {
-            // 环境 ID
-            envId: string;
-            // 地域
-            region?: string;
-            // 语言
-            lang?: string;
-        };
-    };
 };
 
 /**
