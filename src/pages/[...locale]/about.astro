@@ -1,0 +1,46 @@
+---
+import type { GetStaticPaths } from "astro";
+export const prerender = true;
+
+import { render } from "astro:content";
+
+import Markdown from "@components/common/markdown.astro";
+import GridLayout from "@layouts/grid.astro";
+import BackwardButton from "@components/backwardButton.astro";
+import { getCollection } from "astro:content";
+import { getLocaleParams } from "@utils/language";
+
+export const getStaticPaths = (async () => {
+    const pages = await getCollection("spec", (page) => {
+        return page.id.startsWith("about");
+    });
+
+    return pages.map((page) => ({
+        params: {
+            locale: getLocaleParams(page.data.locale)
+        },
+        props: {
+            page
+        }
+    }));
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+if (!page) {
+    throw new Error("About page content not found");
+}
+
+const { Content, headings } = await render(page);
+---
+
+<GridLayout title={page.data.title} description={page.data.description} headings={headings}>
+    <div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
+        <div class="card-base z-10 px-9 py-6 relative w-full ">
+            <BackwardButton currentPath={Astro.url.pathname} />
+            <Markdown class="mt-2">
+                <Content />
+            </Markdown>
+        </div>
+    </div>
+</GridLayout>

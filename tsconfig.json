@@ -1,12 +1,13 @@
 {
+    "extends": "astro/tsconfigs/base",
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "node",
-        "jsx": "react",
+        "moduleResolution": "bundler",
+        "jsx": "preact",
         "jsxImportSource": "preact",
         "strictNullChecks": true,
-        "allowJs": false,
+        "allowJs": true,
         "declaration": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,

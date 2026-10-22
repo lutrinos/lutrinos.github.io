@@ -7,7 +7,7 @@ import { sidebarConfig } from "@/config";
 
 
 /**
- * 组件映射表 - 将组件类型映射到实际的组件路径
+ * Component map - maps component types to actual component paths
  */
 export const WIDGET_COMPONENT_MAP = {
     profile: "@components/sidebar/profile.astro",
@@ -17,12 +17,12 @@ export const WIDGET_COMPONENT_MAP = {
     tags: "@components/sidebar/tags.astro",
     toc: "@components/sidebar/toc.astro",
     statistics: "@components/sidebar/statistics.astro",
-    custom: null, // 自定义组件需要在配置中指定路径
+    custom: null, // Custom components need a path specified in the config
 } as const;
 
 /**
- * 组件管理器类
- * 负责管理侧边栏组件的动态加载、排序和渲染
+ * Component manager class
+ * Responsible for managing dynamic loading, sorting, and rendering of sidebar components
  */
 export class WidgetManager {
     private config: SidebarConfig;
@@ -32,40 +32,40 @@ export class WidgetManager {
     }
 
     /**
-     * 获取配置
+     * Get configuration
      */
     getConfig(): SidebarConfig {
         return this.config;
     }
 
     /**
-     * 检查组件在当前页面和设备上是否可见
-     * @param component 组件配置
-     * @param currentPath 当前页面路径
-     * @param deviceType 设备类型: 'mobile' | 'tablet' | 'desktop'
+     * Check if the component is visible on the current page and device
+     * @param component Component configuration
+     * @param currentPath Current page path
+     * @param deviceType Device type: 'mobile' | 'tablet' | 'desktop'
      */
     isVisible(component: WidgetComponentConfig, currentPath?: string, deviceType?: 'mobile' | 'tablet' | 'desktop'): boolean {
-        // 检查响应式隐藏配置
+        // Check responsive hidden configuration
         if (deviceType && component.responsive?.hidden?.includes(deviceType)) {
             return false;
         }
-        // 检查页面路径可见性
+        // Check page path visibility
         return this.shouldShowComponent(component, currentPath);
     }
 
     /**
-     * 检查组件在当前页面是否可见
-     * @param component 组件配置
-     * @param currentPath 当前页面路径
+     * Check if the component is visible on the current page
+     * @param component Component configuration
+     * @param currentPath Current page path
      */
     shouldShowComponent(component: WidgetComponentConfig, currentPath?: string): boolean {
         if (!component.visibility || !currentPath) {
             return true;
         }
         const { mode, paths } = component.visibility;
-        // 确保路径以 / 开头，以便于匹配
+        // Ensure path starts with / for matching
         let normalizedPath = currentPath.startsWith('/') ? currentPath : '/' + currentPath;
-        // 移除末尾的斜杠（如果是根路径 / 则保留）
+        // Remove trailing slash (preserve if it's root /)
         if (normalizedPath.length > 1 && normalizedPath.endsWith('/')) {
             normalizedPath = normalizedPath.slice(0, -1);
         }
@@ -89,9 +89,9 @@ export class WidgetManager {
     }
 
     /**
-     * 获取指定侧边栏上的组件列表
-     * @param side 侧边栏位置：'left' | 'right'
-     * @param currentPath 当前页面路径 (可选，用于过滤)
+     * Get component list on specified sidebar
+     * @param side Sidebar position: 'left' | 'right'
+     * @param currentPath Current page path (optional, for filtering)
      */
     getComponentsBySide(side: "left" | "right", currentPath?: string): WidgetComponentConfig[] {
         const components = this.config.components[side] || [];
@@ -102,9 +102,9 @@ export class WidgetManager {
     }
 
     /**
-     * 根据位置获取组件列表
-     * @param position 组件位置：'top' | 'sticky'
-     * @param currentPath 当前页面路径 (可选，用于过滤)
+     * Get component list based on position
+     * @param position Component position: 'top' | 'sticky'
+     * @param currentPath Current page path (optional, for filtering)
      */
     getComponentsByPosition(position: "top" | "sticky", currentPath?: string): WidgetComponentConfig[] {
         const left = this.getComponentsBySideAndPosition("left", position, currentPath);
@@ -114,10 +114,10 @@ export class WidgetManager {
     }
 
     /**
-     * 根据侧边栏和位置获取组件列表
-     * @param side 侧边栏位置：'left' | 'right' | 'middle'
-     * @param position 组件位置：'top' | 'sticky'
-     * @param currentPath 当前页面路径 (可选，用于过滤)
+     * Get component list based on sidebar and position
+     * @param side Sidebar position: 'left' | 'right' | 'middle'
+     * @param position Component position: 'top' | 'sticky'
+     * @param currentPath Current page path (optional, for filtering)
      */
     getComponentsBySideAndPosition(
         side: "left" | "right" | "middle",
@@ -150,15 +150,15 @@ export class WidgetManager {
     }
 
     /**
-     * 获取组件的CSS类名
-     * @param component 组件配置
-     * @param index 组件在列表中的索引
-     * @param side 当前渲染的侧边栏位置
+     * Get CSS class name of the component
+     * @param component Component configuration
+     * @param index Index of the component in the list
+     * @param side Currently rendered sidebar position
      */
     getComponentClass(component: WidgetComponentConfig, index: number, side: "left" | "right" | "middle"): string {
         const classes: string[] = [];
 
-        // 基础响应式隐藏配置 (用户配置的)
+        // Basic responsive hidden configuration (user-configured)
         if (component.responsive?.hidden) {
             component.responsive.hidden.forEach((device) => {
                 switch (device) {
@@ -175,30 +175,30 @@ export class WidgetManager {
             });
         }
 
-        // 自动布局逻辑
+        // Automatic layout logic
         const isFromLeft = (this.config.components.left || []).includes(component);
         const isFromRight = (this.config.components.right || []).includes(component);
 
         if (side === "left") {
             if (isFromRight && !isFromLeft) {
-                // 如果是右侧组件在左侧栏渲染（平板模式），则仅在平板显示
+                // If a right component is rendered in the left sidebar (tablet mode), only display on tablet
                 classes.push("hidden md:block lg:hidden");
             }
-            // 左侧组件默认显示
+            // Left components display by default
         }
 
         return classes.join(" ");
     }
 
     /**
-     * 获取组件的内联样式
-     * @param component 组件配置
-     * @param index 组件在列表中的索引
+     * Get inline style of the component
+     * @param component Component configuration
+     * @param index Index of the component in the list
      */
     getComponentStyle(component: WidgetComponentConfig, index: number): string {
         const styles: string[] = [];
 
-        // 添加自定义样式
+        // Add custom styles
         if (component.style) {
             styles.push(component.style);
         }
@@ -207,9 +207,9 @@ export class WidgetManager {
     }
 
     /**
-     * 检查组件是否应该折叠
-     * @param component 组件配置
-     * @param itemCount 组件内容项数量
+     * Check if the component should collapse
+     * @param component Component configuration
+     * @param itemCount Number of content items in the component
      */
     isCollapsed(component: WidgetComponentConfig, itemCount: number): boolean {
         if (!component.responsive?.collapseThreshold) {
@@ -219,46 +219,46 @@ export class WidgetManager {
     }
 
     /**
-     * 获取组件的路径
-     * @param componentType 组件类型
+     * Get path of the component
+     * @param componentType Component type
      */
     getComponentPath(componentType: WidgetComponentType): string | null {
         return WIDGET_COMPONENT_MAP[componentType];
     }
 
     /**
-     * 检查指定侧边栏是否具有实际可显示的内容
-     * @param side 侧边栏位置：'left' | 'right'
-     * @param headings 页面标题列表，用于判断特殊组件是否显示
-     * @param currentPath 当前页面路径 (可选，用于过滤)
+     * Check if the specified sidebar has actual displayable content
+     * @param side Sidebar position: 'left' | 'right'
+     * @param headings Page heading list, used to determine if special components are displayed
+     * @param currentPath Current page path (optional, for filtering)
      */
     hasContentOnSide(side: "left" | "right", headings: any[] = [], currentPath?: string): boolean {
         const components = this.getComponentsBySide(side, currentPath);
         if (components.length === 0) return false;
 
-        // 只要有一个组件能显示内容，侧边栏就不是空的
+        // As long as one component can display content, the sidebar is not empty
         return components.some((component) => {
-            // TOC 组件只有在有标题时才显示
+            // TOC component only displays when there are headings
             if (component.type === "toc") {
                 return headings && headings.length > 0;
             }
-            // 其他组件暂认为始终有内容
+            // Other components are currently assumed to always have content
             return true;
         });
     }
 
     /**
-     * 更新组件配置
-     * @param newConfig 新的配置
+     * Update component configuration
+     * @param newConfig New configuration
      */
     updateConfig(newConfig: Partial<SidebarConfig>): void {
         this.config = { ...this.config, ...newConfig };
     }
 
     /**
-     * 添加新组件
-     * @param component 组件配置
-     * @param side 侧边栏位置
+     * Add new component
+     * @param component Component configuration
+     * @param side Sidebar position
      */
     addComponent(component: WidgetComponentConfig, side: "left" | "right"): void {
         if (!this.config.components[side]) {
@@ -268,8 +268,8 @@ export class WidgetManager {
     }
 
     /**
-     * 移除组件
-     * @param componentType 组件类型
+     * Remove component
+     * @param componentType Component type
      */
     removeComponent(componentType: WidgetComponentType): void {
         if (this.config.components.left) {
@@ -285,10 +285,10 @@ export class WidgetManager {
     }
 
     /**
-     * 重新排序组件
-     * @param side 侧边栏
-     * @param oldIndex 旧索引
-     * @param newIndex 新索引
+     * Reorder component
+     * @param side Sidebar
+     * @param oldIndex Old index
+     * @param newIndex New index
      */
     reorderComponent(side: "left" | "right", oldIndex: number, newIndex: number): void {
         const list = this.config.components[side];
@@ -301,16 +301,16 @@ export class WidgetManager {
     }
 
     /**
-     * 检查组件是否应该在侧边栏中渲染
-     * @param componentType 组件类型
+     * Check if the component should be rendered in the sidebar
+     * @param componentType Component type
      */
     isSidebarComponent(componentType: WidgetComponentType): boolean {
         return true;
     }
 
     /**
-     * 获取页面中的标题列表
-     * @returns 格式化后的标题数组
+     * Get list of headings in the page
+     * @returns Formatted heading array
      */
     getPageHeadings() {
         if (typeof document === "undefined") return [];
@@ -324,9 +324,9 @@ export class WidgetManager {
     }
 
     /**
-     * 获取网格布局相关的类名
-     * @param headings 页面标题列表
-     * @param currentPath 当前页面路径 (可选，用于过滤)
+     * Get grid layout related class names
+     * @param headings Page heading list
+     * @param currentPath Current page path (optional, for filtering)
      */
     getGridLayout(headings: any[] = [], currentPath?: string) {
         const hasLeftComponents = this.hasContentOnSide("left", headings, currentPath);
@@ -337,7 +337,7 @@ export class WidgetManager {
         const hasLeftSidebar = hasLeftComponents;
         const hasRightSidebar = hasRightComponents;
 
-        // 动态网格布局类名
+        // Dynamic grid layout class names
         const gridCols = `
             grid-cols-1
             ${hasAnyComponents ? "md:grid-cols-[17.5rem_1fr]" : "md:grid-cols-1"}
@@ -352,7 +352,7 @@ export class WidgetManager {
             }
         `.trim().replace(/\s+/g, " ");
 
-        // 左侧侧边栏容器类名
+        // Left sidebar container class name
         // Mobile: Hidden
         // Tablet: Visible if hasAnyComponents (merged)
         // Desktop: Visible if hasLeftSidebar
@@ -362,7 +362,7 @@ export class WidgetManager {
             ${hasLeftSidebar ? "lg:flex lg:flex-col lg:max-w-70 lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-2" : "lg:hidden"}
         `.trim().replace(/\s+/g, " ");
 
-        // 右侧侧边栏容器类名
+        // Right sidebar container class name
         // Mobile: Hidden
         // Tablet: Hidden
         // Desktop: Visible if hasRightSidebar
@@ -378,7 +378,7 @@ export class WidgetManager {
             }
         `.trim().replace(/\s+/g, " ");
 
-        // 移动端 Footer 类名
+        // Mobile Footer class name
         // Always 1 col on mobile
         // 2 cols on tablet if sidebar is present
         const mobileFooterClass = `
@@ -386,13 +386,13 @@ export class WidgetManager {
             ${hasAnyComponents ? "md:col-span-2" : "md:col-span-1"}
         `.trim().replace(/\s+/g, " ");
         
-        // 移动端侧边栏类名
+        // Mobile sidebar class name
         const middleSidebarClass = `
             col-span-1 flex flex-col md:hidden
             ${!hasAnyComponents ? "hidden" : ""}
         `.trim().replace(/\s+/g, " ");
 
-        // 主内容区域类名
+        // Main content area class name
         const mainContentClass = `
             overflow-hidden w-full
             col-span-1 row-start-1 row-end-2
@@ -423,13 +423,13 @@ export class WidgetManager {
 }
 
 /**
- * 默认组件管理器实例
+ * Default component manager instance
  */
 export const widgetManager = new WidgetManager();
 
 /**
- * 工具函数：根据组件类型获取组件配置
- * @param componentType 组件类型
+ * Utility function: Get component configuration based on component type
+ * @param componentType Component type
  */
 export function getComponentConfig(
     componentType: WidgetComponentType,
@@ -441,18 +441,18 @@ export function getComponentConfig(
 }
 
 /**
- * 工具函数：检查组件是否启用
- * @param componentType 组件类型
+ * Utility function: Check if component is enabled
+ * @param componentType Component type
  */
 export function isComponentEnabled(
     componentType: WidgetComponentType,
 ): boolean {
-    // 默认所有配置中存在的组件都视为启用
+    // By default, all components present in the configuration are considered enabled
     return !!getComponentConfig(componentType);
 }
 
 /**
- * 工具函数：获取所有启用的组件类型
+ * Utility function: Get all enabled component types
  */
 export function getEnabledComponentTypes(): WidgetComponentType[] {
     const enabledComponents = widgetManager.getComponentsByPosition("top").concat(
@@ -462,11 +462,11 @@ export function getEnabledComponentTypes(): WidgetComponentType[] {
 }
 
 /**
- * 通用的点击外部关闭处理函数
- * @param event 鼠标事件
- * @param panelId 面板ID
- * @param ignoreIds 忽略的元素ID（按钮等），支持单个ID或ID数组
- * @param action 关闭回调
+ * Generic click-outside-to-close handler function
+ * @param event Mouse event
+ * @param panelId Panel ID
+ * @param ignoreIds Element IDs to ignore (buttons, etc.), supports single ID or ID array
+ * @param action Close callback
  */
 export function onClickOutside(
     event: MouseEvent,
@@ -483,14 +483,14 @@ export function onClickOutside(
 
     const ids = Array.isArray(ignoreIds) ? ignoreIds : [ignoreIds];
     
-    // 如果点击的是忽略元素或其内部元素，则不执行关闭操作
+    // If the click is on an ignored element or its child, do not close
     for (const id of ids) {
         if (target.closest(`#${id}`)) {
             return;
         }
     }
 
-    // 如果面板存在且点击发生在面板外部，则执行关闭操作
+    // If the panel exists and the click occurs outside it, perform the close operation
     if (panel && !panel.contains(target)) {
         action();
     }

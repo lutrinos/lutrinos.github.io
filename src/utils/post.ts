@@ -14,27 +14,32 @@ async function getRawSortedPosts() {
     });
 
     const sorted = allBlogPosts.sort((a, b) => {
-        // 首先按置顶状态排序，置顶文章在前
+        // Sort by pinned status first, pinned posts come first
         if (a.data.pinned && !b.data.pinned) return -1;
         if (!a.data.pinned && b.data.pinned) return 1;
 
-        // 如果置顶状态相同，则按发布日期排序
+        // If pinned status is the same, sort by publication date
         const dateA = new Date(a.data.published);
         const dateB = new Date(b.data.published);
         return dateA > dateB ? -1 : 1;
     });
-    return sorted;
+
+    return sorted.map((p) => {
+        p.data.slug = p.data.slug || p.id;
+        p.id = p.data.slug;
+        return p;
+    });
 }
 
 export async function getSortedPosts() {
     const sorted = await getRawSortedPosts();
 
     for (let i = 1; i < sorted.length; i++) {
-        sorted[i].data.nextSlug = sorted[i - 1].id;
+        sorted[i].data.nextSlug = sorted[i - 1].data.slug;
         sorted[i].data.nextTitle = sorted[i - 1].data.title;
     }
     for (let i = 0; i < sorted.length - 1; i++) {
-        sorted[i].data.prevSlug = sorted[i + 1].id;
+        sorted[i].data.prevSlug = sorted[i + 1].data.slug;
         sorted[i].data.prevTitle = sorted[i + 1].data.title;
     }
 
@@ -49,7 +54,7 @@ export async function getSortedPostsList(): Promise<PostForList[]> {
 
     // delete post.body
     const sortedPostsList = sortedFullPosts.map((post) => ({
-        id: post.id,
+        id: post.data.slug,
         data: post.data,
     }));
 

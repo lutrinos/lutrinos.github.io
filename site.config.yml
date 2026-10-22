@@ -7,27 +7,8 @@ site:
     # Site Subtitle
     subtitle: ""
     # Language Configuration
-    lang: "en"
-
-    # Translation Configuration
-    translate:
-        # Enable translation feature
-        enable: false
-        # Translation service
-        service: "client.edge"
-        # Show language selection dropdown
-        showSelectTag: false
-        # Automatically detect user language
-        autoDiscriminate: true
-        # CSS class names to ignore during translation
-        ignoreClasses:
-            - "ignore"
-        # HTML tags to ignore during translation
-        ignoreTags:
-            - "script"
-            - "style"
-            - "code"
-            - "pre"
+    lang: "fr"
+ 
     # Time Zone Configuration
     timeZone: 2
 

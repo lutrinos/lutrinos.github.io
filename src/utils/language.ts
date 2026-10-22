@@ -10,92 +10,99 @@ import {
 } from "@/config";
 
 
-// 重新导出以保持向后兼容
+// Re-export for backward compatibility
 export { SUPPORTED_LANGUAGES, type SupportedLanguage, langToTranslateMap, translateToLangMap };
 
 
-// 获取默认语言配置
+// Get default language configuration
 export function getDefaultLanguage(): string {
     const fallback = siteConfig.lang;
+
     if (typeof document !== "undefined") {
         const configCarrier = document.getElementById("config-carrier");
         return configCarrier?.dataset.lang || fallback;
     }
+
     return fallback;
 }
 
-// 将配置文件的语言代码转换为翻译服务的语言代码
+// Convert config file language code to translation service language code
 export function getTranslateLanguageFromConfig(configLang: string): string {
-    return langToTranslateMap[configLang] || "en";
+    return langToTranslateMap[configLang] || "fr";
 }
 
-// 获取解析后的站点语言代码
+// Get resolved site language code
 export function getResolvedSiteLang(): SupportedLanguage {
     const configLang = getDefaultLanguage() as any;
     if (SUPPORTED_LANGUAGES.includes(configLang)) {
         return configLang as SupportedLanguage;
     }
-    // 如果 siteConfig.lang 不合规，则使用浏览器检测到的语言
+    // If siteConfig.lang is invalid, use the browser-detected language
     return detectBrowserLanguage();
 }
 
-// 将翻译服务的语言代码转换为配置文件的语言代码
+// Convert translation service language code to config file language code
 export function getConfigLanguageFromTranslate(translateLang: string): string {
     return translateToLangMap[translateLang] || "en";
 }
 
-// 获取语言的显示名称
+// Get display name of the language
 export function getLanguageDisplayName(langCode: string): string {
-    // 先尝试作为配置语言代码查找
+    // Try looking up as a config language code first
     if (langCode in LANGUAGE_CONFIG) {
         return LANGUAGE_CONFIG[langCode as SupportedLanguage].displayName;
     }
-    // 尝试作为翻译服务代码查找
+    // Try looking up as a translation service code
     const configLang = translateToLangMap[langCode];
     if (configLang && configLang in LANGUAGE_CONFIG) {
         return LANGUAGE_CONFIG[configLang as SupportedLanguage].displayName;
     }
-    // 如果都找不到，返回原始代码
+    // If none found, return the original code
     return langCode;
 }
 
-// 检测浏览器语言并返回支持的语言代码
+// Detect browser language and return supported language code
 export function detectBrowserLanguage(fallbackLang: SupportedLanguage = "en"): SupportedLanguage {
-    // 服务端渲染时返回备用语言
+    // Return fallback language during server-side rendering
     if (typeof window === "undefined" || typeof navigator === "undefined") {
         return fallbackLang;
     }
-    // 获取浏览器语言列表
+    // Get browser language list
     const browserLangs = navigator.languages || [navigator.language];
-    // 遍历浏览器语言列表，找到第一个支持的语言
+    // Iterate through browser language list and find the first supported language
     for (const browserLang of browserLangs) {
-        // 提取主语言代码（例如：'zh-CN' -> 'zh', 'en-US' -> 'en'）
+        // Extract primary language code (e.g., 'zh-CN' -> 'zh', 'en-US' -> 'en')
         const langCode = browserLang.toLowerCase().split("-")[0];
-        // 检查是否在支持的语言列表中
+        // Check if it's in the supported language list
         if (SUPPORTED_LANGUAGES.includes(langCode as SupportedLanguage)) {
             return langCode as SupportedLanguage;
         }
     }
-    // 如果没有找到支持的语言，返回备用语言
+    // If no supported language found, return the fallback language
     return fallbackLang;
 }
 
-// 获取当前站点语言（优先使用缓存，其次是配置语言，最后是浏览器检测）
+// Get current site language (prefer cache, then config language, finally browser detection)
 export function getSiteLanguage(configLang?: string): string {
-    // 其次使用传入的配置语言或从 carrier 获取的默认语言
+    // Second, use the passed config language or default language from carrier
     const defaultLang = configLang || getDefaultLanguage();
     if (SUPPORTED_LANGUAGES.includes(defaultLang as SupportedLanguage)) {
         return langToTranslateMap[defaultLang];
     }
-    // 最后自动检测浏览器语言并转换为翻译服务代码
+    // Finally, auto-detect browser language and convert to translation service code
     const browserLang = detectBrowserLanguage();
     return langToTranslateMap[browserLang];
 }
 
-// 切换语言
+// Toggle language
 export function toggleLanguage(langCode: string): void {
-    const translate = (window as any).translate;
-    if (!translate) return;
-    // 切换语言
-    translate.changeLanguage(langCode);
+    
+}
+
+export function getLocaleParams(locale?: string) {
+    // @ts-ignore
+    if (locale !== "fr" && SUPPORTED_LANGUAGES.includes(locale)) {
+        return locale;
+    }
+    return undefined;
 }

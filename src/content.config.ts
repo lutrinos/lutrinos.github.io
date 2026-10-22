@@ -2,8 +2,8 @@ import { defineCollection } from "astro:content";
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
-import { getCategoryPathParts } from "@utils/category";
-import { parseTags } from "@utils/tag";
+import { getCategoryPathParts } from "@/utils/category";
+import { parseTags } from "@/utils/tag";
 
 
 // Helper for handling dates that might be empty strings from JSON
@@ -26,8 +26,11 @@ const tagsSchema = z.preprocess((arg) => {
 }, z.array(z.string()).optional().default([]));
 
 const postsCollection = defineCollection({
-    loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/en/posts" }),
+    loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/posts" }),
     schema: z.object({
+        // Automatically generated if not provided
+        slug: z.string().default(""),
+
         title: z.string(),
         published: dateSchema,
         updated: optionalDateSchema,
@@ -36,7 +39,7 @@ const postsCollection = defineCollection({
         coverInContent: z.boolean().optional().default(false),
         category: categorySchema,
         tags: tagsSchema,
-        lang: z.string().optional().default(""),
+        locale: z.string().optional().default("fr"),
         pinned: z.boolean().optional().default(false),
         author: z.string().optional().default(""),
         sourceLink: z.string().optional().default(""),
@@ -49,9 +52,6 @@ const postsCollection = defineCollection({
         encrypted: z.boolean().optional().default(false),
         password: z.string().optional().default(""),
 
-        /* Custom routeName */
-        routeName: z.string().optional(),
-
         /* For internal use */
         prevTitle: z.string().default(""),
         prevSlug: z.string().default(""),
@@ -61,8 +61,15 @@ const postsCollection = defineCollection({
 });
 
 const specCollection = defineCollection({
-    loader: glob({ pattern: '[^_]*.{md,mdx}', base: "./src/content/en" }),
-    schema: z.object({}),
+    loader: glob({
+        pattern: '[^_]*.{md,mdx}',
+        base: "./src/content",
+    }),
+    schema: z.object({
+        title: z.string().default(""),
+        description: z.string().default(""),
+        locale: z.string().default("fr")
+    }),
 });
 
 export const collections = {

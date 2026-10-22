@@ -1,0 +1,50 @@
+---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
+
+import { PAGE_SIZE } from "@constants/constants";
+import { getSortedPosts } from "@utils/post";
+import Pagination from "@components/pagination.astro";
+import PostPage from "@components/postPage.astro";
+import GridLayout from "@layouts/grid.astro";
+import { getLocaleParams, SUPPORTED_LANGUAGES } from "@utils/language";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const allBlogPosts = await getSortedPosts();
+
+    const postsPerLocale = new Map();
+
+    for (let l of SUPPORTED_LANGUAGES) {
+        postsPerLocale.set(l, []);
+    }
+
+    for (let p of allBlogPosts) {
+        postsPerLocale.get(p.data.locale).push(p);
+    }
+
+    const res = postsPerLocale.entries().map(([locale, posts]) =>
+        paginate(posts, { pageSize: PAGE_SIZE }).map((v) => {
+            v.params.locale = getLocaleParams(locale);
+            return v;
+        }),
+    ).toArray().flat();
+
+    return res;
+}) satisfies GetStaticPaths;
+// https://github.com/withastro/astro/issues/6507#issuecomment-1489916992
+
+
+const { page } = Astro.props;
+
+const len = page.data.length;
+---
+
+<GridLayout>
+    <PostPage page={page} />
+    <Pagination
+        class="mx-auto onload-animation-up"
+        page={page}
+        style={`animation-delay: ${len * 50}ms`}
+    />
+</GridLayout>
