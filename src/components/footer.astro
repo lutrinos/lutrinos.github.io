@@ -9,13 +9,11 @@ const currentYear = new Date().getFullYear();
 <div class="transition border-t border-black/10 dark:border-white/15 my-10 border-dashed mx-32"></div>
 <div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
     <div class="transition text-50 text-sm text-center leading-6">
-        <span id="copyright-year">{currentYear}</span> {profileConfig.name}. All Rights Reserved. /
+        <span id="copyright-year">{currentYear}</span> {profileConfig.name}. Tous droits réservés. /
         <a class="transition link text-(--primary) font-medium" href={url('rss/')} onclick={`event.preventDefault(); navigateToPage('${url('rss/')}')`}>RSS</a> /
         <a class="transition link text-(--primary) font-medium" href={url('atom/')} onclick={`event.preventDefault(); navigateToPage('${url('atom/')}')`}>Atom</a>
         <!--/ <a class="transition link text-(--primary) font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>-->
         <br />
-        Built with <a class="transition link text-(--primary) font-medium" target="_blank" href="https://astro.build">Astro</a> &
-        Inspired by <a class="transition link text-(--primary) font-medium" target="_blank" href="https://github.com/Spr-Aachen/Twilight">Twilight</a>
-
+        <a class="transition link text-(--primary) font-medium" target="_blank" href="https://github.com/lutrinos/lutrinos.github.io">Source</a>
     </div>
 </div>
