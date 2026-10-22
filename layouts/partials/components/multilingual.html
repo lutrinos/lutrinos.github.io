@@ -25,7 +25,7 @@
 
     {{/* Sinon on redirige vers l’accueil de la langue cible */}}
     {{ if eq $targetLink "" }}
-    {{ $targetLink = (site.GetPage $targetLang).RelPermalink }}
+    {{ $targetLink = $targetLang | relURL }}
     {{ end }}
 
     <a href="{{ $targetLink }}" hreflang="{{ $targetLang }}">
