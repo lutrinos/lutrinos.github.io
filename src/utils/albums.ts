@@ -38,7 +38,7 @@ export const albums: AlbumGroup[] = Object.entries(albumModules).map(([path, mod
         id,
         ...data,
         photos: data.photos || [],
-        visible: data.visible !== false, // 默认为 true
+        visible: data.visible !== false, // Default to true
         basePath,
     };
     return album;

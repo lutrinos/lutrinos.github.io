@@ -4,9 +4,9 @@
 # By: Dreamer-Paul
 # Last Update: 2022.8.12
 
-一个支持更换 Live2D 模型的 JS 插件
+A JavaScript plugin that supports Live2D model switching
 
-本代码为奇趣保罗原创，并遵守 GPL 2.0 开源协议。欢迎访问我的博客：https://paugram.com
+This code is original by Dreamer-Paul and follows the GPL 2.0 open source protocol. Welcome to visit my blog: https://paugram.com
 
 ---- */
 
@@ -22,20 +22,20 @@ var Paul_Pio = function (prop) {
         root: document.location.origin + "/"
     };
 
-    // 工具通用函数
+    // Common utility functions
     const tools = {
-        // 创建内容
+        // Create element
         create: (tag, options) => {
             const el = document.createElement(tag);
             options.class && (el.className = options.class);
 
             return el;
         },
-        // 随机内容
+        // Random item from array
         rand: (arr) => {
             return arr[Math.floor(Math.random() * arr.length + 1) - 1];
         },
-        // 是否为移动设备
+        // Check if mobile device
         isMobile: () => {
             let ua = window.navigator.userAgent.toLowerCase();
             ua = ua.indexOf("mobile") || ua.indexOf("android") || ua.indexOf("ios");
@@ -58,15 +58,15 @@ var Paul_Pio = function (prop) {
     current.body.appendChild(elements.dialog);
     current.body.appendChild(elements.show);
 
-    /* - 方法 */
+    /* - Methods */
     const modules = {
-        // 更换模型
+        // Switch model
         idol: () => {
             current.idol < (prop.model.length - 1) ? current.idol++ : current.idol = 0;
 
             return current.idol;
         },
-        // 创建对话框方法
+        // Create dialog method
         message: (text, options = {}) => {
             const { dialog } = elements;
 
@@ -77,7 +77,7 @@ var Paul_Pio = function (prop) {
                 dialog[options.html ? "innerHTML" : "innerText"] = text;
             }
             else {
-                dialog.innerText = "输入内容出现问题了 X_X";
+                dialog.innerText = "There is a problem with the input ";
             }
 
             dialog.classList.add("active");
@@ -87,7 +87,7 @@ var Paul_Pio = function (prop) {
                 dialog.classList.remove("active");
             }, options.time || 3000);
         },
-        // 移除方法
+        // Remove method
         destroy: () => {
             that.initHidden();
             localStorage.setItem("posterGirl", "0");
@@ -97,9 +97,9 @@ var Paul_Pio = function (prop) {
     this.destroy = modules.destroy;
     this.message = modules.message;
 
-    /* - 提示操作 */
+    /* - Prompt operations */
     const action = {
-        // 欢迎
+        // Welcome message
         welcome: () => {
             if (document.referrer && document.referrer.includes(current.root)) {
                 const referrer = document.createElement("a");
@@ -146,68 +146,68 @@ var Paul_Pio = function (prop) {
                 modules.message(text);
             }
             else {
-                modules.message(prop.content.welcome || "欢迎来到本站！");
+                modules.message(prop.content.welcome || "Welcome to this website!");
             }
         },
-        // 触摸
+        // Touch interaction
         touch: () => {
             current.canvas.onclick = () => {
-                modules.message(prop.content.touch || ["你在干什么？", "再摸我就报警了！", "HENTAI!", "不可以这样欺负我啦！"]);
+                modules.message(prop.content.touch || ["What are you doing?", "I'll call the police if you touch me again!", "HENTAI!", "Don't bully me like that!"]);
             };
         },
-        // 右侧按钮
+        // Right side buttons
         buttons: () => {
-            // 返回首页 - 使用 Swup 无刷新跳转
+            // Go back to home - Use Swup navigation
             elements.home.onclick = () => {
-                // 检查 Swup 是否可用
+                // Check if Swup is available
                 if (typeof window !== 'undefined' && window.swup) {
                     try {
-                        // 使用 Swup 进行无刷新跳转
+                        // Use Swup for navigation
                         window.swup.navigate('/');
                     } catch (error) {
                         console.error('Swup navigation failed:', error);
-                        // 降级到普通跳转
+                        // Fall back to normal navigation
                         location.href = current.root;
                     }
                 } else {
-                    // Swup 不可用时使用普通跳转
+                    // Use normal navigation when Swup is not available
                     location.href = current.root;
                 }
             };
             elements.home.onmouseover = () => {
-                modules.message(prop.content.home || "点击这里回到首页！");
+                modules.message(prop.content.home || "Click here to go back to the home page!");
             };
             current.menu.appendChild(elements.home);
 
-            // 更换模型
+            // Switch model
             if (prop.model && prop.model.length > 1) {
                 elements.skin.onclick = () => {
                     loadlive2d("pio", prop.model[modules.idol()]);
 
-                    prop.content.skin && modules.message(prop.content.skin[1] || "新衣服真漂亮~");
+                    prop.content.skin && modules.message(prop.content.skin[1] || "The new outfit looks so pretty~");
                 };
                 elements.skin.onmouseover = () => {
-                    prop.content.skin && modules.message(prop.content.skin[0] || "想看看我的新衣服吗？");
+                    prop.content.skin && modules.message(prop.content.skin[0] || "Want to see my new outfit?");
                 };
                 current.menu.appendChild(elements.skin);
             }
 
-            // 关于我
+            // About me
             elements.info.onclick = () => {
                 window.open(prop.content.link || "https://paugram.com/coding/add-poster-girl-with-plugin.html");
             };
             elements.info.onmouseover = () => {
-                modules.message("想了解更多关于我的信息吗？");
+                modules.message("Want to learn more about me?");
             };
             current.menu.appendChild(elements.info);
 
-            // 夜间模式
+            // Night mode
             if (prop.night) {
                 elements.night.onclick = () => {
                     typeof prop.night === "function" ? prop.night() : eval(prop.night);
                 };
                 elements.night.onmouseover = () => {
-                    modules.message("夜间点击这里可以保护眼睛呢");
+                    modules.message("Click here at night to protect your eyes");
                 };
                 current.menu.appendChild(elements.night);
             }
@@ -217,11 +217,11 @@ var Paul_Pio = function (prop) {
                 modules.destroy();
             };
             elements.close.onmouseover = () => {
-                modules.message(prop.content.close || "QWQ 下次再见吧~");
+                modules.message(prop.content.close || "QWQ See you next time~");
             };
             current.menu.appendChild(elements.close);
         },
-        // 自定义选择器
+        // Custom selectors
         custom: () => {
             prop.content.custom.forEach((item) => {
                 const el = document.querySelectorAll(item.selector);
@@ -232,13 +232,13 @@ var Paul_Pio = function (prop) {
                     if (item.type === "read") {
                         el[i].onmouseover = (ev) => {
                             const text = ev.currentTarget.title || ev.currentTarget.innerText;
-                            modules.message("想阅读 %t 吗？".replace(/%t/, "“" + text + "”"));
+                            modules.message("Want to read " + text + "?");
                         }
                     }
                     else if (item.type === "link") {
                         el[i].onmouseover = (ev) => {
                             const text = ev.currentTarget.title || ev.currentTarget.innerText;
-                            modules.message("想了解一下 %t 吗？".replace(/%t/, "“" + text + "”"));
+                            modules.message("Want to learn more about " + text + "?");
                         }
                     }
                     else if (item.text) {
@@ -251,7 +251,7 @@ var Paul_Pio = function (prop) {
         }
     };
 
-    /* - 运行 */
+    /* - Run */
     const begin = {
         static: () => {
             current.body.classList.add("static");
@@ -299,9 +299,9 @@ var Paul_Pio = function (prop) {
         }
     };
 
-    // 运行
+    // Run
     this.init = (noModel) => {
-        // 未隐藏 + 非手机版，出现操作功能
+        // Not hidden + not mobile, show interaction features
         if (!(prop.hidden && tools.isMobile())) {
             if (!noModel) {
                 action.welcome();
@@ -318,9 +318,9 @@ var Paul_Pio = function (prop) {
         }
     };
 
-    // 隐藏状态
+    // Hidden state
     this.initHidden = () => {
-        // ! 清除预设好的间距
+        // ! Clear the preset spacing
         if (prop.mode === "draggable") {
             current.body.style.top = null;
             current.body.style.left = null;
@@ -341,7 +341,7 @@ var Paul_Pio = function (prop) {
     localStorage.getItem("posterGirl") === "0" ? this.initHidden() : this.init();
 };
 
-// 请保留版权说明
+// Please keep the copyright notice
 if (window.console && window.console.log) {
     console.log("%c Pio %c https://paugram.com ","color: #fff; margin: 1em 0; padding: 5px 0; background: #673ab7;","margin: 1em 0; padding: 5px 0; background: #efefef;");
 }
