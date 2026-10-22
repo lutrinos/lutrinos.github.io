@@ -1232,7 +1232,7 @@ uglyURLs = false
 
     displayShareOnText = false
 
-    postShareItems = ["facebook", "mastodon", "fediverse", "linkedin", "twitter", "email"]
+    postShareItems = ["email", "qrcode"]#["facebook", "mastodon", "fediverse", "linkedin", "twitter", "email"]
 
     # Fetch fediverse instances list for
     # input suggestions
