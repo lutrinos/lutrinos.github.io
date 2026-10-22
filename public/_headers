@@ -22,6 +22,3 @@
 
 /favicon/*
   Cache-Control: public, max-age=31536000, immutable
-
-/pio/*
-  Cache-Control: public, max-age=31536000, immutable
