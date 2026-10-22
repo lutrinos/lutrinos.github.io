@@ -11,7 +11,8 @@ import PostPage from "@components/postPage.astro";
 import GridLayout from "@layouts/grid.astro";
 
 
-export const getStaticPaths = (async ({ paginate }) => {
+export const getStaticPaths = (async ({ paginate, ... r }) => {
+    console.log(r);
     const allBlogPosts = await getSortedPosts();
     return paginate(allBlogPosts, { pageSize: PAGE_SIZE });
 }) satisfies GetStaticPaths;

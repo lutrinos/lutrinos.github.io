@@ -265,7 +265,8 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
     import { initHue } from "@utils/hue";
     import { initMarkdownActions } from "@/utils/markdown";
     import { initFancybox, cleanupFancybox } from "@utils/fancybox";
-    import { loadAndInitTranslate } from "@utils/language";
+
+    console.log('LOCALE', Astro.currentLocale);
 
     // 初始化Swup
     const setup = () => {
@@ -477,9 +478,6 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
 
     // 初始化 Markdown 相关操作以防止因 Swup 无刷新跳转的机制限制而导致操作失效
     initMarkdownActions();
-
-    // Initialize translate.js
-    loadAndInitTranslate();
 
     // Remove is-loading class and trigger initial-animation after page load
     if (typeof window !== "undefined") {

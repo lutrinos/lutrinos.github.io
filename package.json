@@ -7,7 +7,7 @@
 		"type-check": "tsc --noEmit --isolatedDeclarations",
 		"check": "astro check",
 		"dev": "node scripts/generate-icons.js && astro dev",
-		"build": "node scripts/generate-icons.js && node scripts/build-with-pagefind.cjs",
+		"build": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide && node scripts/generate-icons.js && node scripts/build-with-pagefind.cjs",
 		"preview": "astro preview",
 		"astro": "astro",
 		"new-post": "node scripts/new-post.js"
@@ -27,6 +27,7 @@
 		"@iconify-json/fa6-solid": "^1.2.4",
 		"@iconify-json/material-symbols": "^1.2.70",
 		"@iconify/svelte": "^5.2.1",
+		"@inlang/plugin-message-format": "^4.4.0",
 		"@swup/astro": "^1.8.0",
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.2.4",
@@ -70,6 +71,8 @@
 		"@types/markdown-it": "^14.1.2",
 		"@types/mdast": "^4.0.4",
 		"@types/sanitize-html": "^2.16.1",
-		"postcss-import": "^16.1.1"
+		"postcss-import": "^16.1.1",
+		"@inlang/paraglide-js": "^2.18.0",
+		"@inlang/cli": "^3.0.0"
 	}
 }

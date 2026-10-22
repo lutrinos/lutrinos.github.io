@@ -32,6 +32,7 @@ import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
 import { visualizer } from "rollup-plugin-visualizer";
+import yaml from "@rollup/plugin-yaml";
 
 // Choose adapter depending on deployment environment
 const adapter = process.env.GITHUB_ACTIONS
@@ -44,6 +45,13 @@ export default defineConfig({
     base: "/",
     trailingSlash: "always",
     adapter: adapter,
+    i18n: {
+        defaultLocale: 'fr',
+        locales: ['fr', 'en'],
+        routing: {
+            prefixDefaultLocale: true
+        }
+    },
     integrations: [
         decapCmsOauth({
             configPath: "./.decap.yml", // Path to the Decap CMS configuration file
@@ -205,6 +213,7 @@ export default defineConfig({
     },
     vite: {
         plugins: [
+            yaml(),
             tailwindcss(),
             visualizer({
                 emitFile: true,

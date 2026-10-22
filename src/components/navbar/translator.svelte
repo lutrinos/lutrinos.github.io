@@ -2,7 +2,7 @@
 import { onDestroy, onMount } from "svelte";
 
 import { BREAKPOINT_LG } from "@constants/breakpoints";
-import { getTranslateLanguageFromConfig, getSiteLanguage, setStoredLanguage, getDefaultLanguage } from "@/utils/language";
+import { getTranslateLanguageFromConfig, getSiteLanguage, getDefaultLanguage } from "@/utils/language";
 import { onClickOutside } from "@utils/widget";
 import { siteConfig } from "@/config";
 import { getSupportedTranslateLanguages } from "@/i18n/language";
@@ -56,8 +56,7 @@ async function changeLanguage(languageCode: string) {
         if (languageCode === localLang) {
             translate.reset();
         }
-        // 同步保存到我们的缓存中
-        setStoredLanguage(languageCode);
+        
         // 更新当前 UI 状态
         currentLanguage = languageCode;
     } catch (error) {

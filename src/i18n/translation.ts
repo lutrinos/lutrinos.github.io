@@ -1,25 +1,22 @@
 import { getResolvedSiteLang } from "@utils/language";
-import { en } from "./languages/en";
-import { ja } from "./languages/ja";
-import { zh } from "./languages/zh";
-import type I18nKey from "./i18nKey";
 
+// @ts-ignore
+import en from "./en.yml";
+
+// @ts-ignore
+import fr from "./fr.yml";
+
+import type I18nKey from "./i18nKey";
 
 export type Translation = {
     [K in I18nKey]: string;
 };
 
-const defaultTranslation = en;
+const defaultTranslation = fr;
 
 const map: { [key: string]: Translation } = {
     en: en,
-    en_us: en,
-    en_gb: en,
-    en_au: en,
-    zh: zh,
-    zh_cn: zh,
-    ja: ja,
-    ja_jp: ja,
+    fr: fr,
 };
 
 export function getTranslation(lang: string): Translation {
