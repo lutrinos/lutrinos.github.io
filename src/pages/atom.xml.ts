@@ -1,7 +1,7 @@
 import { getImage } from "astro:assets";
 import { parse as htmlParser } from "node-html-parser";
 import type { APIContext, ImageMetadata } from "astro";
-import MarkdownIt from "markdown-it";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import sanitizeHtml from "sanitize-html";
 
 import { siteConfig, profileConfig } from "@/config";
@@ -10,8 +10,7 @@ import { getCategoryPathParts } from "@utils/category";
 import { parseTags } from "@utils/tag";
 import { getFileDirFromPath, getPostUrl } from "@utils/url";
 
-
-const markdownParser = new MarkdownIt();
+const processorPromise = createMarkdownProcessor();
 
 function escapeXml(value: string) {
     return value
@@ -51,9 +50,12 @@ export async function GET(context: APIContext) {
         <updated>${new Date().toISOString()}</updated>
         <language>${escapeXml(siteConfig.lang)}</language>`;
 
+    const processor = await processorPromise;
+
     for (const post of posts) {
-        // convert markdown to html string, ensure post.body is a string
-        const body = markdownParser.render(String(post.body ?? ""));
+        // convert markdown to html string using Astro's markdown processor
+        const rendered = await processor.render(String(post.body ?? ""));
+        const body = String(rendered.code);
         // convert html string to DOM-like structure
         const html = htmlParser.parse(body);
         // hold all img tags in variable images

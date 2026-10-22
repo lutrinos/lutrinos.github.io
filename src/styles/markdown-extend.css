@@ -1,3 +1,5 @@
+/*@import "rehype-callouts/theme/vitepress";*/
+
 .custom-md blockquote.admonition .bdm-title {
   display: flex;
   align-items: center;
@@ -68,8 +70,11 @@
 .custom-md blockquote.admonition.bdm-caution:before {
   background: var(--admonitions-color-caution);
 }
+
 .custom-md img {
   border-radius: 0.75rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 .custom-md hr {
   border-color: var(--line-divider);

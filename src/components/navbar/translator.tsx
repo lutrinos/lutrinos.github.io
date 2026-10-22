@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { useState, useEffect, useRef } from 'preact/hooks';
 
 import { BREAKPOINT_LG } from "@constants/breakpoints";
@@ -7,6 +6,7 @@ import DropdownItem from "@/components/common/DropdownItem.tsx";
 import DropdownPanel from "@/components/common/DropdownPanel.tsx";
 import Icon from "@components/common/icon";
 import { LOCALE_CONFIG, SUPPORTED_LOCALES } from '@i18n/locales';
+import { navigateToPage } from '@utils/navigation';
 
 export default function Translator({ currentLocale }: { currentLocale?: string }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -40,20 +40,20 @@ export default function Translator({ currentLocale }: { currentLocale?: string }
     }, []);
 
     return (
-        <div class="relative z-50" onmouseleave={closePanel}>
+        <div class="relative z-50" onMouseLeave={closePanel}>
             {/* Translation button */}
             <button
                 aria-label="Language Translation"
                 class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90 flex items-center justify-center"
                 id="translate-switch"
-                onclick={() => {
+                onClick={() => {
                     if (window.innerWidth < BREAKPOINT_LG) {
                         openPanel();
                     } else {
                         togglePanel();
                     }
                 }}
-                onmouseenter={openPanel}
+                onMouseEnter={openPanel}
             >
                 <Icon icon="material-symbols:translate" class="text-[1.25rem] transition" />
             </button>
@@ -72,7 +72,15 @@ export default function Translator({ currentLocale }: { currentLocale?: string }
                             <DropdownItem
                                 isActive={currentLocale === l}
                                 onclick={() => {
-                                    // changeLanguage(lang.code)
+                                    if (l === 'fr')  {
+                                        navigateToPage('/', {
+                                            replace: true
+                                        });
+                                    } else {
+                                        navigateToPage(`/${l}`, {
+                                            replace: true
+                                        });
+                                    }
                                 }}
                                 class="gap-3 p-2! h-auto!"
                                 isLast={false}

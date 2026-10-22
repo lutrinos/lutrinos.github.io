@@ -8,8 +8,6 @@ const posts = await getSortedPostsList();
 const categories = await getCategoryList(Astro.currentLocale ?? "fr");
 const tags = await getTagList(Astro.currentLocale ?? "fr");
 
-console.log(categories);
-
 interface Props {
     class?: string;
     style?: string;
