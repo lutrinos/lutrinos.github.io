@@ -4,7 +4,7 @@ slug = "projets"
 description  = "Une liste des différents projets et programmes réalisées par-ci par-là."
 
 date = 2024-02-01
-modified = 2025-06-13
+modified = 2025-06-15
 tags = ['Informatique']
 categories = ['Divers']
 +++
@@ -15,6 +15,7 @@ L'ordre des projets n'a que peu d'importance, même si en règle générale, ceu
 - [Ressources](https://github.com/lutrinos/Ressources)
 
 # Khan Academy
+- [Grapheur de fonctions à deux variables](https://www.khanacademy.org/computer-programming/deux-variables/5883988318208000)
 - [Boyer-Moore algorithm](https://www.khanacademy.org/computer-programming/boyer-moore/5546924586418176)
 - [Bezier curve drawing](https://www.khanacademy.org/computer-programming/bezier/6445157619515392)
 - [A* algorithm](https://www.khanacademy.org/computer-programming/a/6346280991899648)

@@ -3,7 +3,7 @@ title = "Projects"
 slug = "projects"
 
 date = 2024-01-30
-modified = 2025-06-13
+modified = 2025-06-15
 categories = ['Miscellaneous']
 tags = ['Computer science']
 +++
@@ -14,6 +14,7 @@ The order does not matter, even though the most recent are listed first globally
 - [Ressources (in French)](https://github.com/lutrinos/Ressources)
 
 # Khan Academy
+- [Two variable functions](https://www.khanacademy.org/computer-programming/deux-variables/5883988318208000);
 - [Boyer-Moore algorithm](https://www.khanacademy.org/computer-programming/boyer-moore/5546924586418176)
 - [Bezier curve drawing](https://www.khanacademy.org/computer-programming/bezier/6445157619515392)
 - [A* algorithm](https://www.khanacademy.org/computer-programming/a/6346280991899648)
