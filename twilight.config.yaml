@@ -8,7 +8,7 @@ site:
     subtitle: "Blog Template"
     # Language Configuration
     lang: "en"
-    
+
     # Translation Configuration
     translate:
         # Enable translation feature
@@ -124,26 +124,6 @@ site:
             navbar:
                 transparentMode: "semi"
     
-    # Loading page configuration
-    loadingOverlay:
-        # Whether to enable the loading page
-        enable: false
-        # Whether to wait for all resources (such as images, stylesheets) to load
-        waitForAllResources: true
-        # Loading title configuration
-        title:
-            # Whether to enable the loading title
-            enable: true
-            # Loading title text
-            content: "LOADING"
-            # Animation cycle (s)
-            interval: 1.5
-        # Loading animation configuration
-        spinner:
-            # Whether to enable the loading animation
-            enable: true
-            # Animation cycle (s)
-            interval: 1.5
     # favicon configuration
     favicon: []
     # bangumi configuration

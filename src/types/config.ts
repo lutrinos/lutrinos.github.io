@@ -34,32 +34,6 @@ export type Favicon = {
     sizes?: string;
 };
 
-
-// 加载页配置
-export type LoadingOverlayConfig = {
-    // 是否启用加载页
-    enable: boolean;
-    // 是否等待所有资源加载完成; 若设置为 false，则会在 DOM 解析完成后立即关闭加载页
-    waitForAllResources: boolean;
-    // 加载标题配置
-    title: {
-        // 是否启用加载标题
-        enable: boolean;
-        // 加载标题文本
-        content: string;
-        // 动画周期 (s)
-        interval: number;
-    };
-    // 加载动画配置
-    spinner: {
-        // 是否启用加载动画
-        enable: boolean;
-        // 动画周期 (s)
-        interval: number;
-    };
-};
-
-
 // 站点配置
 export type SiteConfig = {
     // 站点 URL (以斜杠结尾) 
@@ -184,8 +158,7 @@ export type SiteConfig = {
             };
         };
     };
-    // 加载页配置
-    loadingOverlay?: LoadingOverlayConfig;
+    
     // Favicon 配置
     favicon: Favicon[];
     // bangumi 配置
