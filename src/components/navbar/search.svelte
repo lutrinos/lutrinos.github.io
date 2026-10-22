@@ -18,6 +18,8 @@ let isSearching = $state(false);
 let pagefindLoaded = false;
 let initialized = $state(false);
 let isDesktopSearchExpanded = $state(false);
+
+// @ts-ignore
 let debounceTimer: NodeJS.Timeout;
 
 const fakeResult: SearchResult[] = [

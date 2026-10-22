@@ -7,6 +7,7 @@
     "tags": ["example"],
     "layout": "masonry",
     "columns": 3,
+    "draft": true,
     "photos": [
         {
             "src": "./智子_ASK.jpg",
