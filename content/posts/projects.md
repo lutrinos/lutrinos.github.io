@@ -1,7 +1,8 @@
 +++
-title = "Projets"
+title = "Inventaire des projets"
 date = 2024-02-01
 modified = 2025-06-13
+tags = ['Informatique']
 +++
 
 L'ordre des projets n'a que peu d'importance, même si en règle générale, ceux les plus récents sont vers le haut.
