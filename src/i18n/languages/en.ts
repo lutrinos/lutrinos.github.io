@@ -51,11 +51,6 @@ export const en: Translation = {
     [Key.darkMode]: "Dark",
     [Key.systemMode]: "System",
 
-    [Key.wallpaperMode]: "Wallpaper Mode",
-    [Key.wallpaperFullscreen]: "Fullscreen",
-    [Key.wallpaperBanner]: "Banner",
-    [Key.wallpaperNone]: "None",
-
     [Key.more]: "More",
 
     [Key.backTo]: "Back to",

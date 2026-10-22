@@ -1,14 +1,9 @@
 ---
 import type { MarkdownHeading } from "astro";
-import { Icon } from "astro-icon/components";
 
-import { siteConfig } from "@/config";
-import { pathsEqual, url } from "@utils/url";
 import { widgetManager } from "@utils/widget";
 import IconifyLoader from "@components/common/iconifyLoader.astro";
 import Navbar from "@components/navbar.astro";
-import FullscreenWallpaper from "@components/fullscreenWallpaper.astro";
-import Banner from "@components/banner.astro";
 import Sidebar from "@components/sidebar.astro";
 import Footer from "@components/footer.astro";
 import TocButton from "@components/tocButton.astro";
@@ -16,13 +11,9 @@ import BackToTopButton from "@components/back2TopButton.astro";
 import BaseLayout from "./base.astro";
 import "@styles/grid.css";
 
-/**
- * Wallpaper
- */
 
 interface Props {
     title?: string;
-    banner?: string;
     description?: string;
     lang?: string;
     setOGTypeArticle?: boolean;
@@ -32,24 +23,15 @@ interface Props {
 
 const {
     title,
-    banner,
     description,
     lang,
     setOGTypeArticle,
     postSlug,
     headings = [],
 } = Astro.props;
-const hasBannerCredit = siteConfig.wallpaper.mode === "banner" && siteConfig.wallpaper.banner?.credit?.enable;
-const hasBannerLink = !!siteConfig.wallpaper.banner?.credit?.url;
-
-// 检查是否为首页
-const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
-
-// 检查是否应该启用半透明效果
-const shouldEnableTransparency = siteConfig.wallpaper.mode === "banner" || siteConfig.wallpaper.mode === "fullscreen";
 
 // 为组件添加半透明效果的CSS类
-const transparentClass = shouldEnableTransparency ? "wallpaper-transparent" : "";
+const transparentClass = "";
 
 /**
  * Sidebar
@@ -71,7 +53,6 @@ const {
 
 <BaseLayout
     title={title}
-    banner={banner}
     description={description}
     lang={lang}
     setOGTypeArticle={setOGTypeArticle}
@@ -94,31 +75,9 @@ const {
         </div>
     </div>
 
-    <!-- 全屏壁纸 - 总是渲染但通过CSS控制可见性 -->
-    <FullscreenWallpaper
-        config={siteConfig.wallpaper}
-        class={siteConfig.wallpaper.mode === "fullscreen" ? "" : "hidden"}
-    />
-
-    <!-- 为全屏壁纸模式添加body类 -->
-    {
-        shouldEnableTransparency && (
-            <script>
-                document.body.classList.add('wallpaper-transparent');
-            </script>
-        )
-    }
-
-    <!-- Banner - 总是渲染但通过CSS控制可见性 -->
-    <Banner
-        config={siteConfig.wallpaper}
-        isHomePage={isHomePage}
-        class={siteConfig.wallpaper.mode === "banner" ? "" : "hidden"}
-    />
-
     <!-- Main content -->
     <div
-        class={`absolute w-full z-30 pointer-events-none transition-transform duration-600 top-0 min-h-[calc(100vh-var(--main-content-top))] ${siteConfig.wallpaper.mode !== "banner" ? "no-banner-layout" : ""} ${transparentClass}`}
+        class={`absolute w-full z-30 pointer-events-none transition-transform duration-600 top-0 min-h-[calc(100vh-var(--main-content-top))] ${transparentClass}`}
         style="transform: translateY(var(--main-content-top))"
     >
         <div
@@ -128,44 +87,7 @@ const {
                 id="main-grid"
                 class={`w-full left-0 right-0 grid ${gridCols} grid-rows-[auto] mx-auto gap-4 px-0 md:px-4 ${!hasAnyComponents ? "mobile-no-sidebar" : ""} ${(hasLeftSidebar || hasRightSidebar) ? "mobile-both-sidebar" : ""}`}
             >
-                <!-- Banner image credit -->
-                {
-                    hasBannerCredit && (
-                        <a
-                            href={siteConfig.wallpaper.banner?.credit?.url}
-                            id="banner-credit"
-                            target="_blank"
-                            rel="noopener"
-                            aria-label="Visit image source"
-                            class:list={[
-                                "group onload-animation-up transition-all absolute flex justify-center items-center rounded-full " +
-                                    "px-3 right-4 -top-13 bg-black/60 hover:bg-black/70 h-9",
-                                {
-                                    "hover:pr-9 active:bg-black/80":
-                                        hasBannerLink,
-                                },
-                            ]}
-                        >
-                            <Icon
-                                class="text-white/75 text-[1.25rem] mr-1"
-                                name="material-symbols:copyright-outline-rounded"
-                            />
-                            <div class="text-white/75 text-xs">
-                                {siteConfig.wallpaper.banner?.credit?.text}
-                            </div>
-                            <Icon
-                                class:list={[
-                                    "transition absolute text-[oklch(0.75_0.14_var(--hue))] right-4 text-[0.75rem] opacity-0",
-                                    {
-                                        "group-hover:opacity-100":
-                                            hasBannerLink,
-                                    },
-                                ]}
-                                name="fa6-solid:arrow-up-right-from-square"
-                            />
-                        </a>
-                    )
-                }
+                
 
                 <div class="contents lg:contents md:flex md:flex-col md:col-start-1 md:row-start-1 md:gap-4">
                     {

@@ -1,13 +1,3 @@
-/* 当banner被禁用时的布局样式 */
-.no-banner-layout {
-    /* top and min-height are now handled by inline style in grid.astro */
-}
-
-/* 隐藏已收起横幅或非横幅模式时的图片版权描述 */
-.no-banner-layout #banner-credit {
-    display: none !important;
-}
-
 
 /* 手机端无侧边栏布局优化 */
 @media (max-width: 768px) {

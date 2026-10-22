@@ -68,39 +68,11 @@
     transition: none !important;
     backdrop-filter: none !important;
     }
-    & #navbar[data-transparent-mode] > div {
+    & #navbar > div {
     transition: none !important;
     backdrop-filter: none !important;
     }
-    & #navbar[data-transparent-mode].scrolled > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-    & body.wallpaper-transparent #navbar > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-    & body.wallpaper-transparent #navbar[data-transparent-mode] > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-    & body.wallpaper-transparent #navbar[data-transparent-mode].scrolled > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-    & #banner-wrapper ~ * #navbar > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-    & #banner-wrapper ~ * #navbar[data-transparent-mode] > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-    & body:has(#banner-wrapper) #navbar > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-    & body:has(#banner-wrapper) #navbar[data-transparent-mode] > div {
+    & #navbar.scrolled > div {
     transition: none !important;
     backdrop-filter: none !important;
     }
@@ -154,83 +126,12 @@
 }
 
 @utility scrolled {
-    .is-theme-transitioning &#navbar[data-transparent-mode] > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-
-    .is-theme-transitioning
-    body.wallpaper-transparent
-    &#navbar[data-transparent-mode]
-    > div {
+    .is-theme-transitioning &#navbar > div {
     transition: none !important;
     backdrop-filter: none !important;
     }
 }
 
-@utility wallpaper-transparent {
-    .is-theme-transitioning &body #navbar > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-
-    .is-theme-transitioning &body #navbar[data-transparent-mode] > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-
-    .is-theme-transitioning &body #navbar[data-transparent-mode].scrolled > div {
-    transition: none !important;
-    backdrop-filter: none !important;
-    }
-
-    /* 全屏壁纸模式下的半透明效果 */
-    & .card-base {
-    @apply bg-(--card-bg-transparent);
-    }
-
-    & .float-panel {
-    @apply bg-(--card-bg-transparent);
-    }
-
-    & #navbar > div {
-    @apply bg-(--card-bg-transparent) backdrop-blur-xs;
-    }
-
-    & .btn-card {
-    @apply bg-(--card-bg-transparent);
-    }
-
-    & ~ * .music-player .mini-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    & ~ * .music-player .expanded-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    & ~ * .music-player .playlist-panel {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    & body .music-player .mini-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    & body .music-player .expanded-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    & body .music-player .playlist-panel {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-}
 
 @utility dropdown-content {
     /* 导航栏相关浮动面板的过渡禁用 */
@@ -247,19 +148,12 @@
     backdrop-filter: none !important;
     }
 
-    .wallpaper-transparent & {
-    @apply bg-(--card-bg-transparent);
-    }
     @apply top-21 rounded-(--radius-large) overflow-hidden bg-(--float-panel-bg) transition-colors duration-150 shadow-xl dark:shadow-none;
 }
 
 @utility card-base {
     @apply rounded-(--radius-large) overflow-hidden bg-(--card-bg) transition-colors duration-150;
 
-    /* 全屏壁纸模式下的半透明效果 */
-    .wallpaper-transparent & {
-    @apply bg-(--card-bg-transparent);
-    }
 }
 
 @utility card-base-transparent {
@@ -267,9 +161,6 @@
 }
 
 @utility btn-card {
-    .wallpaper-transparent & {
-    @apply bg-(--card-bg-transparent);
-    }
     @apply transition-colors duration-150 flex items-center justify-center bg-(--card-bg) hover:bg-(--btn-card-bg-hover)
         active:bg-(--btn-card-bg-active);
     &.disabled {
@@ -277,73 +168,6 @@
     }
 }
 
-@utility music-player {
-    .wallpaper-transparent ~ * & .mini-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    .wallpaper-transparent ~ * & .expanded-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    .wallpaper-transparent ~ * & .playlist-panel {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    body.wallpaper-transparent & .mini-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    body.wallpaper-transparent & .expanded-player {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    body.wallpaper-transparent & .playlist-panel {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-}
-
-@utility mini-player {
-    .wallpaper-transparent ~ * .music-player & {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    body.wallpaper-transparent .music-player & {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-}
-
-@utility expanded-player {
-    .wallpaper-transparent ~ * .music-player & {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    body.wallpaper-transparent .music-player & {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-}
-
-@utility playlist-panel {
-    .wallpaper-transparent ~ * .music-player & {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-
-    body.wallpaper-transparent .music-player & {
-    background-color: var(--card-bg-transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    }
-}
 
 @utility card-shadow {
     @apply drop-shadow-sm;
