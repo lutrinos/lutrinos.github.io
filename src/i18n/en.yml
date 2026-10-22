@@ -7,6 +7,9 @@ archive: "Archive"
 about: "About"
 search: "Search"
 
+# Archive
+archiveSubtitle: "The published posts"
+
 # Posts
 directory: "Directory"
 tags: "Tags"

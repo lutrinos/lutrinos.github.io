@@ -2,8 +2,6 @@
 import { Icon } from "astro-icon/components";
 import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 
 import { profileConfig, postConfig } from "@/config";
 import { getSortedPosts } from "@utils/post";
@@ -51,11 +49,6 @@ const { remarkPluginFrontmatter } = await render(entry);
 
 // Handle encryption logic
 let isEncrypted = !!(entry.data.encrypted && entry.data.password);
-
-dayjs.extend(utc);
-const lastModified = dayjs(entry.data.updated || entry.data.published)
-    .utc()
-    .format("YYYY-MM-DDTHH:mm:ss");
 
 const lastModifiedKeys = [
     I18nKey.lastModifiedPrefix,

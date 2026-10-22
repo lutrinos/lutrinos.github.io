@@ -8,6 +8,9 @@ enum I18nKey {
     about = "about",
     search = "search",
 
+    // Archive
+    archiveSubtitle = "archiveSubtitle",
+
     // Post
     directory = "directory",
     tags = "tags",
