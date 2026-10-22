@@ -1,17 +1,23 @@
 ---
-import { LinkPresets } from "@constants/link-presets";
-import { LinkPreset } from "@/types/config";
+export const prerender = true;
+
+export const getStaticPaths = async () => getLocaleStaticPaths();
+
 import { getSortedPostsList } from "@utils/post";
 import ArchivePanel from "@components/archivePanel.tsx";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
+import { getLocaleStaticPaths } from "@utils/locale";
 import I18nKey from "@i18n/i18nKey";
 
-const pageTitle = LinkPresets[LinkPreset.Archive].name;
-const pageDescription = LinkPresets[LinkPreset.Archive].description;
-
 const sortedPostsList = await getSortedPostsList();
+
+const i18n = useLocale(Astro.currentLocale);
+
+const pageTitle = i18n(I18nKey.archive)
+const pageDescription = "A chronological list of all published posts.";
+
 ---
 
 <GridLayout title={pageTitle} description={pageDescription}>

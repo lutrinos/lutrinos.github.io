@@ -1,13 +1,13 @@
 ---
 import { getCategoryTree, type CategoryTreeItem } from "@utils/post";
 import { widgetManager, getComponentConfig } from "@utils/widget";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 import WidgetLayout from "./widgetLayout.astro";
 import CategoryItem from "./categoryItem.astro";
 
 
-const categoriesTree = await getCategoryTree();
+const categoriesTree = await getCategoryTree(Astro.currentLocale ?? "fr");
 
 const COLLAPSED_HEIGHT = "7.5rem";
 
@@ -25,6 +25,7 @@ interface Props {
     depth?: number;
 }
 const { class: className, style, side = "default", depth } = Astro.props;
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <WidgetLayout

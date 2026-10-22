@@ -49,42 +49,6 @@ analytics:
         # Tracking code
         code: ""
 
-# Navigation Bar Configuration
-navbar:
-    # Link configuration (link presets are located in LinkPresets in src/constants/link-presets.ts)
-    links:
-        - # Level 1 navigation link - Home (preset)
-          "Home"
-        - # Level 1 navigation link - Archive (preset)
-          "Archive"
-        - # Level 1 navigation link - Exhibition (custom)
-          # Navigation name
-          name: "Exhibition"
-          # Navigation link
-          url: "/exhibition/"
-          # Navigation icon
-          icon: "material-symbols:person"
-          # Navigation description
-          description: "A collection of my creative works and experiences"
-          # Sub-links
-          children:
-              - # Level 2 navigation link - Projects (preset)
-                "Projects"
-              - # Level 2 navigation link - Skills (preset)
-                "Skills"
-              - # Level 2 navigation link - Timeline (preset)
-                "Timeline"
-              - # Level 2 navigation link - Diary (preset)
-                "Diary"
-              - # Level 2 navigation link - Albums (preset)
-                "Albums"
-              - # Level 2 navigation link - Anime (preset)
-                "Anime"
-        - # Level 1 navigation link - Friends (preset)
-          "Friends"
-        - # Level 1 navigation link - About (preset)
-          "About"
-
 # Sidebar Layout Configuration
 sidebar:
     # Sidebar component configuration list (sidebar component presets are located in WidgetComponentType in src/types/config.ts)

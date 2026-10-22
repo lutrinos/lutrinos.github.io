@@ -5,7 +5,7 @@ import { getCategoryUrl, getTagUrl, url } from "@utils/url";
 import { getCategoryPathParts } from "@utils/category";
 import { formatDateToYYYYMMDD } from "@utils/date";
 import { getAnalyticsConfig } from "@utils/analytics";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 
 
@@ -38,6 +38,7 @@ const finalPostUrl = postUrl || (slug ? url(`/posts/${slug}/`) : "");
 const categoryParts = getCategoryPathParts(category ?? null);
 
 const { enabled: analyticsEnabled, platform, baseUrl, apiKey, websiteId } = getAnalyticsConfig();
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <div class:list={["flex flex-wrap text-neutral-500 dark:text-neutral-400 items-center gap-x-4 gap-y-2", className]}>
@@ -70,7 +71,7 @@ const { enabled: analyticsEnabled, platform, baseUrl, apiKey, websiteId } = getA
                             <div class="mx-1.5 text-(--meta-divider) text-sm">/</div>
                         )}
                         <a
-                            href={getCategoryUrl(categoryParts.slice(0, index + 1))}
+                            href={getCategoryUrl(Astro.currentLocale ?? "fr", categoryParts.slice(0, index + 1))}
                             aria-label={`View all posts in the ${categoryName} category`}
                             class="link-lg transition text-50 text-sm font-medium
                                         hover:text-(--primary) dark:hover:text-(--primary) whitespace-nowrap"
@@ -80,7 +81,7 @@ const { enabled: analyticsEnabled, platform, baseUrl, apiKey, websiteId } = getA
                     </>
                 ))
             ) : (
-                <a href={getCategoryUrl(null)} aria-label={`View all posts in the ${i18n(I18nKey.uncategorized)} category`}
+                <a href={getCategoryUrl(Astro.currentLocale ?? "fr", null)} aria-label={`View all posts in the ${i18n(I18nKey.uncategorized)} category`}
                     class="link-lg transition text-50 text-sm font-medium
                                 hover:text-(--primary) dark:hover:text-(--primary) whitespace-nowrap">
                     {i18n(I18nKey.uncategorized)}

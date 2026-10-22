@@ -1,5 +1,5 @@
 ---
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 import Icon from "@components/common/icon.astro";
 
@@ -164,6 +164,7 @@ const getSizeClasses = (size: string) => {
 
 const sizeClasses = getSizeClasses(size);
 const itemColor = item.color || "#3B82F6";
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 {layout === 'timeline' ? (

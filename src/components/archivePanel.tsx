@@ -4,27 +4,33 @@ import { useState, useEffect, useMemo } from 'preact/hooks';
 import { getPostUrl } from "@utils/url";
 import { getCategoryPathLabel, getCategoryPathParts } from "@utils/category";
 import { parseTags } from "@utils/tag";
+import type { PostForList } from '@utils/post';
 
-export default function ArchivePanel({ sortedPosts = [], postCountLabel = "post", postsCountLabel = "posts" }) {
-    const [tags, setTags] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [uncategorized, setUncategorized] = useState(null);
+export default function ArchivePanel({
+    sortedPosts = [],
+    postCountLabel = "post",
+    postsCountLabel = "posts" }: {
+        sortedPosts: PostForList[],
+        postCountLabel: string;
+        postsCountLabel: string;
+    }) {
+    const [tags, setTags] = useState<string[]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         setTags(params.has("tag") ? params.getAll("tag") : []);
         setCategories(params.has("category") ? params.getAll("category") : []);
-        setUncategorized(params.get("uncategorized"));
     }, []);
 
-    function formatDate(date) {
+    function formatDate(date: any) {
         const d = new Date(date);
         const month = (d.getMonth() + 1).toString().padStart(2, "0");
         const day = d.getDate().toString().padStart(2, "0");
         return `${month}-${day}`;
     }
 
-    function formatTag(tagList) {
+    function formatTag(tagList: string[]) {
         return tagList.map((t) => `#${t}`).join(" ");
     }
 
@@ -66,10 +72,6 @@ export default function ArchivePanel({ sortedPosts = [], postCountLabel = "post"
             );
         }
 
-        if (uncategorized !== null) {
-            filteredPosts = filteredPosts.filter((post) => !getCategoryPathLabel(post.data.category));
-        }
-
         // Sort by published date descending
         filteredPosts = filteredPosts.slice().sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
 
@@ -93,7 +95,7 @@ export default function ArchivePanel({ sortedPosts = [], postCountLabel = "post"
         groupedPostsArray.sort((a, b) => b.year - a.year);
 
         return groupedPostsArray;
-    }, [sortedPosts, tags, categories, uncategorized]);
+    }, [sortedPosts, tags, categories]);
 
     return (
         <div>

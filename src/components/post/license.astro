@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 import { getPostUrlBySlug } from "@utils/url";
 import { postConfig, profileConfig } from "@/config";
 import { formatDateToYYYYMMDD } from "@utils/date";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 
 
@@ -26,6 +26,7 @@ const className = Astro.props.class;
 const profileConf = profileConfig;
 const licenseConf = postConfig.license;
 const postUrl = sourceLink || propPostUrl || getPostUrlBySlug(id);
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <div class={`relative transition overflow-hidden bg-(--license-block-bg) py-5 px-6 ${className}`}>

@@ -3,14 +3,12 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import { CATEGORY_SEPARATOR, type CategoryPath, getCategoryPathParts } from "@utils/category";
 import { parseTags, type Tag } from "@utils/tag";
 import { getCategoryUrl } from "@utils/url";
-import { i18n } from "@i18n/translation";
-import I18nKey from "@i18n/i18nKey";
 
 
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
-    const allBlogPosts = await getCollection("posts", ({ data, ...r }) => {
-        return import.meta.env.PROD ? data.draft !== true : true;
+    const allBlogPosts = await getCollection("posts", ({ data }) => {
+        return data.draft !== true;
     });
 
     const sorted = allBlogPosts.sort((a, b) => {
@@ -24,9 +22,9 @@ async function getRawSortedPosts() {
         return dateA > dateB ? -1 : 1;
     });
 
+    // We create the slug if it doesn't exists
     return sorted.map((p) => {
         p.data.slug = p.data.slug || p.id;
-        p.id = p.data.slug;
         return p;
     });
 }
@@ -60,9 +58,9 @@ export async function getSortedPostsList(): Promise<PostForList[]> {
 
     return sortedPostsList;
 }
-export async function getTagList(): Promise<Tag[]> {
+export async function getTagList(locale: string): Promise<Tag[]> {
     const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-        return import.meta.env.PROD ? data.draft !== true : true;
+        return data.draft !== true && data.locale === locale;
     });
 
     const countMap: { [key: string]: number } = {};
@@ -96,16 +94,15 @@ export type CategoryTreeItem = {
     children: CategoryTreeItem[];
 };
 
-export async function getCategoryList(): Promise<Category[]> {
+export async function getCategoryList(locale: string): Promise<Category[]> {
     const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-        return import.meta.env.PROD ? data.draft !== true : true;
+        return data.draft !== true && data.locale === locale;
     });
     const count: { [key: string]: number } = {};
     allBlogPosts.forEach((post: { data: { category: string | string[] | null } }) => {
         const categoryParts = getCategoryPathParts(post.data.category);
+
         if (!categoryParts) {
-            const ucKey = i18n(I18nKey.uncategorized);
-            count[ucKey] = count[ucKey] ? count[ucKey] + 1 : 1;
             return;
         }
 
@@ -122,15 +119,15 @@ export async function getCategoryList(): Promise<Category[]> {
         ret.push({
             name: c,
             count: count[c],
-            url: getCategoryUrl(c),
+            url: getCategoryUrl(locale, c),
         });
     }
     return ret;
 }
 
-export async function getCategoryTree(): Promise<CategoryTreeItem[]> {
+export async function getCategoryTree(locale: string): Promise<CategoryTreeItem[]> {
     const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-        return import.meta.env.PROD ? data.draft !== true : true;
+        return data.draft !== true && data.locale === locale;
     });
 
     type CategoryTreeInternal = {
@@ -141,11 +138,10 @@ export async function getCategoryTree(): Promise<CategoryTreeItem[]> {
     };
 
     const root = new Map<string, CategoryTreeInternal>();
-    const uncategorizedKey = i18n(I18nKey.uncategorized);
 
     for (const post of allBlogPosts) {
         const rawParts = getCategoryPathParts(post.data.category);
-        const categoryParts = rawParts && rawParts.length > 0 ? rawParts : [uncategorizedKey];
+        const categoryParts = rawParts && rawParts.length > 0 ? rawParts : [];
         let currentLevel = root;
         let currentPath: string[] = [];
 
@@ -176,7 +172,7 @@ export async function getCategoryTree(): Promise<CategoryTreeItem[]> {
             name: node.name,
             count: node.count,
             path: node.path,
-            url: getCategoryUrl(node.path),
+            url: getCategoryUrl(locale, node.path),
             children: buildTree(node.children),
         }));
     };

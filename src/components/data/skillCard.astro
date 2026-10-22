@@ -1,5 +1,5 @@
 ---
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 import Icon from "@components/common/icon.astro";
 
@@ -126,6 +126,7 @@ const getExperienceText = (experience: Props["skill"]["experience"]) => {
             : "";
     return `${yearsText}${monthsText}`;
 };
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <div class="bg-white dark:bg-slate-800/50 rounded-lg border border-black/10 dark:border-white/10 overflow-hidden hover:shadow-lg transition-all duration-300 group">

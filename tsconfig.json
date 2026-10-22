@@ -4,7 +4,7 @@
         "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "bundler",
-        "jsx": "preact",
+        "jsx": "react-jsx",
         "jsxImportSource": "preact",
         "strictNullChecks": true,
         "allowJs": true,

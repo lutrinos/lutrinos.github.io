@@ -32,24 +32,20 @@ export function getPostUrlByRouteName(routeName: string): string {
 export function getPostUrl(post: CollectionEntry<"posts">): string;
 export function getPostUrl(post: { id: string; data: { routeName?: string } }): string;
 export function getPostUrl(post: any): string {
-    // If the post has a custom permalink, use it preferentially
-    if (post.data.routeName) {
-        return getPostUrlByRouteName(post.data.routeName);
-    }
     // Otherwise use the default slug path
-    return getPostUrlBySlug(post.id);
+    return getLocaleUrl(post.data.locale, 'posts', post.data.slug);
 }
 
-export function getCategoryUrl(category: string | string[] | null): string {
-    if (!category) return url("/archive/?uncategorized=true");
+export function getCategoryUrl(locale: string, category: string | string[] | null): string {
+    if (!category) return getLocaleUrl(locale, "/archive/?uncategorized=true");
     const parts = Array.isArray(category)
         ? category.map((item) => String(item).trim()).filter((item) => item.length > 0)
         : [category.trim()];
     const label = parts.join(CATEGORY_SEPARATOR).trim();
     if (!label || label.toLowerCase() === 'uncategorized') {
-        return url("/archive/?uncategorized=true");
+        return getLocaleUrl(locale, "/archive/?uncategorized=true");
     }
-    return url(`/archive/?category=${encodeURIComponent(label)}`);
+    return getLocaleUrl(locale, `/archive/?category=${encodeURIComponent(label)}`);
 }
 
 export function getTagUrl(tag: string): string {
@@ -71,6 +67,14 @@ export function getFileDirFromPath(filePath: string): string {
     return filePath.replace(/^src\//, "").replace(/\/[^/]+$/, "");
 }
 
-export function url(path: string) {
-    return joinUrl("", import.meta.env.BASE_URL, path);
+export function getLocaleUrl(locale: string, ...path: string[]) {
+    if (locale && locale !== "fr") {
+        return joinUrl("", import.meta.env.BASE_URL, locale, ...path);
+    }
+
+    return url(...path);
+}
+
+export function url(...path: string[]) {
+    return joinUrl("", import.meta.env.BASE_URL, ...path);
 }

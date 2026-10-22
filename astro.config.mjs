@@ -47,7 +47,7 @@ const siteConfig = jsYaml.load(rawConfig).site;
 export default defineConfig({
     site: siteConfig.siteURL,
     base: "/",
-    trailingSlash: "always",
+    trailingSlash: "ignore",
     adapter: adapter,
     i18n: {
         defaultLocale: 'fr',

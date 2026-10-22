@@ -1,13 +1,13 @@
 ---
 import { getDirectoryTree } from "@utils/directory";
 import { widgetManager, getComponentConfig } from "@utils/widget";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 import WidgetLayout from "./widgetLayout.astro";
 import DirectoryTree from "./directoryTree.tsx";
 
 
-const directoryTree = await getDirectoryTree();
+const directoryTree = await getDirectoryTree(Astro.currentLocale);
 
 const COLLAPSED_HEIGHT = "12rem";
 
@@ -24,6 +24,7 @@ interface Props {
     side?: string;
 }
 const { class: className, style, side = "default" } = Astro.props;
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <WidgetLayout

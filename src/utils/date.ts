@@ -1,5 +1,4 @@
-import { langToLocaleMap } from "@i18n/language";
-import { getDefaultLanguage } from "./language";
+import { getDefaultLanguage, LOCALE_CONFIG } from "./locale";
 
 
 export function formatDateToYYYYMMDD(date: Date): string {
@@ -19,6 +18,5 @@ export function formatDateI18n(dateString: string): string {
     };
 
     // Use unified language configuration to get locale
-    const locale = langToLocaleMap[lang] || "en-US";
-    return date.toLocaleDateString(locale, options);
+    return date.toLocaleDateString(LOCALE_CONFIG[lang].locale, options);
 }

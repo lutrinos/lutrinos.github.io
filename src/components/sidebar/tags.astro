@@ -1,6 +1,6 @@
 ---
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { useLocale } from "@i18n/translation";
 import { getTagList } from "@utils/post";
 import { getTagUrl } from "@utils/url";
 import { widgetManager, getComponentConfig } from "@utils/widget";
@@ -8,7 +8,7 @@ import ButtonTag from "@/components/common/buttonTag.astro";
 import WidgetLayout from "./widgetLayout.astro";
 
 
-const tags = await getTagList();
+const tags = await getTagList(Astro.currentLocale ?? "fr");
 
 const COLLAPSED_HEIGHT = "7.5rem";
 
@@ -22,6 +22,7 @@ interface Props {
     side?: string;
 }
 const { class: className, style, side = "default" } = Astro.props;
+const i18n = useLocale(Astro.currentLocale);
 ---
 
 <WidgetLayout name={i18n(I18nKey.tags)} id={`tags-${side}`} isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT} class={className} style={style}>
