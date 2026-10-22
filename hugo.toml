@@ -1448,7 +1448,7 @@ uglyURLs = false
     # Note: This requires SearchIndex
     #       output to be enabled.
 
-    enableLunrSearch = true
+    enableLunrSearch = false
     # Note: https://lunrjs.com/
 
 
