@@ -24,6 +24,7 @@ site:
     themeColor:
         # Default hue of the theme color (range from 0 to 360. e.g., Red: 0, Cyan: 200, Teal: 250, Pink: 345)
         hue: 255
+
     # Default Theme ("system" follows system | "light" light mode | "dark" dark mode)
     defaultTheme: "light"
 
