@@ -1,7 +1,11 @@
 +++
 title = "Projects"
+slug = "projects"
+
 date = 2024-01-30
 modified = 2025-06-13
+categories = ['Miscellaneous']
+tags = ['Computer science']
 +++
 
 The order does not matter, even though the most recent are listed first globally.

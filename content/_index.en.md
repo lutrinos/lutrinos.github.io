@@ -22,4 +22,4 @@ I am currently a high school student enjoying coding, reading, playing basketbal
 
 Besides this short presentation, I use this website to list some of the projects I made, and am currently involved in.
 
-You can find them by [following this link](./posts/projects).
+You can find them by [following this link](/posts/projects).

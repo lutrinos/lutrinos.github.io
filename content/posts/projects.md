@@ -1,9 +1,12 @@
 +++
 title = "Inventaire des projets"
+slug = "projets"
 description  = "Une liste des différents projets et programmes réalisées par-ci par-là."
+
 date = 2024-02-01
 modified = 2025-06-13
 tags = ['Informatique']
+categories = ['Divers']
 +++
 
 L'ordre des projets n'a que peu d'importance, même si en règle générale, ceux les plus récents sont vers le haut.

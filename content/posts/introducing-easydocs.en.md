@@ -1,7 +1,9 @@
 +++
 title = "Introducing EasyDocs !"
+
 date = 2024-02-01
 modified = 2025-06-13
+categories = ['Miscellaneous']
 +++
 
 _I will not maintain this side project soon. However, I started a  rewrite of EasyDocs, related with its core algorithms, to make it more performant and extensible, which might be released some day._
