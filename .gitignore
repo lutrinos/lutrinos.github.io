@@ -1,4 +1,7 @@
-# Generated files by hugo
+# Generated files by hugo and astro
+/dist
+/.astro
+
 /public/
 /resources/_gen/
 /assets/jsconfig.json
