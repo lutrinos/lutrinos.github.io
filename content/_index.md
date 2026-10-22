@@ -18,8 +18,8 @@ dropCap: true
 
 # Bien le bonjour !
 
-Je suis actuellement étudiant en classe préparatoires, en MP2I. Je publie de temps à autre des posts à propos d'informatique, de mathématiques ou (parfois) de physique.
+Actuellement en deuxième année de prépa MPI, je publie de temps à autre des _choses_ à propos d'informatique, de mathématiques ou (parfois) de physique.
 
-En dehors de cela, vous trouverez [à ce lien](/posts/projects) une partie des projets que j'ai mené sur mon temps libre ou bien, pour certains, que je mène encore.
+En dehors de cela, vous trouverez [à ce lien](/posts/projects) une (petite) partie des projets que j'ai mené sur mon temps libre ou bien, pour certains, que je mène encore.
 
 Tous les posts sont listé [sur cette page](/posts) !
