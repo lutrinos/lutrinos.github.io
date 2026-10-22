@@ -11,6 +11,9 @@ import Search from "@components/navbar/search.svelte";
 import Translator from "@components/navbar/translator.svelte";
 import DisplaySettings from "@components/navbar/displaySettings.svelte";
 import LightDarkSwitch from "@components/navbar/lightDarkSwitch.svelte";
+import { i18n } from "@i18n/translation";
+import I18nKey from "@i18n/i18nKey";
+import { getSupportedTranslateLanguages } from "@i18n/language";
 
 
 const className = Astro.props.class;
@@ -43,10 +46,10 @@ let links: NavbarLink[] = navbarConfig.links.map(
             })}
         </div>
         <div class="flex items-center navbar-buttons" id="navbar-buttons">
-            <Search client:idle></Search>
-            <Translator client:idle></Translator>
-            <DisplaySettings client:idle></DisplaySettings>
-            <LightDarkSwitch client:idle></LightDarkSwitch>
+            <Search searchLabel={i18n(I18nKey.search)} client:idle></Search>
+            <Translator language={Astro.currentLocale} languages={getSupportedTranslateLanguages()} client:idle></Translator>
+            <DisplaySettings themeColor={i18n(I18nKey.themeColor)} client:idle></DisplaySettings>
+            <LightDarkSwitch lightMode={i18n(I18nKey.lightMode)} darkMode={i18n(I18nKey.darkMode)} systemMode={i18n(I18nKey.systemMode)} client:idle></LightDarkSwitch>
             <NavMenu client:idle links={links}></NavMenu>
         </div>
     </div>

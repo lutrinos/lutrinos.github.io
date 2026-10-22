@@ -1,7 +1,8 @@
 ---
 import { getCategoryList, getSortedPostsList, getTagList } from "@utils/post";
 import StatsCharts from "./statistics.svelte";
-
+import { i18n } from "@i18n/translation";
+import I18nKey from "@i18n/i18nKey";
 
 const posts = await getSortedPostsList();
 const categories = await getCategoryList();
@@ -16,4 +17,22 @@ interface Props {
 const { class: className, style, side } = Astro.props;
 ---
 
-<StatsCharts client:visible {posts} {categories} {tags} class={className} style={style} {side} />
+<StatsCharts
+    labels={{
+        year: i18n(I18nKey.year),
+        month: i18n(I18nKey.month),
+        day: i18n(I18nKey.day),
+        posts: i18n(I18nKey.posts),
+        activities: "Activities",
+        categories: i18n(I18nKey.categories),
+        tags: i18n(I18nKey.tags),
+        statistics: i18n(I18nKey.statistics),
+    }}
+    client:visible
+    {posts}
+    {categories}
+    {tags}
+    class={className}
+    style={style}
+    {side}
+/>

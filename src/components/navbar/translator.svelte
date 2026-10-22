@@ -1,11 +1,9 @@
 <script lang="ts">
-import { onDestroy, onMount } from "svelte";
+import { onDestroy } from "svelte";
 
 import { BREAKPOINT_LG } from "@constants/breakpoints";
-import { getTranslateLanguageFromConfig, getSiteLanguage, getDefaultLanguage } from "@/utils/language";
 import { onClickOutside } from "@utils/widget";
 import { siteConfig } from "@/config";
-import { getSupportedTranslateLanguages } from "@/i18n/language";
 import DropdownItem from "@/components/common/DropdownItem.svelte";
 import DropdownPanel from "@/components/common/DropdownPanel.svelte";
 import Icon from "@components/common/icon.svelte";
@@ -13,15 +11,9 @@ import Icon from "@components/common/icon.svelte";
 
 let isOpen = $state(false);
 let translatePanel: HTMLElement | undefined = $state();
-let currentLanguage = $state("");
 
 // 从统一配置动态获取支持的语言列表
-const languages = getSupportedTranslateLanguages();
-
-// 根据配置文件的语言设置获取源语言
-const sourceLanguage = getTranslateLanguageFromConfig(
-    getDefaultLanguage(),
-);
+const { languages, currentLanguage } = $props();
 
 function togglePanel() {
     isOpen = !isOpen;
@@ -35,35 +27,6 @@ function closePanel() {
     isOpen = false;
 }
 
-async function changeLanguage(languageCode: string) {
-    try {
-        // 如果翻译脚本未加载，先加载
-        if (!(window as any).translateScriptLoaded && typeof (window as any).loadTranslateScript === "function") {
-            await (window as any).loadTranslateScript();
-        }
-        // 确认翻译脚本已加载
-        if (!(window as any).translate) {
-            console.warn("translate.js is not loaded");
-            return;
-        }
-        // 获取翻译实例
-        const translate = (window as any).translate;
-        // 检查是否切换回源语言
-        const localLang = translate.language.getLocal();
-        // 统一使用 changeLanguage 方法
-        translate.changeLanguage(languageCode);
-        // 如果是切换回源语言，额外执行一次 reset 以确保在不刷新的情况下也能还原
-        if (languageCode === localLang) {
-            translate.reset();
-        }
-        
-        // 更新当前 UI 状态
-        currentLanguage = languageCode;
-    } catch (error) {
-        console.error("Failed to execute translation:", error);
-    }
-}
-
 // 点击外部关闭面板
 function handleClickOutside(event: MouseEvent) {
     if (!isOpen) return;
@@ -71,13 +34,6 @@ function handleClickOutside(event: MouseEvent) {
         isOpen = false;
     });
 }
-
-// 组件挂载时添加事件监听和初始化默认语言
-onMount(() => {
-    document.addEventListener("click", handleClickOutside);
-    // 初始化当前语言为站点语言（优先缓存）
-    currentLanguage = getSiteLanguage();
-});
 
 onDestroy(() => {
     if (typeof document !== "undefined") {
@@ -87,6 +43,7 @@ onDestroy(() => {
 </script>
 
 {#if siteConfig.translate?.enable}
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="relative z-50" onmouseleave={closePanel}>
     <!-- 翻译按钮 -->
     <button
@@ -112,7 +69,7 @@ onDestroy(() => {
                 {#each languages as lang}
                     <DropdownItem
                         isActive={currentLanguage === lang.code}
-                        onclick={() => changeLanguage(lang.code)}
+                        //onclick={() => changeLanguage(lang.code)}
                         class="gap-3 p-2! h-auto!"
                         isLast={false}
                     >

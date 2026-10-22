@@ -5,6 +5,8 @@ import { getSortedPostsList } from "@utils/post";
 import ArchivePanel from "@components/archivePanel.svelte";
 import GridLayout from "@layouts/grid.astro";
 import BackwardButton from "@components/backwardButton.astro";
+import { i18n } from "@i18n/translation";
+import I18nKey from "@i18n/i18nKey";
 
 
 const pageTitle = LinkPresets[LinkPreset.Archive].name;
@@ -29,7 +31,7 @@ const sortedPostsList = await getSortedPostsList();
                 )}
             </header>
             <!-- 归档面板 -->
-            <ArchivePanel sortedPosts={sortedPostsList} client:idle></ArchivePanel>
+            <ArchivePanel postsCountLabel={I18nKey.postsCount} postCountLabel={i18n(I18nKey.postCount)} sortedPosts={sortedPostsList} client:idle></ArchivePanel>
         </div>
     </div>
 </GridLayout>
