@@ -17,7 +17,6 @@ import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 
-import { siteConfig } from "./src/config.ts";
 import { pluginCollapseButton } from "./src/plugins/expressive-code/collapse-button.ts";
 import { pluginCopyButton } from "./src/plugins/expressive-code/copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
@@ -34,10 +33,15 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { visualizer } from "rollup-plugin-visualizer";
 import yaml from "@rollup/plugin-yaml";
 
+import jsYaml from "js-yaml";
+import rawConfig from "./site.config.yml?raw";
+
 // Choose adapter depending on deployment environment
 const adapter = process.env.GITHUB_ACTIONS
     ? undefined
     : undefined;
+
+const siteConfig = jsYaml.load(rawConfig).site;
 
 // Ref: https://astro.build/config
 export default defineConfig({
@@ -213,7 +217,12 @@ export default defineConfig({
     },
     vite: {
         plugins: [
-            yaml(),
+            {
+                ...yaml({
+                include: ['**/*.yml', '**/*.yaml'],
+                }),
+                enforce: 'pre'
+            },
             tailwindcss(),
             visualizer({
                 emitFile: true,
@@ -240,7 +249,4 @@ export default defineConfig({
             },
         },
     },
-    //build: {
-    //    inlineStylesheets: "always",
-    //},
 });

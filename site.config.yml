@@ -64,45 +64,45 @@ analytics:
         # Umami API address
         baseUrl: "https://api.umami.is"
         # API key
-        apiKey: ''
+        apiKey: ""
         # Tracking code
-        code: ''
+        code: ""
 
 # Navigation Bar Configuration
 navbar:
     # Link configuration (link presets are located in LinkPresets in src/constants/link-presets.ts)
     links:
         - # Level 1 navigation link - Home (preset)
-            "Home"
+          "Home"
         - # Level 1 navigation link - Archive (preset)
-            "Archive"
+          "Archive"
         - # Level 1 navigation link - Exhibition (custom)
-            # Navigation name
-            name: "Exhibition"
-            # Navigation link
-            url: "/exhibition/"
-            # Navigation icon
-            icon: "material-symbols:person"
-            # Navigation description
-            description: "A collection of my creative works and experiences"
-            # Sub-links
-            children:
-                - # Level 2 navigation link - Projects (preset)
-                    "Projects"
-                - # Level 2 navigation link - Skills (preset)
-                    "Skills"
-                - # Level 2 navigation link - Timeline (preset)
-                    "Timeline"
-                - # Level 2 navigation link - Diary (preset)
-                    "Diary"
-                - # Level 2 navigation link - Albums (preset)
-                    "Albums"
-                - # Level 2 navigation link - Anime (preset)
-                    "Anime"
+          # Navigation name
+          name: "Exhibition"
+          # Navigation link
+          url: "/exhibition/"
+          # Navigation icon
+          icon: "material-symbols:person"
+          # Navigation description
+          description: "A collection of my creative works and experiences"
+          # Sub-links
+          children:
+              - # Level 2 navigation link - Projects (preset)
+                "Projects"
+              - # Level 2 navigation link - Skills (preset)
+                "Skills"
+              - # Level 2 navigation link - Timeline (preset)
+                "Timeline"
+              - # Level 2 navigation link - Diary (preset)
+                "Diary"
+              - # Level 2 navigation link - Albums (preset)
+                "Albums"
+              - # Level 2 navigation link - Anime (preset)
+                "Anime"
         - # Level 1 navigation link - Friends (preset)
-            "Friends"
+          "Friends"
         - # Level 1 navigation link - About (preset)
-            "About"
+          "About"
 
 # Sidebar Layout Configuration
 sidebar:
@@ -111,72 +111,72 @@ sidebar:
         # Left sidebar
         left:
             - # Component - Profile (preset)
-                # Type
-                type: "profile"
-                # Position strategy ("top" fixed at the top | "sticky" sticky)
-                position: "top"
-                # Page visibility configuration
-                visibility:
-                    # Matching mode: 'include' (include), 'exclude' (exclude)
-                    mode: "exclude"
-                    # Page path matching rules list (supports regular expression strings)
-                    paths: ["^/posts/", "^/archive"]
+              # Type
+              type: "profile"
+              # Position strategy ("top" fixed at the top | "sticky" sticky)
+              position: "top"
+              # Page visibility configuration
+              visibility:
+                  # Matching mode: 'include' (include), 'exclude' (exclude)
+                  mode: "exclude"
+                  # Page path matching rules list (supports regular expression strings)
+                  paths: ["^/posts/", "^/archive"]
             - # Component - Directory (preset)
-                # Type
-                type: "directory"
-                # Position strategy ("top" fixed at the top | "sticky" sticky)
-                position: "sticky"
+              # Type
+              type: "directory"
+              # Position strategy ("top" fixed at the top | "sticky" sticky)
+              position: "sticky"
             - # Component - Post Categories (preset)
-                # Type
-                type: "categories"
-                # Position strategy ("top" fixed at the top | "sticky" sticky)
-                position: "sticky"
-                # Responsive configuration
-                responsive:
-                    # Collapse threshold
-                    collapseThreshold: 5
-                # Directory depth
-                depth: 3
+              # Type
+              type: "categories"
+              # Position strategy ("top" fixed at the top | "sticky" sticky)
+              position: "sticky"
+              # Responsive configuration
+              responsive:
+                  # Collapse threshold
+                  collapseThreshold: 5
+              # Directory depth
+              depth: 3
             - # Component - Post Tags (preset)
-                # Type
-                type: "tags"
-                # Position strategy ("top" fixed at the top | "sticky" sticky)
-                position: "sticky"
-                # Responsive configuration
-                responsive:
-                    # Collapse threshold
-                    collapseThreshold: 20
+              # Type
+              type: "tags"
+              # Position strategy ("top" fixed at the top | "sticky" sticky)
+              position: "sticky"
+              # Responsive configuration
+              responsive:
+                  # Collapse threshold
+                  collapseThreshold: 20
         # Right sidebar
         right:
             - # Component - Announcement (preset)
-                # Type
-                type: "announcement"
-                # Position strategy ("top" fixed at the top | "sticky" sticky)
-                position: "top"
-                # Page visibility configuration
-                visibility:
-                    # Matching mode: 'include' (include), 'exclude' (exclude)
-                    mode: "include"
-                    # Page path matching rules list (supports regular expression strings)
-                    paths: ["^/$"]
+              # Type
+              type: "announcement"
+              # Position strategy ("top" fixed at the top | "sticky" sticky)
+              position: "top"
+              # Page visibility configuration
+              visibility:
+                  # Matching mode: 'include' (include), 'exclude' (exclude)
+                  mode: "include"
+                  # Page path matching rules list (supports regular expression strings)
+                  paths: ["^/$"]
             - # Component - Post TOC (preset)
-                # Type
-                type: "toc"
-                # Position strategy ("top" fixed at the top | "sticky" sticky)
-                position: "sticky"
-                # Directory depth (1-6, 1 means only display h1 titles, 2 means display h1 and h2 titles, and so on)
-                depth: 3
+              # Type
+              type: "toc"
+              # Position strategy ("top" fixed at the top | "sticky" sticky)
+              position: "sticky"
+              # Directory depth (1-6, 1 means only display h1 titles, 2 means display h1 and h2 titles, and so on)
+              depth: 3
             - # Component - Post Statistics (preset)
-                # Type
-                type: "statistics"
-                # Position strategy ("top" fixed at the top | "sticky" sticky)
-                position: "sticky"
-                # Page visibility configuration
-                visibility:
-                    # Matching mode: 'include' (include), 'exclude' (exclude)
-                    mode: "include"
-                    # Page path matching rules list (supports regular expression strings)
-                    paths: ["^/$", "^/archive$"]
+              # Type
+              type: "statistics"
+              # Position strategy ("top" fixed at the top | "sticky" sticky)
+              position: "sticky"
+              # Page visibility configuration
+              visibility:
+                  # Matching mode: 'include' (include), 'exclude' (exclude)
+                  mode: "include"
+                  # Page path matching rules list (supports regular expression strings)
+                  paths: ["^/$", "^/archive$"]
 
 # Profile Configuration
 profile:
@@ -189,12 +189,12 @@ profile:
     # Link configuration
     links:
         - # Link example
-            # Name
-            name: "GitHub"
-            # Icon
-            icon: "fa6-brands:github"
-            # Link
-            url: "https://github.com/lutrinos"
+          # Name
+          name: "GitHub"
+          # Icon
+          icon: "fa6-brands:github"
+          # Link
+          url: "https://github.com/lutrinos"
 
 # Announcement Feature Configuration Description
 announcement:

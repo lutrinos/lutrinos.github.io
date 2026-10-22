@@ -1,17 +1,12 @@
-<script context="module" lang="ts">
-    let isGlobalInitialized = false;
-    let cachedEcharts: any = null;
-</script>
-
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import dayjs from 'dayjs';
+    import { onMount } from "svelte";
+    import dayjs from "dayjs";
 
     import { BREAKPOINT_LG } from "@constants/breakpoints";
     import { i18n } from "@i18n/translation";
     import I18nKey from "@i18n/i18nKey";
     import Icon from "@components/common/icon.svelte";
-
+    //import { LineChart } from "layerchart/svg";
 
     let {
         posts = [],
@@ -21,12 +16,12 @@
         style = "",
         side = "default",
     }: {
-        posts?: any[],
-        categories?: any[],
-        tags?: any[],
-        class?: string,
-        style?: string,
-        side?: string,
+        posts?: any[];
+        categories?: any[];
+        tags?: any[];
+        class?: string;
+        style?: string;
+        side?: string;
     } = $props();
 
     const labels = {
@@ -41,487 +36,446 @@
     };
 
     let container = $state<HTMLDivElement>();
-    let heatmapContainer = $state<HTMLDivElement>();
-    let categoriesContainer = $state<HTMLDivElement>();
-    let tagsContainer = $state<HTMLDivElement>();
-    let echarts: any = $state();
-    let heatmapChart: any = $state();
-    let categoriesChart: any = $state();
-    let tagsChart: any = $state();
-    let isHeatmapLoading = $state(!isGlobalInitialized);
-    let isCategoriesLoading = $state(!isGlobalInitialized);
-    let isTagsLoading = $state(!isGlobalInitialized);
-
-    let timeScale: 'year' | 'month' | 'day' = $state('year');
-    let lastScale = $state<'year' | 'month' | 'day'>('year');
-    let isDark = $state(false);
+    let isHeatmapLoading = $state(true);
+    let isCategoriesLoading = $state(true);
+    let isTagsLoading = $state(true);
     let isDesktop = $state(true);
+    let isDark = $state(false);
+    let isInitialized = $state(false);
+
+    let timeScale: "year" | "month" | "day" = $state("year");
 
     const updateIsDesktop = () => {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
             isDesktop = window.innerWidth >= BREAKPOINT_LG;
         }
     };
 
     const getThemeColors = () => {
-        const isDarkNow = document.documentElement.classList.contains('dark');
+        const isDarkNow =
+            typeof document !== "undefined" &&
+            document.documentElement.classList.contains("dark");
         return {
-            text: isDarkNow ? '#e5e7eb' : '#374151',
-            primary: isDarkNow ? '#60a5fa' : '#3b82f6', // Use standard hex for primary to avoid oklch issues in ECharts
-            grid: isDarkNow ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-            areaStart: isDarkNow ? 'rgba(96, 165, 250, 0.5)' : 'rgba(59, 130, 246, 0.5)',
-            areaEnd: isDarkNow ? 'rgba(96, 165, 250, 0)' : 'rgba(59, 130, 246, 0)',
+            text: isDarkNow ? "#e5e7eb" : "#374151",
+            primary: isDarkNow ? "#60a5fa" : "#3b82f6",
+            grid: isDarkNow ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
+            areaStart: isDarkNow
+                ? "rgba(96, 165, 250, 0.5)"
+                : "rgba(59, 130, 246, 0.5)",
+            areaEnd: isDarkNow
+                ? "rgba(96, 165, 250, 0)"
+                : "rgba(59, 130, 246, 0)",
         };
     };
 
     const getChartsFontFamily = () => {
-        const fallback = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
-        if (typeof window === 'undefined') return fallback;
+        const fallback =
+            "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+        if (typeof window === "undefined") return fallback;
         const target = container ?? document.body ?? document.documentElement;
         const fontFamily = window.getComputedStyle(target).fontFamily;
-        return fontFamily && fontFamily !== 'inherit' ? fontFamily : fallback;
+        return fontFamily && fontFamily !== "inherit" ? fontFamily : fallback;
     };
 
-    const loadECharts = async () => {
-        if (typeof window === 'undefined') return;
-        isDark = document.documentElement.classList.contains('dark');
-
-        if (cachedEcharts) {
-            echarts = cachedEcharts;
-            return;
-        }
-
-        // 动态导入 ECharts 及其组件，启用 Tree Shaking
-        const echartsCore = await import('echarts/core');
-        const { LineChart, RadarChart } = await import('echarts/charts');
-        const {
-            TitleComponent,
-            TooltipComponent,
-            GridComponent,
-            LegendComponent
-        } = await import('echarts/components');
-        const { SVGRenderer } = await import('echarts/renderers');
-
-        // 注册组件
-        echartsCore.use([
-            LineChart,
-            RadarChart,
-            TitleComponent,
-            TooltipComponent,
-            GridComponent,
-            LegendComponent,
-            SVGRenderer
-        ]);
-
-        echarts = echartsCore;
-        cachedEcharts = echartsCore;
-    };
-
-    let isInitialized = $state(false);
-
-    const initCharts = async () => {
-        if (isInitialized) return;
-        isInitialized = true;
-        // 依次初始化图表
-        await initActivityChart();
-        if (isDesktop) {
-            await initCategoriesChart();
-            await initTagsChart();
-        }
-        isGlobalInitialized = true;
-    };
-
-    const initActivityChart = async (isUpdate = false) => {
-        if (!heatmapContainer || !echarts) return;
-        if (!isUpdate && !isGlobalInitialized) isHeatmapLoading = true;
-
-        // 模拟加载延迟以测试效果
-        //if (!isUpdate) await new Promise(resolve => setTimeout(resolve, 300));
-
-        // 尝试获取现有实例以支持 Swup 持久化
-        const existingChart = echarts.getInstanceByDom(heatmapContainer);
-        const isNew = !existingChart;
-        if (existingChart) {
-            heatmapChart = existingChart;
-        } else {
-            heatmapChart = echarts.init(heatmapContainer, isDark ? 'dark' : null, { renderer: 'svg' });
-        }
-
-        const colors = getThemeColors();
-        const fontFamily = getChartsFontFamily();
-
+    const buildHeatmapData = () => {
         const now = dayjs();
-        let data: any[] = [];
-        let xAxisData: string[] = [];
+        const data: { label: string; value: number }[] = [];
 
-        if (timeScale === 'year') {
-            // Show from the oldest post's year to current year, at least 5 years
-            const oldestYear = posts.length > 0
-                ? Math.min(...posts.map(p => dayjs(p.data.published).year()))
-                : now.year();
+        if (timeScale === "year") {
+            const oldestYear =
+                posts.length > 0
+                    ? Math.min(
+                          ...posts.map((p) => dayjs(p.data.published).year()),
+                      )
+                    : now.year();
             const currentYear = now.year();
             const startYear = Math.min(oldestYear, currentYear - 4);
 
             for (let year = startYear; year <= currentYear; year++) {
                 const yearStr = year.toString();
-                xAxisData.push(yearStr);
-                const count = posts.filter(p => dayjs(p.data.published).year() === year).length;
-                data.push(count);
+                const count = posts.filter(
+                    (p) => dayjs(p.data.published).year() === year,
+                ).length;
+                data.push({ label: yearStr, value: count });
             }
-        } else if (timeScale === 'month') {
-            // Last 12 months
+        } else if (timeScale === "month") {
             for (let i = 11; i >= 0; i--) {
-                const month = now.subtract(i, 'month');
-                const monthStr = month.format('YYYY-MM');
-                xAxisData.push(month.format('MMM'));
-                const count = posts.filter(p => dayjs(p.data.published).format('YYYY-MM') === monthStr).length;
-                data.push(count);
+                const month = now.subtract(i, "month");
+                const monthStr = month.format("YYYY-MM");
+                const count = posts.filter(
+                    (p) =>
+                        dayjs(p.data.published).format("YYYY-MM") === monthStr,
+                ).length;
+                data.push({ label: month.format("MMM"), value: count });
             }
         } else {
-            // Last 30 days
             for (let i = 29; i >= 0; i--) {
-                const day = now.subtract(i, 'day');
-                const dayStr = day.format('YYYY-MM-DD');
-                xAxisData.push(day.format('DD'));
-                const count = posts.filter(p => dayjs(p.data.published).format('YYYY-MM-DD') === dayStr).length;
-                data.push(count);
+                const day = now.subtract(i, "day");
+                const dayStr = day.format("YYYY-MM-DD");
+                const count = posts.filter(
+                    (p) =>
+                        dayjs(p.data.published).format("YYYY-MM-DD") === dayStr,
+                ).length;
+                data.push({ label: day.format("DD"), value: count });
             }
         }
 
-        const option = {
-            backgroundColor: 'transparent',
-            textStyle: { fontFamily },
-            animation: (isNew && !isGlobalInitialized) || isUpdate,
-            animationDuration: isNew ? 2000 : 500,
-            animationEasing: 'cubicOut',
-            title: {
-                text: labels.activities,
-                left: 'left',
-                textStyle: { fontFamily, fontSize: 14, color: colors.text, fontWeight: 'bold' }
-            },
-            tooltip: {
-                trigger: 'axis',
-                confine: true,
-                formatter: (params: any) => `${params[0].name}: ${params[0].value} ${labels.posts}`
-            },
-            grid: { left: '10%', right: '5%', bottom: '15%', top: '25%', containLabel: true },
-            xAxis: {
-                type: 'category',
-                data: xAxisData,
-                axisLine: { lineStyle: { color: colors.grid } },
-                axisLabel: { fontFamily, color: colors.text, fontSize: 10 }
-            },
-            yAxis: {
-                type: 'value',
-                minInterval: 1,
-                axisLine: { show: false },
-                axisLabel: { fontFamily, color: colors.text, fontSize: 10 },
-                splitLine: { lineStyle: { color: colors.grid, type: 'dashed' } }
-            },
-            series: [{
-                data: data,
-                type: 'line',
-                smooth: true,
-                symbol: 'circle',
-                symbolSize: 6,
-                itemStyle: { color: colors.primary },
-                lineStyle: { width: 3, color: colors.primary },
-                areaStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: colors.areaStart },
-                        { offset: 1, color: colors.areaEnd }
-                    ])
-                }
-            }]
-        };
-
-        heatmapChart.setOption(option);
-        if (!isUpdate) isHeatmapLoading = false;
+        return data;
     };
 
-    const initCategoriesChart = async (isUpdate = false) => {
-        if (!categoriesContainer || !echarts) return;
-        if (!isUpdate && !isGlobalInitialized) isCategoriesLoading = true;
-        if (!isUpdate && !isGlobalInitialized) await new Promise(resolve => setTimeout(resolve, 300));
+    let themeColors = $state(getThemeColors());
+    let fontFamily = $state(getChartsFontFamily());
+    let heatmapData = $state(buildHeatmapData());
+    let categoriesData: any[] = $state([]);
+    let tagsData: any[] = $state([]);
 
-        const colors = getThemeColors();
-        const fontFamily = getChartsFontFamily();
+    let heatmapSeries: any[] = $state([]);
+    let categoriesSeries: any[] = $state([]);
+    let tagsSeries: any[] = $state([]);
 
-        const existingCategoriesChart = echarts.getInstanceByDom(categoriesContainer);
-        if (existingCategoriesChart) {
-            categoriesChart = existingCategoriesChart;
-        } else {
-            categoriesChart = echarts.init(categoriesContainer, isDark ? 'dark' : null, { renderer: 'svg' });
+    $effect(() => {
+        themeColors = getThemeColors();
+    });
+    $effect(() => {
+        fontFamily = getChartsFontFamily();
+    });
+    $effect(() => {
+        heatmapData = buildHeatmapData();
+    });
+    $effect(() => {
+        categoriesData = categories;
+    });
+    $effect(() => {
+        tagsData = [...tags].sort((a, b) => b.count - a.count).slice(0, 8);
+    });
+    $effect(() => {
+        heatmapSeries = [
+            { key: "activity", value: "value", color: themeColors.primary },
+        ];
+    });
+    $effect(() => {
+        categoriesSeries = [
+            {
+                key: "categories",
+                value: "count",
+                color: "rgba(255, 123, 0, 0.9)",
+            },
+        ];
+    });
+    $effect(() => {
+        tagsSeries = [
+            { key: "tags", value: "count", color: "rgba(16, 185, 129, 0.9)" },
+        ];
+    });
+
+    const runInit = () => {
+        if (!isInitialized) {
+            isInitialized = true;
+            isHeatmapLoading = false;
+            isCategoriesLoading = false;
+            isTagsLoading = false;
         }
-
-        const indicator = categories.map(c => ({ name: c.name, max: Math.max(...categories.map(x => x.count), 5) }));
-        const data = categories.map(c => c.count);
-
-        categoriesChart.setOption({
-            backgroundColor: 'transparent',
-            textStyle: { fontFamily },
-            animation: !isGlobalInitialized || isUpdate,
-            animationDuration: 2000,
-            animationEasing: 'exponentialOut',
-            tooltip: {
-                show: true,
-                trigger: 'item',
-                confine: true
-            },
-            title: {
-                text: labels.categories,
-                left: 'left',
-                textStyle: { fontFamily, fontSize: 14, color: colors.text, fontWeight: 'bold' }
-            },
-            radar: {
-                indicator: indicator,
-                radius: '60%',
-                center: ['50%', '60%'],
-                axisName: { fontFamily, color: colors.text, fontSize: 10 },
-                splitLine: { lineStyle: { color: colors.grid } },
-                splitArea: { show: false }
-            },
-            series: [{
-                type: 'radar',
-                data: [{ value: data, name: labels.categories }],
-                areaStyle: { color: 'rgba(255, 123, 0, 0.6)' },
-                lineStyle: { color: 'rgba(255, 123, 0, 0.9)' },
-                itemStyle: { color: 'rgba(255, 123, 0, 0.9)' },
-                emphasis: {
-                    areaStyle: { color: 'rgba(255, 123, 0, 0.9)' }
-                }
-            }]
-        });
-        if (!isUpdate) isCategoriesLoading = false;
-    };
-
-    const initTagsChart = async (isUpdate = false) => {
-        if (!tagsContainer || !echarts) return;
-        if (!isUpdate && !isGlobalInitialized) isTagsLoading = true;
-        if (!isUpdate && !isGlobalInitialized) await new Promise(resolve => setTimeout(resolve, 300));
-
-        const colors = getThemeColors();
-        const fontFamily = getChartsFontFamily();
-
-        const existingTagsChart = echarts.getInstanceByDom(tagsContainer);
-        if (existingTagsChart) {
-            tagsChart = existingTagsChart;
-        } else {
-            tagsChart = echarts.init(tagsContainer, isDark ? 'dark' : null, { renderer: 'svg' });
-        }
-
-        const sortedTags = [...tags].sort((a, b) => b.count - a.count).slice(0, 8);
-        const indicator = sortedTags.map(t => ({ name: t.name, max: Math.max(...sortedTags.map(x => x.count), 5) }));
-        const data = sortedTags.map(t => t.count);
-
-        tagsChart.setOption({
-            backgroundColor: 'transparent',
-            textStyle: { fontFamily },
-            animation: !isGlobalInitialized || isUpdate,
-            animationDuration: 2000,
-            animationEasing: 'exponentialOut',
-            tooltip: {
-                show: true,
-                trigger: 'item',
-                confine: true
-            },
-            title: {
-                text: labels.tags,
-                left: 'left',
-                textStyle: { fontFamily, fontSize: 14, color: colors.text, fontWeight: 'bold' }
-            },
-            radar: {
-                indicator: indicator,
-                radius: '60%',
-                center: ['50%', '60%'],
-                axisName: { fontFamily, color: colors.text, fontSize: 10 },
-                splitLine: { lineStyle: { color: colors.grid } },
-                splitArea: { show: false }
-            },
-            series: [{
-                type: 'radar',
-                data: [{ value: data, name: labels.tags }],
-                areaStyle: { color: 'rgba(16, 185, 129, 0.6)' },
-                lineStyle: { color: 'rgba(16, 185, 129, 0.9)' },
-                itemStyle: { color: 'rgba(16, 185, 129, 0.9)' },
-                emphasis: {
-                    areaStyle: { color: 'rgba(16, 185, 129, 0.9)' }
-                }
-            }]
-        });
-        if (!isUpdate) isTagsLoading = false;
-    };
-
-    const initRadarCharts = () => {
-        initCategoriesChart(true);
-        initTagsChart(true);
     };
 
     onMount(() => {
         updateIsDesktop();
+        isDark =
+            typeof document !== "undefined" &&
+            document.documentElement.classList.contains("dark");
 
-        let visibilityObserver: IntersectionObserver;
+        let visibilityObserver: IntersectionObserver | undefined;
+        const handleResize = () => updateIsDesktop();
 
-        const runInit = async () => {
-            await loadECharts();
-
-            // 检查是否处于初始加载动画阶段
-            const hasInitialAnimation = document.documentElement.classList.contains('show-initial-animation') ||
-                                       document.documentElement.classList.contains('is-loading');
-
-            if (hasInitialAnimation) {
-                // 查找带有动画类的侧边栏容器
-                const sidebar = container?.closest('.onload-animation-up');
-
-                const startInit = () => {
-                    if (!isInitialized) initCharts();
-                };
-
-                if (sidebar) {
-                    // 监听侧边栏淡入动画开始
-                    sidebar.addEventListener('animationstart', (e) => {
-                        if ((e as AnimationEvent).animationName === 'fade-in-up') {
-                            startInit();
-                        }
-                    }, { once: true });
-                }
-
-                // 使用 MutationObserver 监听 html 的 class 变化，作为更可靠的保底机制
-                const htmlObserver = new MutationObserver(() => {
-                    const isStillLoading = document.documentElement.classList.contains('is-loading');
-
-                    // 一旦 loading 结束（进入动画播放阶段），就开始绘制图表
-                    if (!isStillLoading) {
-                        startInit();
-                        htmlObserver.disconnect();
-                    }
-                });
-                htmlObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-                // 较长的保底时间（3秒），防止所有监听机制意外失效
-                setTimeout(() => {
-                    startInit();
-                    htmlObserver.disconnect();
-                }, 3000);
-
-            } else {
-                // 无动画状态，直接加载
-                initCharts();
+        const handleThemeMutation = () => {
+            const newIsDark =
+                document.documentElement.classList.contains("dark");
+            if (newIsDark !== isDark) {
+                isDark = newIsDark;
             }
+        };
+
+        const themeObserver = new MutationObserver(handleThemeMutation);
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+
+        const start = () => {
+            if (!isInitialized) runInit();
         };
 
         if (container) {
             visibilityObserver = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    visibilityObserver.disconnect();
-                    runInit();
+                if (entries[0]?.isIntersecting) {
+                    visibilityObserver?.disconnect();
+                    start();
                 }
             });
             visibilityObserver.observe(container);
+        } else {
+            start();
         }
 
-        const handleResize = () => {
-            const wasDesktop = isDesktop;
-            updateIsDesktop();
-            
-            heatmapChart?.resize();
-            
-            if (isDesktop) {
-                if (wasDesktop) {
-                    categoriesChart?.resize();
-                    tagsChart?.resize();
-                } else {
-                    // 从移动端切换到桌面端，需要初始化雷达图，延迟一帧确保 DOM 已更新（{#if isDesktop} 生效）
-                    setTimeout(() => {
-                        initRadarCharts();
-                    }, 0);
-                }
-            }
-        };
-
-        const observer = new MutationObserver(() => {
-            const newIsDark = document.documentElement.classList.contains('dark');
-            if (newIsDark !== isDark) {
-                isDark = newIsDark;
-                if (isInitialized) {
-                    initActivityChart(true);
-                    if (isDesktop) initRadarCharts();
-                }
-            }
-        });
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
         return () => {
-            window.removeEventListener('resize', handleResize);
-            observer.disconnect();
-            if (visibilityObserver) visibilityObserver.disconnect();
+            window.removeEventListener("resize", handleResize);
+            themeObserver.disconnect();
+            visibilityObserver?.disconnect();
         };
-    });
-
-    $effect(() => {
-        if (timeScale && echarts && isInitialized) {
-            if (timeScale !== lastScale) {
-                lastScale = timeScale;
-                initActivityChart(true);
-            }
-        }
     });
 </script>
 
-<div id={`statistics-${side}`} data-swup-persist={`statistics-${side}`} bind:this={container} class={"pb-4 card-base " + className} {style}>
-    <div class="font-bold transition text-lg text-neutral-900 dark:text-neutral-100 relative ml-8 mt-4 mb-2
+<div
+    id={`statistics-${side}`}
+    data-swup-persist={`statistics-${side}`}
+    bind:this={container}
+    class={"pb-4 card-base " + className}
+    {style}
+>
+    <div
+        class="font-bold transition text-lg text-neutral-900 dark:text-neutral-100 relative ml-8 mt-4 mb-2
         before:w-1 before:h-4 before:rounded-md before:bg-(--primary)
-        before:absolute before:left-[-16px] before:top-[5.5px]">{labels.statistics}</div>
+        before:absolute before:left-[-16px] before:top-[5.5px]"
+    >
+        {labels.statistics}
+    </div>
     <div class="px-4 overflow-hidden relative min-h-[180px]">
         <div class="stats-charts">
             <div class="chart-section heatmap-section">
                 {#if isHeatmapLoading}
-                    <div class="absolute inset-0 flex items-center justify-center z-10 bg-(--card-bg)/50 backdrop-blur-[1px]">
-                        <div class="text-(--primary) flex items-center justify-center">
-                            <Icon icon="material-symbols:progress-activity" class="animate-spin" style="font-size: 2.4rem;" />
+                    <div
+                        class="absolute inset-0 flex items-center justify-center z-10 bg-(--card-bg)/50 backdrop-blur-[1px]"
+                    >
+                        <div
+                            class="text-(--primary) flex items-center justify-center"
+                        >
+                            <Icon
+                                icon="material-symbols:progress-activity"
+                                class="animate-spin"
+                                style="font-size: 2.4rem;"
+                            />
                         </div>
                     </div>
                 {/if}
                 <div class="section-header">
                     <div class="dropdown-wrapper">
-                        <button class="time-scale-select flex items-center gap-1">
+                        <button
+                            class="time-scale-select flex items-center gap-1"
+                        >
                             {labels[timeScale]}
                             <span class="dropdown-icon flex items-center">
-                                <Icon icon="material-symbols:keyboard-arrow-down-rounded" />
+                                <Icon
+                                    icon="material-symbols:keyboard-arrow-down-rounded"
+                                />
                             </span>
                         </button>
                         <div class="dropdown-menu-custom">
-                            <button class="dropdown-item-custom" class:active={timeScale === 'year'} onclick={() => timeScale = 'year'}>{labels.year}</button>
-                            <button class="dropdown-item-custom" class:active={timeScale === 'month'} onclick={() => timeScale = 'month'}>{labels.month}</button>
-                            <button class="dropdown-item-custom" class:active={timeScale === 'day'} onclick={() => timeScale = 'day'}>{labels.day}</button>
+                            <button
+                                class="dropdown-item-custom"
+                                class:active={timeScale === "year"}
+                                onclick={() => (timeScale = "year")}
+                                >{labels.year}</button
+                            >
+                            <button
+                                class="dropdown-item-custom"
+                                class:active={timeScale === "month"}
+                                onclick={() => (timeScale = "month")}
+                                >{labels.month}</button
+                            >
+                            <button
+                                class="dropdown-item-custom"
+                                class:active={timeScale === "day"}
+                                onclick={() => (timeScale = "day")}
+                                >{labels.day}</button
+                            >
                         </div>
                     </div>
                 </div>
-                <div bind:this={heatmapContainer} class="heatmap-container transition-opacity duration-600" class:opacity-0={isHeatmapLoading}></div>
+                <div
+                    class="heatmap-container transition-opacity duration-600"
+                    class:opacity-0={isHeatmapLoading}
+                >
+                    <!--{#if isInitialized}
+                        <LineChart
+                            data={heatmapData}
+                            x="label"
+                            y="value"
+                            height={180}
+                            padding={{
+                                top: 30,
+                                right: 20,
+                                bottom: 20,
+                                left: 30,
+                            }}
+                            grid={{
+                                x: false,
+                                y: { stroke: themeColors.grid, opacity: 0.35 },
+                            }}
+                            props={{
+                                spline: {
+                                    fill: themeColors.areaStart,
+                                    stroke: themeColors.primary,
+                                    strokeWidth: 3,
+                                    fillOpacity: 0.35,
+                                    opacity: 0.95,
+                                },
+                            }}
+                            style={`font-family:${fontFamily}; color:${themeColors.text};`}
+                        />
+                    {/if}-->
+                </div>
             </div>
 
             {#if isDesktop}
                 <div class="chart-section radar-section">
                     {#if isCategoriesLoading}
-                        <div class="absolute inset-0 flex items-center justify-center z-10 bg-(--card-bg)/50 backdrop-blur-[1px]">
-                            <div class="text-(--primary) flex items-center justify-center">
-                                <Icon icon="material-symbols:progress-activity" class="animate-spin" style="font-size: 2.4rem;" />
+                        <div
+                            class="absolute inset-0 flex items-center justify-center z-10 bg-(--card-bg)/50 backdrop-blur-[1px]"
+                        >
+                            <div
+                                class="text-(--primary) flex items-center justify-center"
+                            >
+                                <Icon
+                                    icon="material-symbols:progress-activity"
+                                    class="animate-spin"
+                                    style="font-size: 2.4rem;"
+                                />
                             </div>
                         </div>
                     {/if}
-                    <div bind:this={categoriesContainer} class="radar-container transition-opacity duration-600" class:opacity-0={isCategoriesLoading}></div>
+                    <div
+                        class="radar-container transition-opacity duration-600"
+                        class:opacity-0={isCategoriesLoading}
+                    >
+                        <!--{#if isInitialized}
+                            <LineChart
+                                data={categoriesData}
+                                x="name"
+                                y="count"
+                                radial
+                                height={250}
+                                padding={{
+                                    top: 20,
+                                    right: 20,
+                                    bottom: 20,
+                                    left: 20,
+                                }}
+                                axis={false}
+                                //series={categoriesSeries}
+                                props={{
+                                    spline: {
+                                        fill: "rgba(255, 123, 0, 0.6)",
+                                        stroke: "rgba(255, 123, 0, 0.9)",
+                                        strokeWidth: 2,
+                                        opacity: 0.95,
+                                    },
+                                    xAxis: {
+                                        tickLength: 0,
+                                    },
+                                    yAxis: {
+                                        ticks: [0, 5, 10],
+                                        format: (d) => "",
+                                    },
+                                    grid: {
+                                        yTicks: [0, 5, 10],
+                                        radialY: "linear",
+                                    },
+                                    highlight: {
+                                        lines: false,
+                                    },
+                                }}
+                                tooltipContext={{ mode: "quadtree-y" }}
+                                style={`font-family:${fontFamily}; color:${themeColors.text};`}
+                            />
+                            <LineChart
+                                data={categoriesData}
+                                x="name"
+                                y="count"
+                                padding={{
+                                    top: 20,
+                                    right: 20,
+                                    bottom: 20,
+                                    left: 20,
+                                }}
+                                radial
+                                points
+                                grid={{
+                                    yTicks: [0, 5, 10],
+                                    radialY: "linear",
+                                }}
+                                props={{
+                                    spline: {
+                                        fill: "rgba(255, 123, 0, 0.6)",
+                                        stroke: "rgba(255, 123, 0, 0.9)",
+                                        strokeWidth: 2,
+                                        opacity: 0.95,
+                                    },
+                                    highlight: {
+                                        lines: false,
+                                    },
+                                }}
+                                tooltipContext={{ mode: "voronoi" }}
+                                height={180}
+                                style={`font-family:${fontFamily}; color:${themeColors.text};`}
+                            />
+                        {/if}-->
+                    </div>
                 </div>
 
                 <div class="chart-section radar-section">
                     {#if isTagsLoading}
-                        <div class="absolute inset-0 flex items-center justify-center z-10 bg-(--card-bg)/50 backdrop-blur-[1px]">
-                            <div class="text-(--primary) flex items-center justify-center">
-                                <Icon icon="material-symbols:progress-activity" class="animate-spin" style="font-size: 2.4rem;" />
+                        <div
+                            class="absolute inset-0 flex items-center justify-center z-10 bg-(--card-bg)/50 backdrop-blur-[1px]"
+                        >
+                            <div
+                                class="text-(--primary) flex items-center justify-center"
+                            >
+                                <Icon
+                                    icon="material-symbols:progress-activity"
+                                    class="animate-spin"
+                                    style="font-size: 2.4rem;"
+                                />
                             </div>
                         </div>
                     {/if}
-                    <div bind:this={tagsContainer} class="radar-container transition-opacity duration-600" class:opacity-0={isTagsLoading}></div>
+                    <div
+                        class="radar-container transition-opacity duration-600"
+                        class:opacity-0={isTagsLoading}
+                    >
+                        <!--{#if isInitialized}
+                            <LineChart
+                                data={tagsData}
+                                radial={true}
+                                x="name"
+                                y="count"
+                                height={180}
+                                padding={{
+                                    top: 20,
+                                    right: 20,
+                                    bottom: 20,
+                                    left: 20,
+                                }}
+                                points
+                                grid={{
+                                    yTicks: [0, 5, 10],
+                                    radialY: "linear",
+                                }}
+                                props={{
+                                    spline: {
+                                        fill: "rgba(16, 185, 129, 0.6)",
+                                        stroke: "rgba(16, 185, 129, 0.9)",
+                                        strokeWidth: 2,
+                                        opacity: 0.95,
+                                    },
+                                    highlight: {
+                                        lines: false,
+                                    },
+                                }}
+                                tooltipContext={{ mode: "voronoi" }}
+                                style={`font-family:${fontFamily}; color:${themeColors.text};`}
+                            />
+                        {/if}-->
+                    </div>
                 </div>
             {/if}
         </div>
@@ -583,7 +537,9 @@
         background: var(--card-bg);
         border: 1px solid var(--line-color);
         border-radius: 4px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        box-shadow:
+            0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
         opacity: 0;
         visibility: hidden;
         translate: 0 -10px;
