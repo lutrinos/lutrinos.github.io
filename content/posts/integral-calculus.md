@@ -9,7 +9,10 @@ date = 2025-06-17
 
 Lorsque l'on veut obtenir la valeur d'une intégrale, on peut s'y prendre de différentes manières.
 
-Certaines calculatrices graphiques sont capables de calculer explicitement l'intégrale, avec des algorithmes comme l'[algorithme de Risch](https://en.wikipedia.org/wiki/Risch_algorithm). Mais souvent, une bonne approximation suffit, et un calcul numérique suffisamment fin permet d'en obtenir une bonne.
+Certaines calculatrices graphiques sont capables de calculer explicitement l'intégrale, avec des algorithmes comme l'[algorithme de Risch](https://en.wikipedia.org/wiki/Risch_algorithm). Mais souvent, une bonne approximation suffit, et un calcul numérique suffisamment fin permet d'obtenir rapidement une valeur proche de celle réelle.
+
+> [!INFO] Intégration
+> Si vous n'êtes pas à l'aise avec l'intégration, vous pouvez parcourir [ce cours](https://www.maths-et-tiques.fr/telech/20IntegT1.pdf) ou [cette page wikipédia](https://fr.wikipedia.org/wiki/Int%C3%A9gration_(math%C3%A9matiques)) sur l'intégration pour vous rafraîchir les idées.
 
 Calculer l'intégrale d'une fonction $f$ sur un intervalle $[a, b]$, avec $a \leq b$ revient à calculer son "aire sous la courbe", c'est-à-dire l'aire de la surface délimitée par l'axe des abscisses et la courbe et les droites verticales d'abscisse $a$ et $b$.
 
