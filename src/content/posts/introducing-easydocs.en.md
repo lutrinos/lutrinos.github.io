@@ -3,7 +3,8 @@ title: Introducing EasyDocs !
 slug: "introducing-easydocs"
 published: 2024-02-01
 modified: 2025-06-13
-category: Informatique
+category: Computer
+tags: ["EasyDocs"]
 locale: en
 ---
 
