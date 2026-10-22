@@ -272,7 +272,6 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
     import { initMarkdownActions } from "@/utils/markdown";
     import { initFancybox, cleanupFancybox } from "@utils/fancybox";
     import { loadAndInitTranslate } from "@utils/language";
-    import { setupParticleEffects } from "@/utils/particle";
 
     // 初始化Swup
     const setup = () => {
@@ -501,9 +500,6 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
 
     // Initialize translate.js
     loadAndInitTranslate();
-
-    // Initialize particle effects
-    setupParticleEffects();
 
     // Remove is-loading class and trigger initial-animation after page load
     if (typeof window !== "undefined") {

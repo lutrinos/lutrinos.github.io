@@ -9,8 +9,7 @@ import type {
     ProfileConfig,
     AnnouncementConfig,
     PostConfig,
-    FooterConfig,
-    ParticleConfig
+    FooterConfig
 } from "./types/config";
 import { LinkPreset } from "./types/config";
 import rawConfig from "../twilight.config.yaml?raw";
@@ -27,7 +26,6 @@ type ConfigFile = {
     announcement: AnnouncementConfig;
     post: PostConfig;
     footer: FooterConfig;
-    particle: ParticleConfig;
 };
 
 const config = yaml.load(rawConfig) as ConfigFile;
@@ -111,6 +109,3 @@ export const postConfig: PostConfig = resolvedPostConfig;
 
 // 页脚配置
 export const footerConfig: FooterConfig = config.footer;
-
-// 粒子特效配置
-export const particleConfig: ParticleConfig = config.particle;
