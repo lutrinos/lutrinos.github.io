@@ -52,8 +52,6 @@ site:
     bangumi:
         # User ID
         userId: "your-bangumi-id"
-    # OpenGraph configuration
-    generateOgImages: false
 
 # Analytics Configuration
 analytics:

@@ -61,11 +61,6 @@ if (title) {
         : siteConfig.title;
 }
 
-let ogImageUrl: string | undefined;
-if (siteConfig.generateOgImages && postSlug) {
-    ogImageUrl = new URL(`/og/${postSlug}.png`, Astro.site).toString();
-}
-
 const favicons: Favicon[] =
     siteConfig.favicon.length > 0 ? siteConfig.favicon : defaultFavicons;
 
@@ -111,7 +106,6 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
         <meta property="og:url" content={Astro.url} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={description || pageTitle} />
-        {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
         {
             setOGTypeArticle ? (
                 <meta property="og:type" content="article" />
