@@ -1,0 +1,14 @@
+---
+import { siteConfig } from "@/config";
+---
+
+<!-- 全局配置载体 -->
+<div
+    id="config-carrier"
+    data-hue={siteConfig.themeColor.hue}
+    data-lang={siteConfig.lang}
+    data-theme={siteConfig.defaultTheme}
+    data-wallpaper-mode={siteConfig.wallpaper.mode}
+    data-wait-for-all-resources={siteConfig.loadingOverlay?.waitForAllResources.toString()}
+>
+</div>
