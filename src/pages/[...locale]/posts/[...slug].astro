@@ -6,8 +6,8 @@ import type { CollectionEntry } from "astro:content";
 import { profileConfig, postConfig } from "@/config";
 import { getSortedPosts } from "@utils/post";
 import { formatDateToYYYYMMDD } from "@utils/date";
-import { getFileDirFromPath, getPostUrl, getPostUrlBySlug, removeFileExtension} from "@utils/url";
-import { useLocale, getTranslation } from "@i18n/translation";
+import { getFileDirFromPath, getPostUrl, getPostUrlBySlug } from "@utils/url";
+import { useLocale } from "@i18n/translation";
 import I18nKey from "@i18n/i18nKey";
 import License from "@components/post/license.astro";
 import Markdown from "@components/common/markdown.astro";
@@ -49,16 +49,6 @@ const { remarkPluginFrontmatter } = await render(entry);
 
 // Handle encryption logic
 let isEncrypted = !!(entry.data.encrypted && entry.data.password);
-
-const lastModifiedKeys = [
-    I18nKey.lastModifiedPrefix,
-    I18nKey.year,
-    I18nKey.month,
-    I18nKey.day,
-    I18nKey.hour,
-    I18nKey.minute,
-    I18nKey.second
-];
 
 const jsonLd = {
     "@context": "https://schema.org",

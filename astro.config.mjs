@@ -22,7 +22,6 @@ import { pluginCollapseButton } from "./src/plugins/expressive-code/collapse-but
 import { pluginCopyButton } from "./src/plugins/expressive-code/copy-button.js";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
-import { MusicCardComponent } from "./src/plugins/rehype-component-music-card.mjs";
 import { rehypeAdmonitions } from "./src/plugins/rehype-admonitions.mjs";
 import { rehypeMermaid } from "./src/plugins/rehype-mermaid.mjs";
 import { rehypeLazyLoadMedia } from "./src/plugins/rehype-lazy-load-media.mjs";
@@ -191,8 +190,7 @@ export default defineConfig({
                 rehypeComponents,
                 {
                     components: {
-                        github: GithubCardComponent,
-                        music: MusicCardComponent,
+                        github: GithubCardComponent
                     },
                 },
             ],

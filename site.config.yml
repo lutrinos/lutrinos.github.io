@@ -165,14 +165,16 @@ announcement:
 post:
     # Show "Last Modified" card
     showLastModified: true
+
     # Code highlighting configuration
     expressiveCode:
         # Theme
         theme: "github-dark"
+
     # License configuration
     license:
         # Enable license
-        enable: false
+        enable: true
         # License name
         name: "CC BY-NC-SA 4.0"
         # License link
