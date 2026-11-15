@@ -204,6 +204,10 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
             title={profileConfig.name}
             href={`${Astro.site}rss.xml`}
         />
+
+        <!-- analytics -->
+        <script data-goatcounter="https://lutrinos.goatcounter.com/count"
+        async src="/assets/js/goat.js"></script>
     </head>
 
     <body
