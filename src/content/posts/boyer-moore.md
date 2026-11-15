@@ -48,7 +48,7 @@ int main()
 }
 ```
 
-Au contraire, cet algorithme prétraite le motif en créant une table de décalages, afin de parcourir le texte plus rapidement. Sa particularité est que plus le motif est grand, plus l'algorithme est rapide, et il est de manière générale "sous-linéaire", c'est-à-dire qu'il compare moins de caractères qu'il y en a dans le texte.
+Au contraire, cet algorithme prétraite le motif en créant une table de décalages[^1], afin de parcourir le texte plus rapidement. Sa particularité est que plus le motif est grand, plus l'algorithme est rapide, et il est de manière générale "sous-linéaire", c'est-à-dire qu'il compare moins de caractères qu'il y en a dans le texte.
 
 # Fonctionnement
 

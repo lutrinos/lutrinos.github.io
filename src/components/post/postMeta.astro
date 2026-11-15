@@ -95,9 +95,9 @@ const i18n = useLocale(Astro.currentLocale);
             <Icon name="material-symbols:tag-rounded" class="text-xl"></Icon>
         </div>
         <div class="flex flex-row flex-nowrap items-center">
-            {(tags && tags.length > 0) && tags.map((tag, i) => (
+            {(tags && tags.length > 0) && tags.map((tag: string, i: number) => (
                 <div class:list={[{"hidden": i == 0}, "mx-1.5 text-(--meta-divider) text-sm"]}>/</div>
-                <a href={getTagUrl(tag)} aria-label={`View all posts with the ${tag.trim()} tag`}
+                <a href={getTagUrl(Astro.currentLocale, tag)} aria-label={`View all posts with the ${tag.trim()} tag`}
                     class="link-lg transition text-50 text-sm font-medium
                                 hover:text-(--primary) dark:hover:text-(--primary) whitespace-nowrap">
                     {tag.trim()}
