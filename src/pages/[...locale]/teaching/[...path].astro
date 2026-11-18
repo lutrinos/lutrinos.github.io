@@ -1,0 +1,242 @@
+---
+export const prerender = true;
+
+import GridLayout from "@layouts/grid.astro";
+import { lookup } from "mrmime";
+
+// Importer les modules Node.js
+const fs = await import("node:fs/promises");
+
+type Item = {
+  isDirectory: boolean;
+  size: number;
+  path: string;
+  fullPath: string;
+  basename: string;
+  date: Date;
+  children: Item[];
+};
+
+// Générer les chemins statiques à partir des fichiers
+export async function getStaticPaths() {
+  // Importer les utilitaires
+  const { join, relative, basename } = await import("node:path");
+  const { stat, readdir } = await import("node:fs/promises");
+
+  const TEACHING_DIR = join(process.cwd(), "src/content/teaching");
+
+  // On liste récursivement tous les fichiers et dossiers
+  async function listAllFiles(dir: string, arr: Item[]): Promise<Item[]> {
+    const entries = await readdir(dir, { withFileTypes: true });
+    const files = [];
+
+    for (const entry of entries) {
+      const fullPath = join(dir, entry.name);
+      const stats = await stat(fullPath);
+
+      const item: Item = {
+        isDirectory: stats.isDirectory(),
+        size: stats.size,
+        path: relative(TEACHING_DIR, fullPath),
+        fullPath: fullPath,
+        basename: basename(entry.name),
+        date: new Date(stats.mtime),
+        children: [],
+      };
+
+      if (entry.isDirectory()) {
+        const subitems = await listAllFiles(fullPath, item.children);
+        // item.children = subitems
+        //   .filter((item) => item.path.startsWith(dir));
+
+        files.push(...subitems);
+      }
+
+      item.children.sort((a, b) => {
+        if (a.isDirectory && !b.isDirectory) {
+          return -1;
+        }
+
+        if (!a.isDirectory && b.isDirectory) {
+          return 1;
+        }
+
+        console.log(a.basename, b.basename, a.basename.localeCompare(b.basename));
+        return a.basename.localeCompare(b.basename);
+      });
+
+      files.push(item);
+      arr.push(item);
+    }
+
+    return files;
+  }
+
+  const root: Item = {
+    isDirectory: true,
+    path: "",
+    fullPath: TEACHING_DIR,
+    size: 0,
+    basename: "Enseignement",
+    children: [],
+    date: new Date(),
+  };
+
+  const files = await listAllFiles(TEACHING_DIR, root.children);
+  files.push(root);
+
+  return files.map((item: any) => ({
+    params: {
+      path: item.path,
+    },
+    props: item,
+  }));
+}
+
+// Récupérer le chemin du slug
+const item = Astro.props as Item;
+
+// Fonction pour formater la taille
+function formatSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} bytes`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(2)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+}
+
+// Fonction pour formater une date
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat("fr-FR", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+
+if (!item.isDirectory) {
+  const fileBuffer = await fs.readFile(item.fullPath);
+  return new Response(fileBuffer, {
+    status: 200,
+    headers: {
+      "Content-Type": lookup(item.basename) || "text/plain",
+    },
+  });
+}
+
+const path = item.path.length !== 0 ? `Enseignement/${item.path}` : 'Enseignement';
+
+const breadcrumbs = path.split("/").map((segment: string, index: number) => ({
+  name: segment,
+  path: item.path.split("/").slice(0, index).join("/"),
+}));
+---
+
+<GridLayout title={"Enseignement"} description={"Pour enseigner"}>
+  <div class="flex w-full rounded-(--radius-large) overflow-hidden relative">
+    <div class="card-base z-10 px-9 py-6 relative w-full space-y-4">
+      <!-- Breadcrumbs -->
+      <div class="animate">
+        <nav class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+          {breadcrumbs.map((crumb: any, index: number) => (
+            <>
+              {index !== 0 && <span>/</span>}
+              {index !== breadcrumbs.length - 1 ? (
+                <a
+                  href={`/teaching/${crumb.path}`}
+                  class="hover:text-black dark:hover:text-white transition"
+                >
+                  {crumb.name}
+                </a>
+              ) : (
+                <span class="text-black dark:text-white">{crumb.name}</span>
+              )}
+            </>
+          ))}
+        </nav>
+      </div>
+
+      <!-- Contenu -->
+      <div class="animate">
+        <div class="space-y-4">
+          <h1 class="text-2xl font-semibold text-black dark:text-white">
+            {item.basename}
+          </h1>
+
+          <p class="text-gray-600 dark:text-gray-300">
+            {item.children.length}{" "}
+            {item.children.length !== 1 ? "éléments" : "élément"}
+          </p>
+
+          <!-- Liste des fichiers -->
+          <ul class="flex flex-col gap-2">
+            {item.children.map((child) => (
+              <a
+                href={`/teaching/${child.path}`}
+                class="btn-plain relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-slate-200 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"
+              >
+                <div class="flex flex-col flex-1 truncate">
+                  <div class="flex text-md flex-row gap-2 font-semibold">
+                    {child.isDirectory && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
+                        />
+                      </svg>
+                    )}
+                    {child.basename}
+                  </div>
+
+                  {!child.isDirectory && (
+                    <div class="text-sm">
+                      Modifié le {formatDate(child.date)} ·{" "}
+                      {formatSize(child.size)}
+                    </div>
+                  )}
+                </div>
+              </a>
+
+              // <Link href={`/teaching/${child.path}`}>
+              //   <div class="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+              //   <span class="text-xl">
+              //     {child.isDirectory && (
+              //       <svg
+              //         xmlns="http://www.w3.org/2000/svg"
+              //         fill="none"
+              //         viewBox="0 0 24 24"
+              //         stroke-width="1.5"
+              //         stroke="currentColor"
+              //         class="size-6"
+              //       >
+              //         <path
+              //           stroke-linecap="round"
+              //           stroke-linejoin="round"
+              //           d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
+              //         />
+              //       </svg>
+              //     )}
+              //   </span>
+              //   <span>
+              //     {child.basename}
+              //   </span>
+              //   {!child.isDirectory && (
+              //     <span class="text-sm text-gray-500 dark:text-gray-400">
+              //       {formatSize(item.size)}
+              //     </span>
+              //   )}
+              // </div>
+              // </Link>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</GridLayout>
