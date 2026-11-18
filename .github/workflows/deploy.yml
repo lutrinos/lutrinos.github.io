@@ -19,13 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v7
+        uses: actions/checkout@v5
       - name: Setup Python
         uses: actions/setup-python@v7
-        with:
-          cache: 'pip'
-      - run: pip install gdown
-      - run: gwodn https://drive.google.com/drive/folders/1GRIy98EezeXwpT_Zz8bN9YJpCKz1GVXr?usp=sharing -O ./src/content/teaching
+      - name: Install pip package
+        run: pip install gdown
+      - name: Import teaching files
+        run: gdown https://drive.google.com/drive/folders/1GRIy98EezeXwpT_Zz8bN9YJpCKz1GVXr?usp=sharing -O ./src/content/teaching
       - name: Install, build, and upload your site
         uses: withastro/action@v5
         with:
