@@ -21,19 +21,25 @@ const links: NavbarLink[] = [
     },
     {
         name: i18n(I18nKey.archive),
-        url: getLocaleUrl(Astro.currentLocale ?? 'fr', '/archive'),
+        url: getLocaleUrl(Astro.currentLocale, '/archive'),
         icon: "material-symbols:archive"
     },
     {
         name: i18n(I18nKey.projects),
-        url:  getLocaleUrl(Astro.currentLocale ?? 'fr', '/projects'),
+        url:  getLocaleUrl(Astro.currentLocale, '/projects'),
         icon: "material-symbols:folder-special"
     },
     {
+        name: i18n(I18nKey.teaching),
+        url: getLocaleUrl(Astro.currentLocale, '/teaching'),
+        icon: "material-symbols:school"
+        
+    },
+    {
         name: i18n(I18nKey.about),
-        url: getLocaleUrl(Astro.currentLocale ?? 'fr', '/about'),
+        url: getLocaleUrl(Astro.currentLocale, '/about'),
         icon: "material-symbols:info"
-    }
+    },
 ]
 ---
 
@@ -41,7 +47,7 @@ const links: NavbarLink[] = [
     <div class:list={[
         className,
         "overflow-visible! max-w-(--page-width) h-18 mx-auto flex items-center justify-between px-2 md:px-4"]}>
-        <a href={getLocaleUrl(Astro.currentLocale ?? 'fr')} class="btn-plain scale-animation rounded-lg h-13 px-5 font-bold active:scale-95">
+        <a href={getLocaleUrl(Astro.currentLocale ?? 'fr')} class="btn-plain rounded-lg h-13 px-5 font-bold">
             <div class="flex flex-row text-(--primary) items-center text-md">
                 <!-- <Icon name="material-symbols:home-pin-outline" class="text-[1.75rem] mb-1 mr-2" /> -->
                  <img src="/assets/images/icon.png" class="h-9 mr-2" />

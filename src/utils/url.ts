@@ -67,7 +67,7 @@ export function getFileDirFromPath(filePath: string): string {
     return filePath.replace(/^src\//, "").replace(/\/[^/]+$/, "");
 }
 
-export function getLocaleUrl(locale: string, ...path: string[]) {
+export function getLocaleUrl(locale: string = "fr", ...path: string[]) {
     if (locale && locale !== "fr") {
         return joinUrl("", import.meta.env.BASE_URL, locale, ...path);
     }

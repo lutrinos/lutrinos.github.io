@@ -7,6 +7,7 @@ enum I18nKey {
     archive = "archive",
     about = "about",
     search = "search",
+    teaching = "teaching",
 
     // Archive
     archiveSubtitle = "archiveSubtitle",
