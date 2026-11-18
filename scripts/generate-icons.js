@@ -1,12 +1,12 @@
 /**
- * Icon preprocessing script (Twilight version) adapted for tsx
- * Automatically scan icons used in tsx and Astro components during build and generate inline SVG data
+ * 图标预处理脚本 (Twilight 版)
+ * 在构建时自动扫描 Svelte 和 Astro 组件中使用的图标，并生成内联 SVG 数据
  * 
- * Logic:
- * 1. Scan .tsx and .astro files in src directory
- * 2. Extract all icons in the form of icon="prefix:name"
- * 3. Read SVG data from node_modules/@iconify-json/[prefix]/icons.json
- * 4. Generate src/utils/icons.ts
+ * 逻辑：
+ * 1. 扫描 src 目录下的 .svelte 和 .astro 文件
+ * 2. 提取所有形如 icon="prefix:name" 的图标
+ * 3. 从 node_modules/@iconify-json/[prefix]/icons.json 中读取 SVG 数据
+ * 4. 生成 src/utils/icons.ts
  */
 
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync, mkdirSync } from "fs";
@@ -18,7 +18,7 @@ const ROOT_DIR = join(__dirname, "..");
 const SRC_DIR = join(ROOT_DIR, "src");
 const OUTPUT_FILE = join(SRC_DIR, "utils", "icons.ts");
 
-// Supported icon sets and their package names
+// 支持的图标集及其包名
 const ICON_SETS = {
     "material-symbols": "@iconify-json/material-symbols",
     "fa6-solid": "@iconify-json/fa6-solid",
@@ -26,15 +26,17 @@ const ICON_SETS = {
     "fa6-regular": "@iconify-json/fa6-regular",
     "mdi": "@iconify-json/mdi",
     "eos-icons": "@iconify-json/eos-icons",
+    "logos": "@iconify-json/logos",
+    "ic": "@iconify-json/ic",
 };
 
-// Icon set data cache
+// 图标集数据缓存
 const iconSetCache = new Map();
 
 /**
- * Recursively get all files in directory
+ * 递归获取目录下所有文件
  */
-function getAllFiles(dir, extensions = [".tsx", ".astro"]) {
+function getAllFiles(dir, extensions = [".svelte", ".astro", ".json"]) {
     const files = [];
 
     function walk(currentDir) {
@@ -59,17 +61,27 @@ function getAllFiles(dir, extensions = [".tsx", ".astro"]) {
 }
 
 /**
- * Extract icon names from file content
+ * 从文件内容中提取图标名称
  */
 function extractIconNames(content) {
     const icons = new Set();
 
-    // Match various icon usage patterns
+    // 匹配各种图标使用模式
     const patterns = [
-        // icon="xxx:yyy" or icon='xxx:yyy'
+        // icon="xxx:yyy" 或 icon='xxx:yyy'
         /icon=["']([a-z0-9-]+:[a-z0-9-]+)["']/gi,
         // icon={`xxx:yyy`}
         /icon=\{[`"']([a-z0-9-]+:[a-z0-9-]+)[`"']\}/gi,
+        // JSON 格式: "icon": "xxx:yyy"
+        /"icon"\s*:\s*"([a-z0-9-]+:[a-z0-9-]+)"/gi,
+
+
+        // // icon="xxx:yyy" 或 icon='xxx:yyy'
+        // /name=["']([a-z0-9-]+:[a-z0-9-]+)["']/gi,
+        // // icon={`xxx:yyy`}
+        // /name=\{[`"']([a-z0-9-]+:[a-z0-9-]+)[`"']\}/gi,
+        // // JSON 格式: "icon": "xxx:yyy"
+        // /"name"\s*:\s*"([a-z0-9-]+:[a-z0-9-]+)"/gi,
     ];
 
     for (const pattern of patterns) {
@@ -83,7 +95,7 @@ function extractIconNames(content) {
 }
 
 /**
- * Load icon set data
+ * 加载图标集数据
  */
 function loadIconSet(prefix) {
     if (iconSetCache.has(prefix)) {
@@ -92,27 +104,27 @@ function loadIconSet(prefix) {
 
     const packageName = ICON_SETS[prefix];
     if (!packageName) {
-        console.warn(`⚠️  Unknown icon set: ${prefix}`);
+        console.warn(`⚠️  未知图标集: ${prefix}`);
         return null;
     }
 
     try {
         const iconSetPath = join(ROOT_DIR, "node_modules", packageName, "icons.json");
         if (!existsSync(iconSetPath)) {
-            console.warn(`⚠️  Icon set file not found: ${iconSetPath}`);
+            console.warn(`⚠️  找不到图标集文件: ${iconSetPath}`);
             return null;
         }
         const data = JSON.parse(readFileSync(iconSetPath, "utf-8"));
         iconSetCache.set(prefix, data);
         return data;
     } catch (error) {
-        console.warn(`⚠️  Cannot load icon set ${packageName}: ${error.message}`);
+        console.warn(`⚠️  无法加载图标集 ${packageName}: ${error.message}`);
         return null;
     }
 }
 
 /**
- * Get SVG for a single icon
+ * 获取单个图标的 SVG
  */
 function getIconSvg(iconName) {
     const [prefix, name] = iconName.split(":");
@@ -123,7 +135,7 @@ function getIconSvg(iconName) {
 
     const iconData = iconSet.icons[name];
     if (!iconData) {
-        // Try to find from aliases
+        // 尝试从别名中查找
         if (iconSet.aliases && iconSet.aliases[name]) {
             const alias = iconSet.aliases[name];
             const realName = alias.parent;
@@ -132,7 +144,7 @@ function getIconSvg(iconName) {
                 return buildSvg(realData, iconSet);
             }
         }
-        console.warn(`⚠️  Icon not found: ${iconName}`);
+        console.warn(`⚠️  图标未找到: ${iconName}`);
         return null;
     }
 
@@ -144,12 +156,12 @@ function buildSvg(iconData, iconSet) {
     const height = iconData.height || iconSet.height || 24;
     const body = iconData.body;
 
-    // Simple SVG building
+    // 简单的 SVG 构建
     return `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 ${width} ${height}" fill="currentColor">${body}</svg>`;
 }
 
 /**
- * Generate icons.ts file
+ * 生成 icons.ts 文件
  */
 function generateIconsFile(iconsMap) {
     const iconEntries = Array.from(iconsMap.entries())
@@ -158,9 +170,9 @@ function generateIconsFile(iconsMap) {
         .join(",\n");
 
     return `/**
- * Auto-generated icon data file
- * Generated by scripts/generate-icons.js at build time
- * Do not edit this file manually
+ * 自动生成的图标数据文件
+ * 由 scripts/generate-icons.js 在构建时生成
+ * 请勿手动编辑此文件
  */
 
 const iconSvgData: Record<string, string> = {
@@ -180,10 +192,10 @@ export default iconSvgData;
 }
 
 /**
- * Main logic
+ * 主逻辑
  */
 async function main() {
-    console.log("🚀 Starting icon scan...");
+    console.log("🚀 开始扫描图标...");
     const files = getAllFiles(SRC_DIR);
     const allIcons = new Set();
 
@@ -195,7 +207,7 @@ async function main() {
         }
     }
 
-    console.log(`📦 Found ${allIcons.size} unique icons`);
+    console.log(`📦 发现 ${allIcons.size} 个唯一图标`);
 
     const iconsMap = new Map();
     for (const icon of allIcons) {
@@ -211,7 +223,7 @@ async function main() {
     }
 
     writeFileSync(OUTPUT_FILE, generateIconsFile(iconsMap));
-    console.log(`✅ Generated ${OUTPUT_FILE}`);
+    console.log(`✅ 已生成 ${OUTPUT_FILE}`);
 }
 
 main().catch(console.error);

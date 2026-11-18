@@ -33,7 +33,7 @@ import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { visualizer } from "rollup-plugin-visualizer";
 import yaml from "@rollup/plugin-yaml";
 
-import jsYaml from "js-yaml";
+import { load } from "js-yaml";
 import rawConfig from "./site.config.yml?raw";
 
 // Choose adapter depending on deployment environment
@@ -41,7 +41,7 @@ const adapter = process.env.GITHUB_ACTIONS
     ? undefined
     : undefined;
 
-const siteConfig = jsYaml.load(rawConfig).site;
+const siteConfig = load(rawConfig).site;
 
 // Ref: https://astro.build/config
 export default defineConfig({
