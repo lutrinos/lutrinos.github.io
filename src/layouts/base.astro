@@ -24,7 +24,6 @@ import { pathsEqual, url } from "@utils/url";
 import FontLoader from "@components/fontLoader.astro";
 import ConfigCarrier from "@components/configCarrier.astro";
 import "@styles/navbar.css";
-import "@styles/fancybox.css";
 
 interface Props {
     title?: string;
@@ -266,8 +265,7 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
     import { pathsEqual, url } from "@utils/url";
     import { initTheme } from "@utils/theme";
     import { initMarkdownActions } from "@/utils/markdown";
-    import { initFancybox, cleanupFancybox } from "@utils/fancybox";
-
+    
     // 初始化Swup
     const setup = () => {
         let pausedElementIds = new Set();
@@ -419,18 +417,7 @@ const { enabled: analyticsEnabled, code: analyticsCode } = getAnalyticsConfig();
                 top: 0,
                 behavior: "smooth",
             });
-            
-            // Initialize Fancybox
-            initFancybox();
         });
-        initFancybox();
-        window.swup.hooks.on(
-            "content:replace",
-            () => {
-                cleanupFancybox();
-            },
-            { before: true },
-        );
     };
     if (window?.swup?.hooks) {
         setup();

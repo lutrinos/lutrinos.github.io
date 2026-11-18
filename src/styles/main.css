@@ -476,10 +476,6 @@
     }
 }
 
-.custom-md img, #post-cover img {
-    @apply cursor-zoom-in
-}
-
 ::selection {
     background-color: var(--selection-bg)
 }
